@@ -6,6 +6,7 @@ type CheckoutStepProps = {
   isOpen: boolean;
   isComplete?: boolean;
   isLocked?: boolean;
+  keepMounted?: boolean;
   onToggle?: () => void;
   children?: React.ReactNode;
   id?: string;
@@ -17,6 +18,7 @@ export default function CheckoutStep({
   isOpen,
   isComplete = false,
   isLocked = false,
+  keepMounted = false,
   onToggle,
   children,
   id,
@@ -47,7 +49,11 @@ export default function CheckoutStep({
         <span className="text-gray-400">{isOpen ? "⌃" : "⌄"}</span>
       </button>
 
-      {isOpen ? (
+      {keepMounted ? (
+        <div className={`border-t border-black/10 px-5 py-5 ${isOpen ? "" : "hidden"}`}>
+          {children}
+        </div>
+      ) : isOpen ? (
         <div className="border-t border-black/10 px-5 py-5">
           {children}
         </div>

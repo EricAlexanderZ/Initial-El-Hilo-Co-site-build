@@ -1,12 +1,12 @@
 ﻿"use client";
 
-import { useMemo, useState, useEffect } from "react";
+import { useMemo, useState, useEffect, useRef } from "react";
 import { TopBanner, SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import CheckoutStep from "@/components/checkout/checkout-step";
 import CheckoutSummary from "@/components/checkout/checkout-summary";
 import AddressSuggestionModal from "@/components/checkout/address-suggestion-modal";
-import SquarePaymentForm from "@/components/checkout/square-payment-form";
+import StripePaymentForm, { type StripeFormHandle } from "@/components/checkout/stripe-payment-form";
 import { useCart } from "@/components/cart/cart-provider";
 import {
   DEFAULT_SHIPPING_FORM,
@@ -55,7 +55,7 @@ export default function CheckoutPage() {
     country: "US",
   });
 
-  const [squareSourceId, setSquareSourceId] = useState("");
+  const stripeFormRef = useRef<StripeFormHandle>(null);
   const [paymentError, setPaymentError] = useState("");
   const [isPlacingOrder, setIsPlacingOrder] = useState(false);
   const [isLoadingRates, setIsLoadingRates] = useState(false);
@@ -66,20 +66,6 @@ export default function CheckoutPage() {
     [subtotal, shippingPrice]
   );
 
-  // Preload Square script as soon as delivery is confirmed so step 3 loads instantly
-  useEffect(() => {
-    if (!deliveryComplete) return;
-    const squareEnv = process.env.NEXT_PUBLIC_SQUARE_ENVIRONMENT === "production" ? "production" : "sandbox";
-    const scriptSrc = squareEnv === "production"
-      ? "https://web.squarecdn.com/v1/square.js"
-      : "https://sandbox.web.squarecdn.com/v1/square.js";
-    if (!document.querySelector(`script[src="${scriptSrc}"]`)) {
-      const script = document.createElement("script");
-      script.src = scriptSrc;
-      script.async = true;
-      document.body.appendChild(script);
-    }
-  }, [deliveryComplete]);
 
   function updateShippingField<K extends keyof ShippingFormData>(
     name: K,
@@ -191,29 +177,19 @@ export default function CheckoutPage() {
       setPaymentError("");
       setIsPlacingOrder(true);
 
-      if (!squareSourceId) {
-        throw new Error("Please complete the payment step first.");
-      }
+      if (grandTotal <= 0) throw new Error("Invalid order total.");
+      if (!stripeFormRef.current) throw new Error("Payment form not ready.");
 
-      if (grandTotal <= 0) {
-        throw new Error("Invalid order total.");
-      }
-
-      const paymentRes = await fetch("/api/payments", {
+      const intentRes = await fetch("/api/payments/intent", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          sourceId: squareSourceId,
-          amount: grandTotal,
-          currency: "USD",
-          note: "El Hilo Co checkout payment",
-        }),
+        body: JSON.stringify({ amount: grandTotal }),
       });
+      const intentData = await intentRes.json();
+      if (!intentRes.ok) throw new Error(intentData?.error || "Payment failed.");
 
-      const paymentData = await paymentRes.json();
-      if (!paymentRes.ok) throw new Error(paymentData?.error || "Payment failed.");
+      await stripeFormRef.current.confirmPayment(intentData.clientSecret);
 
-      // Save order to database
       const orderRes = await fetch("/api/orders", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -240,7 +216,6 @@ export default function CheckoutPage() {
         console.error("[checkout] failed to save order — payment succeeded");
       }
 
-      setSquareSourceId("");
       clearCart();
       window.location.href = "/order-confirmation";
     } catch (error) {
@@ -252,8 +227,7 @@ export default function CheckoutPage() {
     }
   }
 
-  function handlePaymentTokenized({ sourceId }: { sourceId: string }) {
-    setSquareSourceId(sourceId);
+  function handlePaymentValidated() {
     setPaymentComplete(true);
     setPaymentError("");
     setOpenStep(4);
@@ -557,18 +531,18 @@ export default function CheckoutPage() {
               isOpen={openStep === 3}
               isComplete={paymentComplete}
               isLocked={!deliveryComplete}
+              keepMounted
               onToggle={() =>
                 deliveryComplete && setOpenStep(openStep === 3 ? 0 : 3)
               }
             >
-              <SquarePaymentForm onTokenized={handlePaymentTokenized} amount={grandTotal} />
-
-              {paymentError ? (
-                <p className="mt-4 text-sm text-red-500">{paymentError}</p>
-              ) : null}
-
+              <StripePaymentForm
+                ref={stripeFormRef}
+                onValidated={handlePaymentValidated}
+                amount={grandTotal}
+              />
               <p className="mt-3 text-sm text-gray-500">
-                Your card details are securely processed by Square. We do not store your card information.
+                Your payment is securely processed by Stripe. We do not store your card information.
               </p>
             </CheckoutStep>
 
@@ -618,6 +592,10 @@ export default function CheckoutPage() {
                 >
                   {isPlacingOrder ? "Processing..." : "Place Order"}
                 </button>
+
+                {paymentError && (
+                  <p className="mt-4 text-sm text-red-500">{paymentError}</p>
+                )}
 
                 <p className="mt-4 text-xs text-gray-400">
                   By clicking "Place Order", you agree to our{" "}
