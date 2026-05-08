@@ -5,7 +5,7 @@ import { SiteFooter } from "@/components/site-footer";
 
 export default function AboutPage() {
   return (
-    <main className="min-h-screen bg-white text-black">
+    <main className="min-h-dvh bg-white text-black">
       <TopBanner />
       <SiteHeader />
 

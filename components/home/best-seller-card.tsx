@@ -17,16 +17,17 @@ export default function BestSellerCard({
   return (
     <Link
       href={href}
-      className="group rounded-[2rem] border border-black/10 bg-[#f3f3f1] p-3 shadow-[0_8px_24px_rgba(0,0,0,0.06)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_12px_30px_rgba(0,0,0,0.08)] sm:p-5"
+      className="group rounded-[2rem] border border-black/10 bg-[#f3f3f1] p-3 shadow-[0_16px_48px_rgba(0,0,0,0.10)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_24px_64px_rgba(0,0,0,0.14)] sm:p-5"
     >
+      {/* Mobile: plain centered title | Desktop: pill badge */}
       <div className="flex justify-center">
-        <div className="inline-flex rounded-full border border-[#d8dce3] bg-white px-4 py-1.5 text-[11px] font-semibold uppercase tracking-wide text-[#243b63] shadow-sm">
+        <div className="sm:inline-flex sm:rounded-full sm:border sm:border-[#d8dce3] sm:bg-white sm:px-4 sm:py-1.5 sm:shadow-sm text-center text-[11px] font-semibold uppercase tracking-wide text-[#243b63] whitespace-nowrap overflow-hidden text-ellipsis max-w-full">
           {title}
         </div>
       </div>
 
-      <div className="mt-4 flex min-h-[200px] sm:min-h-[260px] items-center justify-center rounded-[1.5rem] bg-[#f3f3f1] p-4">
-        <div className="relative h-[220px] w-full overflow-hidden">
+      <div className="mt-2 sm:mt-4 flex min-h-[140px] sm:min-h-[260px] items-center justify-center rounded-[1.5rem] bg-[#f3f3f1] p-2 sm:p-4">
+        <div className="relative h-[130px] sm:h-[220px] w-full overflow-hidden">
           <Image
             src={image}
             alt={title}

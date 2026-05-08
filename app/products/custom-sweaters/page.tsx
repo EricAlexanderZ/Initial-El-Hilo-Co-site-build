@@ -227,7 +227,7 @@ export default function CustomSweatersPage() {
   ];
 
   return (
-    <main className="min-h-screen bg-[#f6f6f4] text-black">
+    <main className="min-h-dvh bg-[#f6f6f4] text-black">
       <TopBanner />
       <SiteHeader />
 
@@ -250,7 +250,7 @@ export default function CustomSweatersPage() {
           </div>
           <div className="flex flex-col items-center justify-center gap-4">
             <p className="text-sm font-semibold text-gray-500 uppercase tracking-wide">Available in {colors.length} colors</p>
-            <div className="flex flex-wrap justify-center gap-2 max-w-xs sm:max-w-sm">
+            <div className="hidden sm:flex flex-wrap justify-center gap-2 max-w-xs sm:max-w-sm">
               {colors.map((color) => (
                 <div
                   key={color.name}

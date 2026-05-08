@@ -10,7 +10,7 @@ import { bestSellers, categories, logos } from "@/lib/home-content";
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-white text-black">
+    <main className="min-h-dvh bg-white text-black">
       <TopBanner />
       <SiteHeader />
 
@@ -18,9 +18,9 @@ export default function Home() {
         <div className="absolute inset-0 bg-[url('/images/home/hero-bg.jpg')] bg-cover bg-center" />
         <div className="absolute inset-0 bg-black/60" />
 
-        <div className="relative mx-auto min-h-[560px] max-w-7xl px-6 py-20 flex items-center justify-between gap-4 lg:gap-10">
+        <div className="relative mx-auto min-h-[560px] max-w-7xl px-6 pt-0 pb-0 lg:py-20 flex items-center justify-between gap-4 lg:gap-10">
           <div className="w-full text-center lg:max-w-2xl lg:text-left">
-            <h1 className="text-3xl font-extrabold leading-[0.95] tracking-tight text-white sm:text-5xl lg:text-7xl xl:text-8xl">
+            <h1 className="text-4xl font-extrabold leading-[1.15] tracking-tight text-white sm:text-5xl sm:leading-[0.95] lg:text-7xl xl:text-8xl">
               Order custom
               <br />
               embroidered hats
@@ -28,7 +28,7 @@ export default function Home() {
               and apparel.
             </h1>
 
-            <p className="mx-auto mt-8 max-w-lg text-lg font-medium text-white/90 lg:mx-0">
+            <p className="mx-auto mt-8 max-w-lg rounded-2xl bg-black/40 px-4 py-3 text-lg font-medium text-white/90 lg:mx-0 lg:rounded-none lg:bg-transparent lg:px-0 lg:py-0">
               Fast ordering, clean proofs, premium stitching, and a practical
               process built for brands, teams, and businesses.
             </p>
@@ -42,6 +42,19 @@ export default function Home() {
               </Link>
 
               <ScrollToCategories />
+            </div>
+
+            {/* Mobile stats */}
+            <div className="mt-6 flex items-center justify-center gap-0 rounded-2xl bg-black/40 px-5 py-3 lg:hidden">
+              <div className="text-center">
+                <p className="text-xl font-extrabold text-white">680+</p>
+                <p className="text-xs text-white/60">Happy customers</p>
+              </div>
+              <div className="mx-5 h-8 w-px bg-white/30" />
+              <div className="text-center">
+                <p className="text-xl font-extrabold text-white">5/5</p>
+                <p className="text-xs text-white/60">Average review score</p>
+              </div>
             </div>
 
             <div className="mt-10 hidden gap-10 text-white lg:flex">

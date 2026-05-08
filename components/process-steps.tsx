@@ -3,11 +3,12 @@ import { processSteps } from "@/lib/home-content";
 
 export function ProcessSteps() {
   return (
-    <section className="bg-[#ffd84d] py-20">
+    <section className="bg-gradient-to-t from-[#ffd84d] to-[#ffd84d]/[0.07] py-20">
       <div className="mx-auto max-w-7xl px-6">
-        <h2 className="text-center text-3xl font-extrabold tracking-tight sm:text-4xl md:text-5xl lg:text-6xl">
-          <span className="text-black/40">Upload. Approve.</span>{" "}
-          <span className="text-black">Receive.</span>
+        <h2 className="text-center font-extrabold tracking-tight">
+          <span className="block text-6xl text-black/40 sm:inline sm:text-4xl md:text-5xl lg:text-6xl">Upload.</span>
+          <span className="block text-6xl text-black/40 sm:inline sm:text-4xl md:text-5xl lg:text-6xl"> Approve.</span>
+          <span className="block text-6xl text-black sm:inline sm:text-4xl md:text-5xl lg:text-6xl"> Receive.</span>
         </h2>
 
         <div className="mt-10 rounded-[2rem] bg-white px-6 py-10 shadow-lg sm:px-12 md:px-20 md:py-14">

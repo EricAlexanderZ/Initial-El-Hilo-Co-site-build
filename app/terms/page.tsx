@@ -55,7 +55,7 @@ function Divider() {
 
 export default function TermsPage() {
   return (
-    <main className="min-h-screen bg-[#f6f6f4] text-black">
+    <main className="min-h-dvh bg-[#f6f6f4] text-black">
       <TopBanner />
       <SiteHeader />
 

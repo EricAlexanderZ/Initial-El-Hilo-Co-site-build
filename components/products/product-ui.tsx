@@ -7,7 +7,7 @@ import { useEffect, useState, type ChangeEvent, type ReactNode } from "react";
 
 export function Label({ children }: { children: React.ReactNode }) {
   return (
-    <p className="mb-3 text-sm font-bold text-black">{children}</p>
+    <p className="mb-3 text-base font-bold text-black">{children}</p>
   );
 }
 
@@ -174,6 +174,11 @@ export function ProductPreview({
             canExpand ? "cursor-pointer hover:opacity-90" : "cursor-default"
           }`}
         >
+          {canExpand && (
+            <p className="mb-2 text-center text-sm font-semibold text-[#13294b]">
+              {backSrc ? "Tap to view front & back · pick a color" : "Tap to pick a color"}
+            </p>
+          )}
           <div className="flex items-center justify-center">
             {!imgError && src ? (
               <div className="relative h-72 w-full">
@@ -194,11 +199,6 @@ export function ProductPreview({
               </div>
             )}
           </div>
-          {canExpand && (
-            <p className="mt-2 text-center text-xs text-gray-400">
-              {backSrc ? "Tap to view front & back · pick a color" : "Tap to pick a color"}
-            </p>
-          )}
         </button>
 
         <p className="mt-4 text-center text-sm font-semibold">{label}</p>

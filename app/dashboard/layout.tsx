@@ -88,7 +88,7 @@ export default async function DashboardLayout({
   const initial = firstName.charAt(0).toUpperCase();
 
   return (
-    <div className="flex min-h-screen bg-[#f6f6f4]">
+    <div className="flex min-h-dvh bg-[#f6f6f4]">
       {/* ── Desktop Sidebar ── */}
       <aside className="hidden w-64 shrink-0 flex-col border-r border-black/10 bg-white md:flex">
         {/* Logo */}

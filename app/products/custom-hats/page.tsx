@@ -292,7 +292,7 @@ function togglePlacement(type: "front" | "left" | "right") {
   }
 }
   return (
-    <main className="min-h-screen bg-[#f6f6f4] text-black">
+    <main className="min-h-dvh bg-[#f6f6f4] text-black">
       <TopBanner />
       <SiteHeader />
 
@@ -318,7 +318,7 @@ function togglePlacement(type: "front" | "left" | "right") {
             </p>
           </div>
 
-          <div className="flex items-center justify-center">
+          <div className="hidden md:flex items-center justify-center">
             <div className="grid grid-cols-2 gap-5 md:grid-cols-4">
               {hatOptions.map((hat) => (
                 <div
@@ -372,7 +372,7 @@ function togglePlacement(type: "front" | "left" | "right") {
               ))}
             </div>
 
-            <div className="mt-8">
+            <div className="mt-8 hidden lg:block">
               <Label>Hat Style</Label>
 
               <div className="grid grid-cols-2 gap-3">
@@ -792,7 +792,7 @@ function togglePlacement(type: "front" | "left" | "right") {
 
 function Label({ children }: { children: React.ReactNode }) {
   return (
-    <p className="mb-3 text-sm font-bold text-black">{children}</p>
+    <p className="mb-3 text-base font-bold text-black">{children}</p>
   );
 }
 

@@ -86,7 +86,7 @@ export function SiteHeader() {
     <header className="sticky top-0 z-50 border-b border-black/10 bg-white">
 
       {/* ── Mobile header ── */}
-      <div className="relative flex items-center justify-between px-4 py-4 md:hidden">
+      <div className="relative flex items-center justify-between px-4 py-5 md:hidden">
         {/* Hamburger — left */}
         <button
           type="button"
@@ -101,7 +101,7 @@ export function SiteHeader() {
 
         {/* Logo — center */}
         <Link href="/" className="absolute left-1/2 -translate-x-1/2">
-          <div className="relative h-12 w-12">
+          <div className="relative h-16 w-16">
             <Image src="/images/home/elhilocologo.png" alt="El Hilo Co" fill className="object-contain" />
           </div>
         </Link>

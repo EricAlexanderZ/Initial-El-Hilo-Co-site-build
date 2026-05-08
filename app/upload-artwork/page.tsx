@@ -103,7 +103,6 @@ function UploadArtworkContent() {
   return (
     <section className="mx-auto max-w-6xl px-6 py-16">
       <div className="text-center">
-        <div className="mb-3 text-5xl">{emoji}</div>
         <h1 className="text-3xl font-extrabold tracking-tight sm:text-5xl">Upload Your Artwork</h1>
         <p className="mt-3 text-base text-gray-600">
           Free artwork setup. Online proof. Pay only after you approve.
@@ -214,7 +213,7 @@ function UploadArtworkContent() {
 
 export default function UploadArtworkPage() {
   return (
-    <main className="min-h-screen bg-[#f6f6f4] text-black">
+    <main className="min-h-dvh bg-[#f6f6f4] text-black">
       <TopBanner />
       <SiteHeader />
       <Suspense fallback={

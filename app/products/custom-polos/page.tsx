@@ -191,7 +191,7 @@ export default function CustomPolosPage() {
   ];
 
   return (
-    <main className="min-h-screen bg-[#f6f6f4] text-black">
+    <main className="min-h-dvh bg-[#f6f6f4] text-black">
       <TopBanner />
       <SiteHeader />
 
@@ -216,7 +216,7 @@ export default function CustomPolosPage() {
             <p className="text-sm font-semibold uppercase tracking-wide text-gray-500">
               Available in {colors.length} colors
             </p>
-            <div className="flex max-w-xs sm:max-w-sm flex-wrap justify-center gap-2">
+            <div className="hidden sm:flex max-w-xs sm:max-w-sm flex-wrap justify-center gap-2">
               {colors.map((color) => (
                 <div
                   key={color.name}

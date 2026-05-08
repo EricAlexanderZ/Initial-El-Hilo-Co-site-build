@@ -5,7 +5,7 @@ import { SiteFooter } from "@/components/site-footer";
 
 export default function OrderConfirmationPage() {
   return (
-    <main className="min-h-screen bg-[#f6f6f4] text-black">
+    <main className="min-h-dvh bg-[#f6f6f4] text-black">
       <TopBanner />
       <SiteHeader />
 

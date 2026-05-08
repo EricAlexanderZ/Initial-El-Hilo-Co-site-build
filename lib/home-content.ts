@@ -30,7 +30,7 @@ export const categories: Category[] = [
 
 export const bestSellers = [
   {
-    title: "Premium Stitched Hats",
+    title: "Premium Stitched",
     image: "/images/home/Home Content/PREMIUM_STITCH_ELHILOCO.svg",
     href: "/products/custom-hats",
     imageScale: "scale-[1]",
@@ -42,7 +42,7 @@ export const bestSellers = [
   imageScale: "scale-[1]",
 },
   {
-    title: "Left Chest Logo Polos",
+    title: "Stitched Polos",
     image: "/images/home/LeftChestLogo.png",
     href: "/products/custom-polos",
     imageScale: "scale-[1]",
