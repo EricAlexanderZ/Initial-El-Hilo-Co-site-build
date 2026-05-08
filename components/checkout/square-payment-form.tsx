@@ -72,7 +72,7 @@ export default function SquarePaymentForm({ onTokenized, amount }: Props) {
         await card.attach(cardContainerRef.current);
         cardRef.current = card;
 
-        // Try Apple Pay — only available on Safari + HTTPS with domain verification
+        // Create Apple Pay instance — attachment happens after the container renders
         try {
           const paymentRequest = payments.paymentRequest({
             countryCode: "US",
@@ -81,12 +81,6 @@ export default function SquarePaymentForm({ onTokenized, amount }: Props) {
           });
           const applePay = await payments.applePay(paymentRequest);
           applePayRef.current = applePay;
-
-          if (applePayContainerRef.current) {
-            applePayContainerRef.current.innerHTML = "";
-            await applePay.attach(applePayContainerRef.current);
-          }
-
           if (mounted) setIsApplePayAvailable(true);
         } catch {
           // Apple Pay not supported on this device/browser
@@ -113,6 +107,13 @@ export default function SquarePaymentForm({ onTokenized, amount }: Props) {
       if (applePayContainerRef.current) applePayContainerRef.current.innerHTML = "";
     };
   }, []);
+
+  // Attach Apple Pay button once its container is in the DOM
+  useEffect(() => {
+    if (!isApplePayAvailable || !applePayRef.current || !applePayContainerRef.current) return;
+    applePayContainerRef.current.innerHTML = "";
+    applePayRef.current.attach(applePayContainerRef.current).catch(() => {});
+  }, [isApplePayAvailable]);
 
   async function handleCardTokenize() {
     try {
@@ -148,12 +149,9 @@ export default function SquarePaymentForm({ onTokenized, amount }: Props) {
           <span className="font-semibold">Pay with new card</span>
         </button>
 
-        {/* Keep in DOM once Square is attached — just visually hide when not selected */}
+        {/* Keep card container in DOM once Square is attached */}
         <div className={paymentMethod === "card" ? "mt-4" : "hidden"}>
-          <div
-            ref={cardContainerRef}
-            className="min-h-[90px] rounded-xl border border-black/10 bg-white p-4"
-          />
+          <div ref={cardContainerRef} className="min-h-[90px] rounded-xl border border-black/10 bg-white p-4" />
           {error && <p className="mt-3 text-sm text-red-500">{error}</p>}
           <button
             type="button"
@@ -184,9 +182,8 @@ export default function SquarePaymentForm({ onTokenized, amount }: Props) {
             <span className="font-semibold">Pay with Apple Pay</span>
           </button>
 
-          <div className={paymentMethod === "apple-pay" ? "mt-4" : "hidden"}>
-            <div ref={applePayContainerRef} />
-          </div>
+          {/* Square attaches the Apple Pay button here */}
+          <div ref={applePayContainerRef} className="mt-4 w-full" />
         </div>
       )}
     </div>
