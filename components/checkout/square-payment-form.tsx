@@ -53,9 +53,12 @@ export default function SquarePaymentForm({ onTokenized, amount }: Props) {
             script.onerror = reject;
           });
         } else if (!window.Square) {
-          await new Promise<void>((resolve) => {
+          await new Promise<void>((resolve, reject) => {
+            let waited = 0;
             const interval = setInterval(() => {
+              waited += 100;
               if (window.Square) { clearInterval(interval); resolve(); }
+              else if (waited >= 8000) { clearInterval(interval); reject(new Error("Square timed out.")); }
             }, 100);
           });
         }
@@ -111,8 +114,17 @@ export default function SquarePaymentForm({ onTokenized, amount }: Props) {
   // Attach Apple Pay button once its container is in the DOM
   useEffect(() => {
     if (!isApplePayAvailable || !applePayRef.current || !applePayContainerRef.current) return;
-    applePayContainerRef.current.innerHTML = "";
-    applePayRef.current.attach(applePayContainerRef.current).catch(() => {});
+    async function attachApplePay() {
+      try {
+        if (applePayContainerRef.current) {
+          applePayContainerRef.current.innerHTML = "";
+          await applePayRef.current.attach(applePayContainerRef.current);
+        }
+      } catch {
+        // Silently ignore attach errors
+      }
+    }
+    attachApplePay();
   }, [isApplePayAvailable]);
 
   async function handleCardTokenize() {
