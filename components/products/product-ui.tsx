@@ -186,6 +186,7 @@ export function ProductPreview({
                   src={src}
                   alt={alt}
                   fill
+                  priority
                   className="object-contain"
                   onError={() => setImgError(true)}
                 />
