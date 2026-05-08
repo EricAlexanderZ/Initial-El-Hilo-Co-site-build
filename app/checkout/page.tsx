@@ -32,6 +32,7 @@ export default function CheckoutPage() {
     const top = el.getBoundingClientRect().top + window.scrollY - 80;
     window.scrollTo({ top, behavior: "smooth" });
   }, [openStep]);
+
   const [shippingComplete, setShippingComplete] = useState(false);
   const [deliveryComplete, setDeliveryComplete] = useState(false);
   const [paymentComplete, setPaymentComplete] = useState(false);
@@ -64,6 +65,21 @@ export default function CheckoutPage() {
     () => subtotal + shippingPrice,
     [subtotal, shippingPrice]
   );
+
+  // Preload Square script as soon as delivery is confirmed so step 3 loads instantly
+  useEffect(() => {
+    if (!deliveryComplete) return;
+    const squareEnv = process.env.NEXT_PUBLIC_SQUARE_ENVIRONMENT === "production" ? "production" : "sandbox";
+    const scriptSrc = squareEnv === "production"
+      ? "https://web.squarecdn.com/v1/square.js"
+      : "https://sandbox.web.squarecdn.com/v1/square.js";
+    if (!document.querySelector(`script[src="${scriptSrc}"]`)) {
+      const script = document.createElement("script");
+      script.src = scriptSrc;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  }, [deliveryComplete]);
 
   function updateShippingField<K extends keyof ShippingFormData>(
     name: K,
@@ -545,7 +561,7 @@ export default function CheckoutPage() {
                 deliveryComplete && setOpenStep(openStep === 3 ? 0 : 3)
               }
             >
-              <SquarePaymentForm onTokenized={handlePaymentTokenized} />
+              <SquarePaymentForm onTokenized={handlePaymentTokenized} amount={grandTotal} />
 
               {paymentError ? (
                 <p className="mt-4 text-sm text-red-500">{paymentError}</p>
