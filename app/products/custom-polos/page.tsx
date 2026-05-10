@@ -159,6 +159,7 @@ export default function CustomPolosPage() {
   function goToUpload() {
     const placement = [leftChest ? "Left Chest Logo" : null, rightSideName ? "Right Side Name" : null]
       .filter(Boolean).join(", ");
+    sessionStorage.setItem("cartItemImage", currentColor.front);
     const params = new URLSearchParams({
       productType:      "Custom Polos",
       style:            STYLE,
@@ -242,34 +243,6 @@ export default function CustomPolosPage() {
               <span className="mt-1 block text-xs text-[#d39a14]">★ Selected</span>
             </div>
 
-            <Label>Embroidery Placement</Label>
-            <div className="mb-4 grid grid-cols-1 gap-3">
-              <PlacementButton label="Left Chest Logo"  selected={leftChest}     onClick={() => togglePlacement("leftChest")}     />
-              <PlacementButton label="Right Side Name"  selected={rightSideName} onClick={() => togglePlacement("rightSideName")} />
-            </div>
-
-            {rightSideName && (
-              <div className="mt-3">
-                <label className="mb-1 block text-xs font-semibold text-gray-600">
-                  Name to embroider
-                </label>
-                <input
-                  type="text"
-                  value={customerName}
-                  onChange={(e) => setCustomerName(sanitizeName(e.target.value))}
-                  placeholder="e.g. Johnson"
-                  maxLength={24}
-                  className="w-full rounded-2xl border border-[#e3b33d] bg-white px-4 py-3 text-sm font-medium outline-none"
-                />
-                <p className="mt-1 text-xs text-gray-500">Letters only · {customerName.length}/24</p>
-              </div>
-            )}
-
-            {dualPerPiece > 0 && (
-              <p className="mt-3 text-xs font-semibold text-[#d39a14]">
-                ★ Dual placement adds ${DUAL_PER_PIECE}/polo to your order
-              </p>
-            )}
           </div>
 
           {/* Col 2 — Preview + Color (in modal) */}
@@ -288,6 +261,37 @@ export default function CustomPolosPage() {
                 />
               }
             />
+
+            <div className="mt-8">
+              <Label>Embroidery Placement</Label>
+              <div className="grid grid-cols-1 gap-3">
+                <PlacementButton label="Left Chest Logo"  selected={leftChest}     onClick={() => togglePlacement("leftChest")}     />
+                <PlacementButton label="Right Side Name"  selected={rightSideName} onClick={() => togglePlacement("rightSideName")} />
+              </div>
+
+              {rightSideName && (
+                <div className="mt-3">
+                  <label className="mb-1 block text-xs font-semibold text-gray-600">
+                    Name to embroider
+                  </label>
+                  <input
+                    type="text"
+                    value={customerName}
+                    onChange={(e) => setCustomerName(sanitizeName(e.target.value))}
+                    placeholder="e.g. Johnson"
+                    maxLength={24}
+                    className="w-full rounded-2xl border border-[#e3b33d] bg-white px-4 py-3 text-sm font-medium outline-none"
+                  />
+                  <p className="mt-1 text-xs text-gray-500">Letters only · {customerName.length}/24</p>
+                </div>
+              )}
+
+              {dualPerPiece > 0 && (
+                <p className="mt-3 text-xs font-semibold text-[#d39a14]">
+                  ★ Dual placement adds ${DUAL_PER_PIECE}/polo to your order
+                </p>
+              )}
+            </div>
           </div>
 
           {/* Col 3 — Quantity */}

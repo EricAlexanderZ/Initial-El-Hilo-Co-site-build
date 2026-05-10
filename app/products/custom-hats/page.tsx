@@ -184,6 +184,8 @@ function goToUploadPage() {
     rightPlacement ? "Right Side"  : null,
   ].filter(Boolean).join(",");
 
+  const colorImage = currentColors.find(c => c.name === selectedColor)?.image ?? "";
+  sessionStorage.setItem("cartItemImage", colorImage);
   const params = new URLSearchParams({
     productType:  "Custom Hats",
     style:        selectedStyle,
@@ -351,7 +353,33 @@ function togglePlacement(type: "front" | "left" | "right") {
 
       <section className="bg-[#ececeb] py-12">
         <div className="mx-auto grid max-w-7xl grid-cols-1 gap-8 px-6 lg:grid-cols-[1.2fr_1.2fr_1.4fr_1fr]">
-          <div className="order-2 lg:order-1">
+
+          {/* Mobile-only hat style — top of configurator */}
+          <div className="order-1 lg:hidden">
+            <Label>Hat Style</Label>
+            <div className="space-y-3">
+              {hatOptions.map((hat) => {
+                const active = selectedStyle === hat.name;
+                return (
+                  <button
+                    key={hat.name}
+                    type="button"
+                    onClick={() => handleStyleChange(hat.name)}
+                    className={`flex w-full items-center justify-between rounded-2xl border px-4 py-4 text-left text-sm font-semibold transition ${
+                      active
+                        ? "border-[#e3b33d] bg-[#fff8e7] shadow-sm"
+                        : "border-black/10 bg-white hover:border-[#d9d9d9]"
+                    }`}
+                  >
+                    <span>{hat.name}</span>
+                    {active ? <span className="text-[#d39a14]">★</span> : null}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          <div className="order-4 lg:order-1">
             <Label>Stitch Type</Label>
 
             <div className="space-y-3">
@@ -422,120 +450,123 @@ function togglePlacement(type: "front" | "left" | "right") {
             </div>
           </div>
 
-          <div className="order-1 lg:order-2">
-  <div className="mb-8">
-    <Label>Embroidery Placement</Label>
+          <div className="order-2 lg:order-2">
+            <div className="flex flex-col gap-8">
 
-    <div className="grid grid-cols-1 gap-3">
-      <PlacementButton
-        label="Front of Cap"
-        selected={frontPlacement}
-        onClick={() => togglePlacement("front")}
-      />
+              {/* Preview — first on mobile, second on desktop */}
+              <div className="order-1 lg:order-2">
+                <div className="rounded-[1.5rem] border border-black/10 bg-white p-5 shadow-sm">
+                  <p className="text-sm font-semibold text-gray-500">Selected Hat Preview</p>
 
-      <PlacementButton
-        label="Left Side"
-        selected={leftPlacement}
-        onClick={() => togglePlacement("left")}
-      />
-
-      <PlacementButton
-        label="Right Side"
-        selected={rightPlacement}
-        onClick={() => togglePlacement("right")}
-      />
-    </div>
-  </div>
-
-            <div className="mt-8 rounded-[1.5rem] border border-black/10 bg-white p-5 shadow-sm">
-              <p className="text-sm font-semibold text-gray-500">Selected Hat Preview</p>
-
-              {(() => {
-                const colorData = currentColors.find((c) => c.name === selectedColor) ?? currentColors[0];
-                const hasSide = !!colorData.sideImage;
-                const imgSrc = previewAngle === "side" && colorData.sideImage ? colorData.sideImage : colorData.image;
-
-                return (
-                  <>
-                    {hasSide && (
-                      <div className="mt-4 flex gap-2">
-                        {(["front", "side"] as const).map((angle) => (
-                          <button
-                            key={angle}
-                            type="button"
-                            onClick={() => setPreviewAngle(angle)}
-                            className={`flex-1 rounded-xl py-2 text-sm font-semibold capitalize transition ${
-                              previewAngle === angle
-                                ? "bg-[#13294b] text-white"
-                                : "bg-gray-100 text-gray-600 hover:bg-gray-200"
-                            }`}
-                          >
-                            {angle}
-                          </button>
-                        ))}
-                      </div>
-                    )}
-
-                    <div className="mt-4 flex items-center justify-center rounded-[1.5rem] bg-white p-4">
-                      {imgSrc ? (
-                        <div key={imgSrc} className="relative h-48 w-full">
-                          <Image
-                            src={imgSrc}
-                            alt={`${selectedStyle} in ${selectedColor} — ${previewAngle}`}
-                            fill
-                            unoptimized
-                            className="object-contain"
-                          />
+                  {(() => {
+                    const colorData = currentColors.find((c) => c.name === selectedColor) ?? currentColors[0];
+                    const hasSide = !!colorData.sideImage;
+                    const imgSrc = previewAngle === "side" && colorData.sideImage ? colorData.sideImage : colorData.image;
+                    return (
+                      <>
+                        {hasSide && (
+                          <div className="mt-4 flex gap-2">
+                            {(["front", "side"] as const).map((angle) => (
+                              <button
+                                key={angle}
+                                type="button"
+                                onClick={() => setPreviewAngle(angle)}
+                                className={`flex-1 rounded-xl py-2 text-sm font-semibold capitalize transition ${
+                                  previewAngle === angle
+                                    ? "bg-[#13294b] text-white"
+                                    : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                                }`}
+                              >
+                                {angle}
+                              </button>
+                            ))}
+                          </div>
+                        )}
+                        <div className="mt-4 flex items-center justify-center rounded-[1.5rem] bg-white p-4">
+                          {imgSrc ? (
+                            <div key={imgSrc} className="relative h-48 w-full">
+                              <Image
+                                src={imgSrc}
+                                alt={`${selectedStyle} in ${selectedColor} — ${previewAngle}`}
+                                fill
+                                unoptimized
+                                className="object-contain"
+                              />
+                            </div>
+                          ) : (
+                            <HatMockup
+                              label={selectedStyle}
+                              colorHex={colorData.hex}
+                              emoji="🧢"
+                              active
+                              large
+                            />
+                          )}
                         </div>
-                      ) : (
-                        <HatMockup
-                          label={selectedStyle}
-                          colorHex={colorData.hex}
-                          emoji="🧢"
-                          active
-                          large
-                        />
-                      )}
+                      </>
+                    );
+                  })()}
+
+                  <p className="mt-4 text-center text-sm font-semibold">
+                    {selectedStyle} · {selectedColor}
+                  </p>
+
+                  <div className="mt-4 border-t border-black/5 pt-4">
+                    <p className="mb-3 text-sm font-medium text-gray-600">
+                      Color: <span className="font-bold text-black">{selectedColor}</span>
+                    </p>
+                    <div className="grid grid-cols-6 gap-2 sm:grid-cols-8">
+                      {currentColors.map((color) => (
+                        <button
+                          key={color.name}
+                          type="button"
+                          onClick={() => { setSelectedColor(color.name); setPreviewAngle("front"); }}
+                          title={color.name}
+                          className={`h-10 w-10 rounded-full border-2 transition hover:scale-105 sm:h-12 sm:w-12 ${
+                            selectedColor === color.name
+                              ? "border-[#13294b] ring-2 ring-[#13294b]/20"
+                              : "border-white shadow"
+                          }`}
+                          style={{
+                            background: color.hex2
+                              ? `linear-gradient(45deg, ${color.hex} 50%, ${color.hex2} 50%)`
+                              : color.hex,
+                          }}
+                        >
+                          <span className="sr-only">{color.name}</span>
+                        </button>
+                      ))}
                     </div>
-                  </>
-                );
-              })()}
-
-              <p className="mt-4 text-center text-sm font-semibold">
-                {selectedStyle} · {selectedColor}
-              </p>
-
-              <div className="mt-4 border-t border-black/5 pt-4">
-                <p className="mb-3 text-sm font-medium text-gray-600">
-                  Color: <span className="font-bold text-black">{selectedColor}</span>
-                </p>
-                <div className="grid grid-cols-6 gap-2 sm:grid-cols-8">
-                  {currentColors.map((color) => (
-                    <button
-                      key={color.name}
-                      type="button"
-                      onClick={() => { setSelectedColor(color.name); setPreviewAngle("front"); }}
-                      title={color.name}
-                      className={`h-10 w-10 rounded-full border-2 transition hover:scale-105 sm:h-12 sm:w-12 ${
-                        selectedColor === color.name
-                          ? "border-[#13294b] ring-2 ring-[#13294b]/20"
-                          : "border-white shadow"
-                      }`}
-                      style={{
-                        background: color.hex2
-                          ? `linear-gradient(45deg, ${color.hex} 50%, ${color.hex2} 50%)`
-                          : color.hex,
-                      }}
-                    >
-                      <span className="sr-only">{color.name}</span>
-                    </button>
-                  ))}
+                  </div>
                 </div>
               </div>
+
+              {/* Embroidery Placement — second on mobile, first on desktop */}
+              <div className="order-2 lg:order-1">
+                <Label>Embroidery Placement</Label>
+                <div className="grid grid-cols-1 gap-3">
+                  <PlacementButton
+                    label="Front of Cap"
+                    selected={frontPlacement}
+                    onClick={() => togglePlacement("front")}
+                  />
+                  <PlacementButton
+                    label="Left Side"
+                    selected={leftPlacement}
+                    onClick={() => togglePlacement("left")}
+                  />
+                  <PlacementButton
+                    label="Right Side"
+                    selected={rightPlacement}
+                    onClick={() => togglePlacement("right")}
+                  />
+                </div>
+              </div>
+
             </div>
           </div>
 
-          <div className="order-3">
+          <div className="order-5 lg:order-3">
             <Label>Quantity</Label>
 
             <div className="space-y-3">
@@ -610,7 +641,7 @@ function togglePlacement(type: "front" | "left" | "right") {
             </div>
           </div>
 
-          <div className="order-4 min-w-0 overflow-hidden">
+          <div className="order-6 lg:order-4 min-w-0 overflow-hidden">
             <div className="rounded-[1.75rem] border border-black/10 bg-white p-6 text-center shadow-sm">
              <p className="text-4xl font-extrabold">
   {isCustomQuantity && !customQtyIsValid ? "—" : `$${total.toFixed(2)}`}

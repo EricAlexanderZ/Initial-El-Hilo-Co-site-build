@@ -51,8 +51,43 @@ export default async function AdminOrderDetailPage({
       {/* Body */}
       <div className="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-[1fr_320px]">
 
-        {/* Left — order details */}
-        <div className="space-y-6">
+        {/* Right — controls (first on mobile, second on desktop) */}
+        <div className="order-1 space-y-5 self-start lg:order-2">
+          <div className="rounded-[1.5rem] bg-white p-6 shadow-sm">
+            <h2 className="mb-5 text-lg font-bold">Manage Order</h2>
+            <OrderControls
+              orderId={order.id}
+              currentStatus={order.status}
+              currentNotes={order.notes}
+              isArchived={!!order.archived_at}
+            />
+          </div>
+
+          <div className="rounded-[1.5rem] bg-white p-6 shadow-sm">
+            <ProofUpload orderId={order.id} />
+            {order.proof_urls?.length > 0 && (
+              <div className="mt-5 border-t border-black/5 pt-4">
+                <p className="mb-3 text-sm font-bold">Uploaded Proofs</p>
+                <div className="flex flex-wrap gap-2">
+                  {order.proof_urls.map((url, i) => (
+                    <a
+                      key={i}
+                      href={url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="rounded-full border border-[#13294b] px-4 py-1.5 text-xs font-semibold text-[#13294b] transition hover:bg-[#eef2f7]"
+                    >
+                      View Proof {i + 1}
+                    </a>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Left — order details (second on mobile, first on desktop) */}
+        <div className="order-2 space-y-6 lg:order-1">
 
           {/* Customer */}
           <div className="rounded-[1.5rem] bg-white p-6 shadow-sm">
@@ -81,7 +116,7 @@ export default async function AdminOrderDetailPage({
                 Item {i + 1} — {item.product_type}
               </h2>
 
-              <div className="grid grid-cols-2 gap-x-8 gap-y-2 text-sm">
+              <div className="grid grid-cols-1 gap-y-2 text-sm sm:grid-cols-2 sm:gap-x-8">
                 {item.style    && <InfoRow label="Style"     value={item.style} />}
                 {item.color    && <InfoRow label="Color"     value={item.color} />}
                 <InfoRow label="Quantity"  value={String(item.quantity)} />
@@ -140,42 +175,6 @@ export default async function AdminOrderDetailPage({
           </div>
         </div>
 
-        {/* Right — controls */}
-        <div className="space-y-5 self-start">
-          <div className="rounded-[1.5rem] bg-white p-6 shadow-sm">
-            <h2 className="mb-5 text-lg font-bold">Manage Order</h2>
-            <OrderControls
-              orderId={order.id}
-              currentStatus={order.status}
-              currentNotes={order.notes}
-            />
-          </div>
-
-          {/* Proof upload */}
-          <div className="rounded-[1.5rem] bg-white p-6 shadow-sm">
-            <ProofUpload orderId={order.id} />
-
-            {/* Existing proofs */}
-            {order.proof_urls?.length > 0 && (
-              <div className="mt-5 border-t border-black/5 pt-4">
-                <p className="mb-3 text-sm font-bold">Uploaded Proofs</p>
-                <div className="flex flex-wrap gap-2">
-                  {order.proof_urls.map((url, i) => (
-                    <a
-                      key={i}
-                      href={url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="rounded-full border border-[#13294b] px-4 py-1.5 text-xs font-semibold text-[#13294b] transition hover:bg-[#eef2f7]"
-                    >
-                      View Proof {i + 1}
-                    </a>
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
       </div>
     </div>
   );

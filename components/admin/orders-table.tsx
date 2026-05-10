@@ -35,15 +35,28 @@ export default function OrdersTable({ orders }: { orders: Order[] }) {
   return (
     <div className="space-y-5">
       {/* Controls */}
-      <div className="flex flex-wrap items-center gap-3">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
         <input
           type="text"
           placeholder="Search name or email…"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="w-64 rounded-2xl border border-black/10 bg-white px-4 py-2.5 text-sm outline-none focus:border-[#13294b] focus:ring-2 focus:ring-[#13294b]/10"
+          className="w-full rounded-2xl border border-black/10 bg-white px-4 py-2.5 text-sm outline-none focus:border-[#13294b] focus:ring-2 focus:ring-[#13294b]/10 sm:w-64"
         />
-        <div className="flex flex-wrap gap-2">
+
+        {/* Mobile: dropdown */}
+        <select
+          value={filter}
+          onChange={(e) => setFilter(e.target.value as Filter)}
+          className="sm:hidden w-full rounded-2xl border border-black/10 bg-white px-4 py-2.5 text-sm font-semibold outline-none focus:border-[#13294b]"
+        >
+          {FILTERS.map((f) => (
+            <option key={f.value} value={f.value}>{f.label}</option>
+          ))}
+        </select>
+
+        {/* Desktop: chips */}
+        <div className="hidden sm:flex flex-wrap gap-2">
           {FILTERS.map((f) => (
             <button
               key={f.value}
@@ -61,73 +74,97 @@ export default function OrdersTable({ orders }: { orders: Order[] }) {
         </div>
       </div>
 
-      {/* Table */}
-      <div className="overflow-hidden rounded-[1.5rem] bg-white shadow-sm">
-        {visible.length === 0 ? (
-          <div className="py-20 text-center text-sm text-gray-400">
-            {orders.length === 0
-              ? "No orders yet — they'll appear here once customers check out."
-              : "No orders match your search."}
-          </div>
-        ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm">
-              <thead>
-                <tr className="border-b border-black/5 text-left">
-                  <th className="px-5 py-4 font-semibold text-gray-400">Customer</th>
-                  <th className="px-5 py-4 font-semibold text-gray-400">Product</th>
-                  <th className="px-5 py-4 font-semibold text-gray-400">Qty</th>
-                  <th className="px-5 py-4 font-semibold text-gray-400">Total</th>
-                  <th className="px-5 py-4 font-semibold text-gray-400">Status</th>
-                  <th className="px-5 py-4 font-semibold text-gray-400">Date</th>
-                  <th className="px-5 py-4"></th>
-                </tr>
-              </thead>
-              <tbody>
-                {visible.map((order, i) => {
-                  const firstItem = order.order_items?.[0];
-                  const extraItems = (order.order_items?.length ?? 1) - 1;
-                  return (
-                    <tr
-                      key={order.id}
-                      className={`border-b border-black/5 last:border-0 ${i % 2 === 1 ? "bg-[#fafafa]" : ""}`}
+      {visible.length === 0 ? (
+        <div className="rounded-[1.5rem] bg-white py-20 text-center text-sm text-gray-400 shadow-sm">
+          {orders.length === 0
+            ? "No orders yet — they'll appear here once customers check out."
+            : "No orders match your search."}
+        </div>
+      ) : (
+        <>
+          {/* Mobile cards */}
+          <div className="space-y-3 md:hidden">
+            {visible.map((order) => {
+              const firstItem = order.order_items?.[0];
+              const extraItems = (order.order_items?.length ?? 1) - 1;
+              return (
+                <div key={order.id} className="rounded-[1.5rem] bg-white p-4 shadow-sm">
+                  <div className="flex items-start justify-between gap-2">
+                    <div>
+                      <p className="font-bold">{order.customer_name}</p>
+                      <p className="text-xs text-gray-400">{order.customer_email}</p>
+                    </div>
+                    <OrderStatusBadge status={order.status} />
+                  </div>
+                  <div className="mt-3 flex items-center justify-between text-sm">
+                    <div className="text-gray-500">
+                      {firstItem?.product_type ?? "—"}
+                      {extraItems > 0 && <span className="ml-1 text-xs text-gray-400">+{extraItems}</span>}
+                      {firstItem?.quantity && <span className="ml-1 text-xs text-gray-400">· qty {firstItem.quantity}</span>}
+                    </div>
+                    <p className="font-bold">${order.total.toFixed(2)}</p>
+                  </div>
+                  <div className="mt-3 flex items-center justify-between">
+                    <p className="text-xs text-gray-400">{new Date(order.created_at).toLocaleDateString()}</p>
+                    <Link
+                      href={`/admin/orders/${order.id}`}
+                      className="rounded-full bg-[#13294b] px-4 py-1.5 text-xs font-semibold text-white"
                     >
-                      <td className="px-5 py-4">
-                        <p className="font-semibold">{order.customer_name}</p>
-                        <p className="text-xs text-gray-400">{order.customer_email}</p>
-                      </td>
-                      <td className="px-5 py-4 text-gray-600">
-                        {firstItem?.product_type ?? "—"}
-                        {extraItems > 0 && (
-                          <span className="ml-1 text-xs text-gray-400">+{extraItems}</span>
-                        )}
-                      </td>
-                      <td className="px-5 py-4 text-gray-600">
-                        {firstItem?.quantity ?? "—"}
-                      </td>
-                      <td className="px-5 py-4 font-semibold">${order.total.toFixed(2)}</td>
-                      <td className="px-5 py-4">
-                        <OrderStatusBadge status={order.status} />
-                      </td>
-                      <td className="px-5 py-4 text-gray-400">
-                        {new Date(order.created_at).toLocaleDateString()}
-                      </td>
-                      <td className="px-5 py-4">
-                        <Link
-                          href={`/admin/orders/${order.id}`}
-                          className="rounded-full bg-[#13294b] px-4 py-1.5 text-xs font-semibold text-white transition hover:bg-[#0f1f39]"
-                        >
-                          View
-                        </Link>
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
+                      View
+                    </Link>
+                  </div>
+                </div>
+              );
+            })}
           </div>
-        )}
-      </div>
+
+          {/* Desktop table */}
+          <div className="hidden overflow-hidden rounded-[1.5rem] bg-white shadow-sm md:block">
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="border-b border-black/5 text-left">
+                    <th className="px-5 py-4 font-semibold text-gray-400">Customer</th>
+                    <th className="px-5 py-4 font-semibold text-gray-400">Product</th>
+                    <th className="px-5 py-4 font-semibold text-gray-400">Qty</th>
+                    <th className="px-5 py-4 font-semibold text-gray-400">Total</th>
+                    <th className="px-5 py-4 font-semibold text-gray-400">Status</th>
+                    <th className="px-5 py-4 font-semibold text-gray-400">Date</th>
+                    <th className="px-5 py-4"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {visible.map((order, i) => {
+                    const firstItem = order.order_items?.[0];
+                    const extraItems = (order.order_items?.length ?? 1) - 1;
+                    return (
+                      <tr key={order.id} className={`border-b border-black/5 last:border-0 ${i % 2 === 1 ? "bg-[#fafafa]" : ""}`}>
+                        <td className="px-5 py-4">
+                          <p className="font-semibold">{order.customer_name}</p>
+                          <p className="text-xs text-gray-400">{order.customer_email}</p>
+                        </td>
+                        <td className="px-5 py-4 text-gray-600">
+                          {firstItem?.product_type ?? "—"}
+                          {extraItems > 0 && <span className="ml-1 text-xs text-gray-400">+{extraItems}</span>}
+                        </td>
+                        <td className="px-5 py-4 text-gray-600">{firstItem?.quantity ?? "—"}</td>
+                        <td className="px-5 py-4 font-semibold">${order.total.toFixed(2)}</td>
+                        <td className="px-5 py-4"><OrderStatusBadge status={order.status} /></td>
+                        <td className="px-5 py-4 text-gray-400">{new Date(order.created_at).toLocaleDateString()}</td>
+                        <td className="px-5 py-4">
+                          <Link href={`/admin/orders/${order.id}`} className="rounded-full bg-[#13294b] px-4 py-1.5 text-xs font-semibold text-white transition hover:bg-[#0f1f39]">
+                            View
+                          </Link>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </>
+      )}
 
       <p className="text-right text-xs text-gray-400">
         Showing {visible.length} of {orders.length} orders

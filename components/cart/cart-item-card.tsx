@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import type { CartItem } from "@/types/cart";
 import { useCart } from "@/components/cart/cart-provider";
 
@@ -18,8 +19,12 @@ export default function CartItemCard({ item }: { item: CartItem }) {
     <div className="rounded-[1.75rem] bg-white p-4 shadow-sm sm:p-6">
       {/* Top row: thumbnail + name + remove */}
       <div className="flex items-start gap-4">
-        <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-[#eef2f7] text-4xl sm:h-24 sm:w-24 sm:text-5xl">
-          {emoji}
+        <div className="relative flex h-16 w-16 shrink-0 items-center justify-center overflow-hidden rounded-2xl sm:h-24 sm:w-24">
+          {emoji.startsWith("/") || emoji.startsWith("http") ? (
+            <Image src={emoji} alt={item.productType} fill className="object-contain p-1" />
+          ) : (
+            <span className="text-4xl sm:text-5xl">{emoji}</span>
+          )}
         </div>
 
         <div className="flex-1 min-w-0">
@@ -38,9 +43,11 @@ export default function CartItemCard({ item }: { item: CartItem }) {
             {item.style    && <p>{item.style}</p>}
             {item.color    && <p>{item.color}</p>}
             {item.placement.length > 0 && <p>{item.placement.join(", ")}</p>}
-            {Object.entries(item.details).map(([k, v]) => (
-              <p key={k}><span className="font-medium">{k}:</span> {v}</p>
-            ))}
+            {Object.entries(item.details)
+              .filter(([, v]) => !v.startsWith("/") && !v.startsWith("http"))
+              .map(([k, v]) => (
+                <p key={k}><span className="font-medium">{k}:</span> {v}</p>
+              ))}
             {item.flatUpcharge > 0 && (
               <p className="text-[#d39a14]">+${item.flatUpcharge.toFixed(2)} placement upcharge</p>
             )}

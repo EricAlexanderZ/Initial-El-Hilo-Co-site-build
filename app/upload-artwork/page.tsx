@@ -57,6 +57,7 @@ function UploadArtworkContent() {
   const minQty           = Math.max(1, Number(params.get("minQty") ?? 1));
   const flatUpcharge     = Number(params.get("flatUpcharge") ?? 0);
   const perPieceUpcharge = Number(params.get("perPieceUpcharge") ?? 0);
+  const imageUrl         = sessionStorage.getItem("cartItemImage") ?? "";
 
   const placements = placement.split(",").map((p) => p.trim()).filter(Boolean);
 
@@ -95,8 +96,9 @@ function UploadArtworkContent() {
       perPieceUpcharge,
       price: total,
       unitPrice: perUnit,
-      image: emoji,
+      image: imageUrl || emoji,
     });
+    sessionStorage.removeItem("cartItemImage");
     router.push("/cart");
   }
 

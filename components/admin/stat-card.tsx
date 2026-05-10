@@ -18,7 +18,7 @@ export default function StatCard({
       <p className={`text-xs font-bold uppercase tracking-wider ${accent ? "text-white/50" : "text-gray-400"}`}>
         {label}
       </p>
-      <p className="mt-3 text-4xl font-extrabold">{value}</p>
+      <p className="mt-3 break-all text-xl font-extrabold sm:text-3xl">{value}</p>
       {sub && (
         <p className={`mt-1 text-xs ${accent ? "text-white/40" : "text-gray-400"}`}>{sub}</p>
       )}

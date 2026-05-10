@@ -17,6 +17,7 @@ async function getDashboardData() {
   const { data: orders } = await supabaseAdmin
     .from("orders")
     .select("id, customer_name, customer_email, total, status, created_at, order_items(product_type, quantity)")
+    .is("archived_at", null)
     .order("created_at", { ascending: false });
 
   if (!orders || orders.length === 0) {
@@ -88,56 +89,75 @@ export default async function AdminDashboard() {
           </Link>
         </div>
 
-        <div className="overflow-hidden rounded-[1.5rem] bg-white shadow-sm">
-          {recent.length === 0 ? (
-            <div className="py-20 text-center text-sm text-gray-400">
-              No orders yet — they&apos;ll show up here once customers check out.
+        {recent.length === 0 ? (
+          <div className="rounded-[1.5rem] bg-white py-20 text-center text-sm text-gray-400 shadow-sm">
+            No orders yet — they&apos;ll show up here once customers check out.
+          </div>
+        ) : (
+          <>
+            {/* Mobile cards */}
+            <div className="space-y-3 md:hidden">
+              {recent.map((order) => (
+                <div key={order.id} className="rounded-[1.5rem] bg-white p-4 shadow-sm">
+                  <div className="flex items-start justify-between gap-2">
+                    <div>
+                      <p className="font-bold">{order.customer_name}</p>
+                      <p className="text-xs text-gray-400">{order.customer_email}</p>
+                    </div>
+                    <OrderStatusBadge status={order.status} />
+                  </div>
+                  <div className="mt-3 flex items-center justify-between text-sm">
+                    <span className="text-gray-500">{order.order_items?.[0]?.product_type ?? "—"}</span>
+                    <span className="font-bold">${order.total.toFixed(2)}</span>
+                  </div>
+                  <div className="mt-3 flex items-center justify-between">
+                    <p className="text-xs text-gray-400">{new Date(order.created_at).toLocaleDateString()}</p>
+                    <Link href={`/admin/orders/${order.id}`} className="rounded-full bg-[#13294b] px-4 py-1.5 text-xs font-semibold text-white">
+                      View
+                    </Link>
+                  </div>
+                </div>
+              ))}
             </div>
-          ) : (
-            <div className="overflow-x-auto">
-              <table className="w-full text-sm">
-                <thead>
-                  <tr className="border-b border-black/5 text-left">
-                    <th className="px-5 py-4 font-semibold text-gray-400">Customer</th>
-                    <th className="px-5 py-4 font-semibold text-gray-400">Product</th>
-                    <th className="px-5 py-4 font-semibold text-gray-400">Total</th>
-                    <th className="px-5 py-4 font-semibold text-gray-400">Status</th>
-                    <th className="px-5 py-4 font-semibold text-gray-400">Date</th>
-                    <th className="px-5 py-4"></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {recent.map((order) => (
-                    <tr key={order.id} className="border-b border-black/5 last:border-0">
-                      <td className="px-5 py-4">
-                        <p className="font-semibold">{order.customer_name}</p>
-                        <p className="text-xs text-gray-400">{order.customer_email}</p>
-                      </td>
-                      <td className="px-5 py-4 text-gray-600">
-                        {order.order_items?.[0]?.product_type ?? "—"}
-                      </td>
-                      <td className="px-5 py-4 font-semibold">${order.total.toFixed(2)}</td>
-                      <td className="px-5 py-4">
-                        <OrderStatusBadge status={order.status} />
-                      </td>
-                      <td className="px-5 py-4 text-gray-400">
-                        {new Date(order.created_at).toLocaleDateString()}
-                      </td>
-                      <td className="px-5 py-4">
-                        <Link
-                          href={`/admin/orders/${order.id}`}
-                          className="rounded-full bg-[#13294b] px-4 py-1.5 text-xs font-semibold text-white transition hover:bg-[#0f1f39]"
-                        >
-                          View
-                        </Link>
-                      </td>
+
+            {/* Desktop table */}
+            <div className="hidden overflow-hidden rounded-[1.5rem] bg-white shadow-sm md:block">
+              <div className="overflow-x-auto">
+                <table className="w-full text-sm">
+                  <thead>
+                    <tr className="border-b border-black/5 text-left">
+                      <th className="px-5 py-4 font-semibold text-gray-400">Customer</th>
+                      <th className="px-5 py-4 font-semibold text-gray-400">Product</th>
+                      <th className="px-5 py-4 font-semibold text-gray-400">Total</th>
+                      <th className="px-5 py-4 font-semibold text-gray-400">Status</th>
+                      <th className="px-5 py-4 font-semibold text-gray-400">Date</th>
+                      <th className="px-5 py-4"></th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                    {recent.map((order) => (
+                      <tr key={order.id} className="border-b border-black/5 last:border-0">
+                        <td className="px-5 py-4">
+                          <p className="font-semibold">{order.customer_name}</p>
+                          <p className="text-xs text-gray-400">{order.customer_email}</p>
+                        </td>
+                        <td className="px-5 py-4 text-gray-600">{order.order_items?.[0]?.product_type ?? "—"}</td>
+                        <td className="px-5 py-4 font-semibold">${order.total.toFixed(2)}</td>
+                        <td className="px-5 py-4"><OrderStatusBadge status={order.status} /></td>
+                        <td className="px-5 py-4 text-gray-400">{new Date(order.created_at).toLocaleDateString()}</td>
+                        <td className="px-5 py-4">
+                          <Link href={`/admin/orders/${order.id}`} className="rounded-full bg-[#13294b] px-4 py-1.5 text-xs font-semibold text-white transition hover:bg-[#0f1f39]">
+                            View
+                          </Link>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </div>
-          )}
-        </div>
+          </>
+        )}
       </div>
     </div>
   );

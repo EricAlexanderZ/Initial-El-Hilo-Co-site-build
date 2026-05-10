@@ -212,10 +212,11 @@ export function ProductPreview({
           onClick={() => setModalOpen(false)}
         >
           <div
-            className="w-full max-w-sm rounded-t-[2rem] bg-white p-5 sm:rounded-[2rem]"
+            className="flex max-h-[88vh] w-full max-w-sm flex-col overflow-hidden rounded-t-[2rem] bg-white sm:rounded-[2rem]"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="mb-4 flex items-center justify-between">
+            {/* Fixed header */}
+            <div className="flex items-center justify-between px-5 pt-5 pb-3">
               <p className="text-sm font-bold">{label}</p>
               <button
                 type="button"
@@ -226,41 +227,55 @@ export function ProductPreview({
               </button>
             </div>
 
-            {backSrc && (
-              <div className="flex gap-2">
-                {(["front", "back"] as const).map((view) => (
-                  <button
-                    key={view}
-                    type="button"
-                    onClick={() => setModalView(view)}
-                    className={`flex-1 rounded-xl py-2.5 text-sm font-semibold capitalize transition ${
-                      modalView === view
-                        ? "bg-[#13294b] text-white"
-                        : "bg-gray-100 text-gray-600 hover:bg-gray-200"
-                    }`}
-                  >
-                    {view}
-                  </button>
-                ))}
-              </div>
-            )}
+            {/* Scrollable body */}
+            <div className="overflow-y-auto px-5 pb-2">
+              {backSrc && (
+                <div className="flex gap-2">
+                  {(["front", "back"] as const).map((view) => (
+                    <button
+                      key={view}
+                      type="button"
+                      onClick={() => setModalView(view)}
+                      className={`flex-1 rounded-xl py-2.5 text-sm font-semibold capitalize transition ${
+                        modalView === view
+                          ? "bg-[#13294b] text-white"
+                          : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                      }`}
+                    >
+                      {view}
+                    </button>
+                  ))}
+                </div>
+              )}
 
-            <div className="mt-4 flex items-center justify-center rounded-[1.5rem] bg-white p-2">
-              <div className="relative h-60 sm:h-80 w-full">
-                <Image
-                  src={backSrc && modalView === "back" ? backSrc : src}
-                  alt={`${alt}${backSrc ? ` ${modalView}` : ""}`}
-                  fill
-                  className="object-contain"
-                />
+              <div className="mt-4 flex items-center justify-center rounded-[1.5rem] bg-white p-2">
+                <div className="relative h-60 sm:h-80 w-full">
+                  <Image
+                    src={backSrc && modalView === "back" ? backSrc : src}
+                    alt={`${alt}${backSrc ? ` ${modalView}` : ""}`}
+                    fill
+                    className="object-contain"
+                  />
+                </div>
               </div>
+
+              {colorPickerSlot && (
+                <div className="mt-4">
+                  {colorPickerSlot}
+                </div>
+              )}
             </div>
 
-            {colorPickerSlot && (
-              <div className="mt-4">
-                {colorPickerSlot}
-              </div>
-            )}
+            {/* Fixed confirm button */}
+            <div className="px-5 pt-3 pb-5">
+              <button
+                type="button"
+                onClick={() => setModalOpen(false)}
+                className="w-full rounded-2xl bg-[#13294b] py-3 text-sm font-bold text-white transition hover:bg-[#0f1f39]"
+              >
+                Confirm
+              </button>
+            </div>
           </div>
         </div>
       )}

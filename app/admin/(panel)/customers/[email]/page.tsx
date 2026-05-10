@@ -15,7 +15,7 @@ export default async function CustomerDetailPage({
 
   const { data } = await supabaseAdmin
     .from("orders")
-    .select("*, order_items(product_type, quantity)")
+    .select("*, order_items(id, product_type, quantity)")
     .eq("customer_email", email)
     .order("created_at", { ascending: false });
 

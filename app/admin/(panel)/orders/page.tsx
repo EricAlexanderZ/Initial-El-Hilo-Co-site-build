@@ -6,6 +6,7 @@ export default async function AdminOrdersPage() {
   const { data } = await supabaseAdmin
     .from("orders")
     .select("*, order_items(product_type, quantity)")
+    .is("archived_at", null)
     .order("created_at", { ascending: false });
 
   const orders = (data ?? []) as Order[];

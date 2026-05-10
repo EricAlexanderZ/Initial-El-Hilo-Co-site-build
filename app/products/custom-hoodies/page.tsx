@@ -200,6 +200,7 @@ export default function CustomHoodiesPage() {
       flatUpcharge:     String(logoUpcharge),
       perPieceUpcharge: "0",
     });
+    sessionStorage.setItem("cartItemImage", currentColor.front);
     router.push(`/upload-artwork?${params.toString()}`);
   }
 
@@ -276,68 +277,10 @@ export default function CustomHoodiesPage() {
               <span className="mt-1 block text-xs text-[#d39a14]">★ Selected</span>
             </div>
 
-            <div className="mb-8">
-              <Label>Embroidery Placement</Label>
-              <div className="grid grid-cols-1 gap-3">
-                <PlacementButton label="Chest Logo" selected={chestLogo} onClick={() => togglePlacement("chest")} />
-                <PlacementButton label="Back Logo"  selected={backLogo}  onClick={() => togglePlacement("back")}  />
-              </div>
-            </div>
 
-            <Label>Logo Size</Label>
-            <div className="rounded-[1.5rem] border border-black/10 bg-white p-4 shadow-sm">
-              <label className="flex cursor-pointer items-center gap-3">
-                <input
-                  type="checkbox"
-                  checked={hasCustomSize}
-                  onChange={(e) => setHasCustomSize(e.target.checked)}
-                  className="h-4 w-4 accent-[#13294b]"
-                />
-                <span className="text-sm font-semibold">Custom logo size</span>
-              </label>
-
-              {hasCustomSize && (
-                <div className="mt-4 space-y-4">
-                  {chestLogo && (
-                    <div>
-                      <p className="mb-1 text-xs font-semibold text-gray-500">
-                        Chest logo width (in)
-                      </p>
-                      <input
-                        type="number" min={1} max={9} step={0.5}
-                        value={chestWidth}
-                        onChange={(e) => setChestWidth(clampWidth(Number(e.target.value)))}
-                        className="w-full rounded-xl border border-[#e3b33d] px-3 py-2 text-sm outline-none"
-                      />
-                    </div>
-                  )}
-                  {backLogo && (
-                    <div>
-                      <p className="mb-1 text-xs font-semibold text-gray-500">
-                        Back logo width (in)
-                      </p>
-                      <input
-                        type="number" min={1} max={9} step={0.5}
-                        value={backWidth}
-                        onChange={(e) => setBackWidth(clampWidth(Number(e.target.value)))}
-                        className="w-full rounded-xl border border-[#e3b33d] px-3 py-2 text-sm outline-none"
-                      />
-                    </div>
-                  )}
-                  <p className="text-xs text-gray-500">
-                    3.5″ included in base price · +${PRICE_PER_INCH}/inch above 3.5″
-                  </p>
-                  {logoUpcharge > 0 && (
-                    <p className="text-xs font-semibold text-[#d39a14]">
-                      ★ Logo upcharge: +${logoUpcharge.toFixed(2)}
-                    </p>
-                  )}
-                </div>
-              )}
-            </div>
           </div>
 
-          {/* Col 2 — Preview + Color */}
+          {/* Col 2 — Preview + Color + Placement + Logo Size */}
           <div>
             <ProductPreview
               src={currentColor.front}
@@ -354,6 +297,64 @@ export default function CustomHoodiesPage() {
                 />
               }
             />
+
+            <div className="mt-8">
+              <Label>Embroidery Placement</Label>
+              <div className="grid grid-cols-1 gap-3">
+                <PlacementButton label="Chest Logo" selected={chestLogo} onClick={() => togglePlacement("chest")} />
+                <PlacementButton label="Back Logo"  selected={backLogo}  onClick={() => togglePlacement("back")}  />
+              </div>
+            </div>
+
+            <div className="mt-8">
+              <Label>Logo Size</Label>
+              <div className="rounded-[1.5rem] border border-black/10 bg-white p-4 shadow-sm">
+                <label className="flex cursor-pointer items-center gap-3">
+                  <input
+                    type="checkbox"
+                    checked={hasCustomSize}
+                    onChange={(e) => setHasCustomSize(e.target.checked)}
+                    className="h-4 w-4 accent-[#13294b]"
+                  />
+                  <span className="text-sm font-semibold">Custom logo size</span>
+                </label>
+
+                {hasCustomSize && (
+                  <div className="mt-4 space-y-4">
+                    {chestLogo && (
+                      <div>
+                        <p className="mb-1 text-xs font-semibold text-gray-500">Chest logo width (in)</p>
+                        <input
+                          type="number" min={1} max={9} step={0.5}
+                          value={chestWidth}
+                          onChange={(e) => setChestWidth(clampWidth(Number(e.target.value)))}
+                          className="w-full rounded-xl border border-[#e3b33d] px-3 py-2 text-sm outline-none"
+                        />
+                      </div>
+                    )}
+                    {backLogo && (
+                      <div>
+                        <p className="mb-1 text-xs font-semibold text-gray-500">Back logo width (in)</p>
+                        <input
+                          type="number" min={1} max={9} step={0.5}
+                          value={backWidth}
+                          onChange={(e) => setBackWidth(clampWidth(Number(e.target.value)))}
+                          className="w-full rounded-xl border border-[#e3b33d] px-3 py-2 text-sm outline-none"
+                        />
+                      </div>
+                    )}
+                    <p className="text-xs text-gray-500">
+                      3.5″ included in base price · +${PRICE_PER_INCH}/inch above 3.5″
+                    </p>
+                    {logoUpcharge > 0 && (
+                      <p className="text-xs font-semibold text-[#d39a14]">
+                        ★ Logo upcharge: +${logoUpcharge.toFixed(2)}
+                      </p>
+                    )}
+                  </div>
+                )}
+              </div>
+            </div>
           </div>
 
           {/* Col 3 — Quantity */}

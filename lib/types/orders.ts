@@ -43,5 +43,6 @@ export type Order = {
   total: number;
   status: OrderStatus;
   notes: string | null;
+  archived_at: string | null;
   order_items?: OrderItem[];
 };

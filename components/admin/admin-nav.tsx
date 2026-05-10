@@ -9,6 +9,7 @@ const NAV = [
   { href: "/admin/orders",     label: "Orders",    icon: "≡" },
   { href: "/admin/customers",  label: "Customers", icon: "◎" },
   { href: "/admin/analytics",  label: "Analytics", icon: "↗" },
+  { href: "/admin/archive",    label: "Archive",   icon: "⊡" },
 ];
 
 type Props = { open: boolean; onClose: () => void };

@@ -19,16 +19,27 @@ export default function OrderControls({
   orderId,
   currentStatus,
   currentNotes,
+  isArchived = false,
 }: {
   orderId: string;
   currentStatus: OrderStatus;
   currentNotes: string | null;
+  isArchived?: boolean;
 }) {
-  const [status, setStatus] = useState<OrderStatus>(currentStatus);
-  const [notes, setNotes]   = useState(currentNotes ?? "");
-  const [saving, setSaving] = useState(false);
-  const [saved, setSaved]   = useState(false);
+  const [status, setStatus]     = useState<OrderStatus>(currentStatus);
+  const [notes, setNotes]       = useState(currentNotes ?? "");
+  const [saving, setSaving]     = useState(false);
+  const [saved, setSaved]       = useState(false);
+  const [archiving, setArchiving] = useState(false);
   const router = useRouter();
+
+  async function handleArchive() {
+    setArchiving(true);
+    const method = isArchived ? "DELETE" : "POST";
+    await fetch(`/api/admin/orders/${orderId}/archive`, { method });
+    router.refresh();
+    setArchiving(false);
+  }
 
   async function handleSave() {
     setSaving(true);
@@ -89,6 +100,15 @@ export default function OrderControls({
         }`}
       >
         {saving ? "Saving…" : saved ? "✓ Saved" : "Save Changes"}
+      </button>
+
+      <button
+        type="button"
+        onClick={handleArchive}
+        disabled={archiving}
+        className="w-full rounded-2xl border border-black/10 py-3 text-sm font-bold text-gray-500 transition hover:bg-gray-50 disabled:opacity-60"
+      >
+        {archiving ? "…" : isArchived ? "Unarchive Order" : "Archive Order"}
       </button>
     </div>
   );
