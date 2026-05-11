@@ -2,6 +2,8 @@ import { supabaseAdmin } from "@/lib/supabase-admin";
 import OrdersTable from "@/components/admin/orders-table";
 import type { Order } from "@/lib/types/orders";
 
+export const dynamic = "force-dynamic";
+
 export default async function AdminOrdersPage() {
   const { data } = await supabaseAdmin
     .from("orders")

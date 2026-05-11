@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { supabaseAdmin } from "@/lib/supabase-admin";
+
+export const dynamic = "force-dynamic";
 import OrderStatusBadge from "@/components/admin/order-status-badge";
 import UnarchiveButton from "@/components/admin/unarchive-button";
 import type { Order } from "@/lib/types/orders";

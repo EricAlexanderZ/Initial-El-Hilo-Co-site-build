@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { supabaseAdmin } from "@/lib/supabase-admin";
+
+export const dynamic = "force-dynamic";
 import type { Order } from "@/lib/types/orders";
 
 type CustomerRow = {
