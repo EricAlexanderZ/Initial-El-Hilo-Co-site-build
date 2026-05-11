@@ -15,7 +15,8 @@ export default function Home() {
       <SiteHeader />
 
       <section className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-[url('/images/home/hero-bg.jpg')] bg-cover bg-center" />
+        <div className="absolute inset-0 bg-cover bg-center md:hidden" style={{ backgroundImage: "url('/images/home/BG_COVER.JPG')" }} />
+        <div className="absolute inset-0 hidden bg-cover bg-center md:block" style={{ backgroundImage: "url('/images/home/BG_COVER_DESKTOP.JPG')" }} />
         <div className="absolute inset-0 bg-black/60" />
 
         <div className="relative mx-auto min-h-[560px] max-w-7xl px-6 pt-0 pb-0 lg:py-20 flex items-center justify-between gap-4 lg:gap-10">

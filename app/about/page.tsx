@@ -10,14 +10,19 @@ export default function AboutPage() {
       <SiteHeader />
 
       {/* Hero */}
-      <section className="bg-[#f6f6f4] border-b border-black/5 px-6 py-16 text-center">
-        <p className="text-xs font-bold uppercase tracking-[0.4em] text-[#13294b]">Our Story</p>
-        <h1 className="mt-4 text-4xl font-extrabold tracking-tight sm:text-5xl">
-          Built from the ground up.
-        </h1>
-        <p className="mx-auto mt-4 max-w-xl text-base leading-7 text-gray-500">
-          A family, a machine, and a whole lot of heart.
-        </p>
+      <section className="relative overflow-hidden border-b border-black/5 px-6 py-16 text-center">
+        <div className="absolute inset-0 bg-cover bg-center md:hidden" style={{ backgroundImage: "url('/images/home/BG_COVER.JPG')" }} />
+        <div className="absolute inset-0 hidden bg-cover bg-center md:block" style={{ backgroundImage: "url('/images/home/BG_COVER_DESKTOP.JPG')" }} />
+        <div className="absolute inset-0 bg-black/50" />
+        <div className="relative">
+          <p className="text-xs font-bold uppercase tracking-[0.4em] text-white/70">Our Story</p>
+          <h1 className="mt-4 text-4xl font-extrabold tracking-tight text-white sm:text-5xl">
+            Built from the ground up.
+          </h1>
+          <p className="mx-auto mt-4 max-w-xl text-base leading-7 text-white/70">
+            A family, a machine, and a whole lot of heart.
+          </p>
+        </div>
       </section>
 
       {/* Story */}
