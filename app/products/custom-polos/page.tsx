@@ -66,6 +66,8 @@ const quantities: QuantityOption[] = [
 
 const DUAL_PER_PIECE = 5;
 
+const SIZES = ["XS", "S", "M", "L", "XL", "2XL", "3XL"];
+
 const reviews = [
   { initials: "JM", title: "Great for our team uniforms",  date: "04/10/2026", text: "The polos came out sharp. Clean embroidery, great color, and the team loved them." },
   { initials: "SR", title: "Professional and clean",        date: "04/06/2026", text: "Ordered for a corporate event. The left chest logo was crisp and the fit was great." },
@@ -100,6 +102,9 @@ export default function CustomPolosPage() {
   const [leftChest,           setLeftChest]           = useState(true);
   const [rightSideName,       setRightSideName]       = useState(false);
   const [customerName,        setCustomerName]        = useState("");
+  const [sizeBreakdown,       setSizeBreakdown]       = useState<Record<string, number>>(
+    Object.fromEntries(SIZES.map((s) => [s, 0]))
+  );
 
   const currentQty = useMemo(
     () => quantities.find((q) => q.label === selectedQuantity) ?? quantities[0],
@@ -159,6 +164,8 @@ export default function CustomPolosPage() {
   function goToUpload() {
     const placement = [leftChest ? "Left Chest Logo" : null, rightSideName ? "Right Side Name" : null]
       .filter(Boolean).join(", ");
+    const sizes = SIZES.filter((s) => (sizeBreakdown[s] || 0) > 0)
+      .map((s) => `${s}×${sizeBreakdown[s]}`).join(", ");
     sessionStorage.setItem("cartItemImage", currentColor.front);
     const params = new URLSearchParams({
       productType:      "Custom Polos",
@@ -167,6 +174,7 @@ export default function CustomPolosPage() {
       quantity:         isCustomQuantity && customQtyIsValid ? String(parsedCustomQty) : selectedQuantity,
       placement,
       ...(rightSideName && customerName ? { sideName: customerName } : {}),
+      ...(sizes ? { sizes } : {}),
       total:            String(total),
       perUnit:          String(perUnit),
       minQty:           "5",
@@ -179,12 +187,16 @@ export default function CustomPolosPage() {
   const placementLabel = [leftChest ? "Left Chest Logo" : null, rightSideName ? "Right Side Name" : null]
     .filter(Boolean).join(", ");
 
+  const sizeSummary = SIZES.filter((s) => (sizeBreakdown[s] || 0) > 0)
+    .map((s) => `${s}×${sizeBreakdown[s]}`).join(", ");
+
   const summaryItems = [
     { label: "Style",     value: STYLE },
     { label: "Color",     value: selectedColor },
     { label: "Placement", value: placementLabel },
     ...(rightSideName && customerName ? [{ label: "Side Name", value: customerName }] : []),
     ...(dualPerPiece > 0 ? [{ label: "Dual Placement", value: `+$${dualPerPiece.toFixed(2)}/polo` }] : []),
+    ...(sizeSummary ? [{ label: "Sizes", value: sizeSummary }] : []),
     {
       label: "Quantity",
       value: isCustomQuantity && customQtyIsValid ? `${parsedCustomQty} Polos` : selectedQuantity,
@@ -291,6 +303,34 @@ export default function CustomPolosPage() {
                   ★ Dual placement adds ${DUAL_PER_PIECE}/polo to your order
                 </p>
               )}
+            </div>
+
+            <div className="mt-8">
+              <Label>Size Breakdown</Label>
+              <div className="grid grid-cols-3 gap-2 sm:grid-cols-4 lg:grid-cols-7">
+                {SIZES.map((size) => (
+                  <div key={size} className="flex flex-col items-center gap-1">
+                    <span className="text-xs font-bold text-gray-600">{size}</span>
+                    <input
+                      type="number"
+                      min={0}
+                      value={sizeBreakdown[size] || ""}
+                      placeholder="0"
+                      onChange={(e) => setSizeBreakdown((prev) => ({
+                        ...prev,
+                        [size]: Math.max(0, Number(e.target.value) || 0),
+                      }))}
+                      className="w-full rounded-xl border border-black/10 bg-white px-1 py-2 text-center text-sm outline-none focus:border-[#e3b33d]"
+                    />
+                  </div>
+                ))}
+              </div>
+              {(() => {
+                const total = SIZES.reduce((s, sz) => s + (sizeBreakdown[sz] || 0), 0);
+                return total > 0 ? (
+                  <p className="mt-2 text-xs text-gray-500">Total: {total} piece{total !== 1 ? "s" : ""} across all sizes</p>
+                ) : null;
+              })()}
             </div>
           </div>
 

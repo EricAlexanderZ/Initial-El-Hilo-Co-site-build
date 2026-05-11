@@ -21,7 +21,8 @@ import {
 // ─── Data ─────────────────────────────────────────────────────
 
 const STYLE = "Gildan Softstyle Midweight Hoodie";
-const PRICE_PER_INCH = 5; // $5 per inch of logo width, per placement
+const PRICE_PER_INCH = 5;
+const SIZES = ["XS", "S", "M", "L", "XL", "2XL", "3XL"]; // $5 per inch of logo width, per placement
 
 type HoodieColor = { name: string; hex: string; front: string; back: string };
 
@@ -115,6 +116,9 @@ export default function CustomHoodiesPage() {
   const [hasCustomSize,     setHasCustomSize]     = useState(false);
   const [chestWidth,        setChestWidth]        = useState(3.5);
   const [backWidth,         setBackWidth]         = useState(3.5);
+  const [sizeBreakdown,     setSizeBreakdown]     = useState<Record<string, number>>(
+    Object.fromEntries(SIZES.map((s) => [s, 0]))
+  );
 
   const currentQty = useMemo(
     () => quantities.find((q) => q.label === selectedQuantity) ?? quantities[0],
@@ -187,6 +191,8 @@ export default function CustomHoodiesPage() {
       if (backLogo)  sizeParams.backLogoWidth  = String(backWidth);
     }
 
+    const sizes = SIZES.filter((s) => (sizeBreakdown[s] || 0) > 0)
+      .map((s) => `${s}×${sizeBreakdown[s]}`).join(", ");
     const params = new URLSearchParams({
       productType:      "Custom Hoodies",
       style:            STYLE,
@@ -194,6 +200,7 @@ export default function CustomHoodiesPage() {
       quantity:         isCustomQuantity && customQtyIsValid ? String(parsedCustomQty) : selectedQuantity,
       placement,
       ...sizeParams,
+      ...(sizes ? { sizes } : {}),
       total:            String(total),
       perUnit:          String(perUnit),
       minQty:           "1",
@@ -214,12 +221,16 @@ export default function CustomHoodiesPage() {
       ].filter(Boolean).join(", ")
     : null;
 
+  const sizeSummary = SIZES.filter((s) => (sizeBreakdown[s] || 0) > 0)
+    .map((s) => `${s}×${sizeBreakdown[s]}`).join(", ");
+
   const summaryItems = [
     { label: "Style",     value: STYLE },
     { label: "Color",     value: selectedColor },
     { label: "Placement", value: placementLabel },
     ...(sizeLabel ? [{ label: "Logo Width(s)", value: sizeLabel }] : []),
     ...(logoUpcharge > 0 ? [{ label: "Logo Size Upcharge", value: `+$${logoUpcharge.toFixed(2)}` }] : []),
+    ...(sizeSummary ? [{ label: "Sizes", value: sizeSummary }] : []),
     {
       label: "Quantity",
       value: isCustomQuantity && customQtyIsValid ? `${parsedCustomQty} Hoodies` : selectedQuantity,
@@ -354,6 +365,31 @@ export default function CustomHoodiesPage() {
                   </div>
                 )}
               </div>
+            </div>
+            <div className="mt-8">
+              <Label>Size Breakdown</Label>
+              <div className="grid grid-cols-3 gap-2 sm:grid-cols-4 lg:grid-cols-7">
+                {SIZES.map((size) => (
+                  <div key={size} className="flex flex-col items-center gap-1">
+                    <span className="text-xs font-bold text-gray-600">{size}</span>
+                    <input
+                      type="number"
+                      min={0}
+                      value={sizeBreakdown[size] || ""}
+                      placeholder="0"
+                      onChange={(e) => setSizeBreakdown((prev) => ({
+                        ...prev,
+                        [size]: Math.max(0, Number(e.target.value) || 0),
+                      }))}
+                      className="w-full rounded-xl border border-black/10 bg-white px-1 py-2 text-center text-sm outline-none focus:border-[#e3b33d]"
+                    />
+                  </div>
+                ))}
+              </div>
+              {(() => {
+                const t = SIZES.reduce((s, sz) => s + (sizeBreakdown[sz] || 0), 0);
+                return t > 0 ? <p className="mt-2 text-xs text-gray-500">Total: {t} piece{t !== 1 ? "s" : ""} across all sizes</p> : null;
+              })()}
             </div>
           </div>
 
