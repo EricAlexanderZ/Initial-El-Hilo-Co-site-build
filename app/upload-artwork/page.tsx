@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense } from "react";
+import { Suspense, useState } from "react";
 import Link from "next/link";
 import { useSearchParams, useRouter } from "next/navigation";
 import { SiteHeader, TopBanner } from "@/components/site-header";
@@ -46,6 +46,7 @@ function UploadArtworkContent() {
   const params = useSearchParams();
   const router = useRouter();
   const { addItem } = useCart();
+  const [artworkUrls, setArtworkUrls] = useState<Record<number, string>>({});
 
   const productType      = params.get("productType") ?? "Custom Product";
   const style            = params.get("style") ?? "";
@@ -84,6 +85,11 @@ function UploadArtworkContent() {
   ].filter((r) => r.value && r.value !== "—" && r.value !== "$0.00");
 
   function handleAddToCart() {
+    const urls = Object.entries(artworkUrls)
+      .sort(([a], [b]) => Number(a) - Number(b))
+      .map(([, url]) => url)
+      .filter(Boolean);
+
     addItem({
       productType,
       style,
@@ -97,6 +103,7 @@ function UploadArtworkContent() {
       price: total,
       unitPrice: perUnit,
       image: imageUrl || emoji,
+      artworkUrls: urls,
     });
     sessionStorage.removeItem("cartItemImage");
     router.push("/cart");
@@ -118,6 +125,7 @@ function UploadArtworkContent() {
             subtitle="Upload your embroidery artwork file."
             buttonLabel="Upload artwork"
             helpText="Drag & Drop PNG, JPG, PDF, AI files up to 10 MB."
+            onUploaded={(url) => setArtworkUrls((prev) => ({ ...prev, 0: url }))}
           />
         ) : (
           placements.map((p, i) => {
@@ -151,6 +159,7 @@ function UploadArtworkContent() {
                   subtitle={slot.subtitle}
                   buttonLabel={slot.buttonLabel}
                   helpText="Drag & Drop PNG, JPG, PDF, AI files up to 10 MB."
+                  onUploaded={(url) => setArtworkUrls((prev) => ({ ...prev, [i]: url }))}
                 />
               </div>
             );
