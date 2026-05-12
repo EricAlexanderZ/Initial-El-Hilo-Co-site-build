@@ -114,7 +114,7 @@ function UploadArtworkContent() {
       <div className="text-center">
         <h1 className="text-3xl font-extrabold tracking-tight sm:text-5xl">Upload Your Artwork</h1>
         <p className="mt-3 text-base text-gray-600">
-          Free artwork setup. Online proof. Pay only after you approve.
+          Free artwork setup. Online proof. We stitch only after you approve.
         </p>
       </div>
 

@@ -32,6 +32,13 @@ label {
   cursor: pointer;
 }
 
+/* iOS Safari: prevent zoom on focus by ensuring font-size is at least 16px */
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+  input, select, textarea {
+    font-size: 16px;
+  }
+}
+
 @keyframes float {
   0%, 100% { transform: translateY(0); }
   50%       { transform: translateY(-18px); }

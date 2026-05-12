@@ -22,7 +22,8 @@ import {
 
 const STYLE = "Gildan Softstyle Midweight Hoodie";
 const PRICE_PER_INCH = 5;
-const SIZES = ["XS", "S", "M", "L", "XL", "2XL", "3XL"]; // $5 per inch of logo width, per placement
+const SIZES = ["XS", "S", "M", "L", "XL", "2XL", "3XL"];
+const LOGO_WIDTHS = Array.from({ length: 12 }, (_, i) => +(3.5 + i * 0.5).toFixed(1)); // $5 per inch of logo width, per placement
 
 type HoodieColor = { name: string; hex: string; front: string; back: string };
 
@@ -142,13 +143,14 @@ export default function CustomHoodiesPage() {
   const backSizeExtra  = hasCustomSize && backLogo  ? Math.max(0, (backWidth  - 3.5) * PRICE_PER_INCH) : 0;
   const logoUpcharge   = backBase + chestSizeExtra + backSizeExtra;
 
-  const activeQty  = isCustomQuantity && customQtyIsValid ? parsedCustomQty : currentQty.qty;
-  const baseTotal  = isCustomQuantity && customQtyIsValid
+  const activeQty       = isCustomQuantity && customQtyIsValid ? parsedCustomQty : currentQty.qty;
+  const baseTotal       = isCustomQuantity && customQtyIsValid
     ? parsedCustomQty * getUnitPrice(parsedCustomQty)
     : currentQty.price;
-  const total      = baseTotal + logoUpcharge;
-  const perUnit    = activeQty > 0 ? total / activeQty : 0;
-  const isOrderValid = !isCustomQuantity || customQtyIsValid;
+  const total           = baseTotal + logoUpcharge;
+  const perUnit         = activeQty > 0 ? total / activeQty : 0;
+  const perUnitUpcharge = activeQty > 0 ? logoUpcharge / activeQty : 0;
+  const isOrderValid    = !isCustomQuantity || customQtyIsValid;
 
   function togglePlacement(type: "chest" | "back") {
     if (type === "chest") {
@@ -229,7 +231,7 @@ export default function CustomHoodiesPage() {
     { label: "Color",     value: selectedColor },
     { label: "Placement", value: placementLabel },
     ...(sizeLabel ? [{ label: "Logo Width(s)", value: sizeLabel }] : []),
-    ...(logoUpcharge > 0 ? [{ label: "Logo Size Upcharge", value: `+$${logoUpcharge.toFixed(2)}` }] : []),
+    ...(logoUpcharge > 0 ? [{ label: "Logo Size Upcharge", value: `+$${perUnitUpcharge.toFixed(2)}` }] : []),
     ...(sizeSummary ? [{ label: "Sizes", value: sizeSummary }] : []),
     {
       label: "Quantity",
@@ -335,22 +337,44 @@ export default function CustomHoodiesPage() {
                     {chestLogo && (
                       <div>
                         <p className="mb-1 text-xs font-semibold text-gray-500">Chest logo width (in)</p>
+                        {/* Mobile: dropdown */}
+                        <select
+                          value={chestWidth}
+                          onChange={(e) => setChestWidth(Number(e.target.value))}
+                          className="md:hidden w-full rounded-xl border border-[#e3b33d] px-3 py-2 outline-none"
+                        >
+                          {LOGO_WIDTHS.map((w) => (
+                            <option key={w} value={w}>{w}"</option>
+                          ))}
+                        </select>
+                        {/* Desktop: number input */}
                         <input
-                          type="number" min={1} max={9} step={0.5}
+                          type="number" min={3.5} max={9} step={0.5}
                           value={chestWidth}
                           onChange={(e) => setChestWidth(clampWidth(Number(e.target.value)))}
-                          className="w-full rounded-xl border border-[#e3b33d] px-3 py-2 text-sm outline-none"
+                          className="hidden md:block w-full rounded-xl border border-[#e3b33d] px-3 py-2 text-sm outline-none"
                         />
                       </div>
                     )}
                     {backLogo && (
                       <div>
                         <p className="mb-1 text-xs font-semibold text-gray-500">Back logo width (in)</p>
+                        {/* Mobile: dropdown */}
+                        <select
+                          value={backWidth}
+                          onChange={(e) => setBackWidth(Number(e.target.value))}
+                          className="md:hidden w-full rounded-xl border border-[#e3b33d] px-3 py-2 outline-none"
+                        >
+                          {LOGO_WIDTHS.map((w) => (
+                            <option key={w} value={w}>{w}"</option>
+                          ))}
+                        </select>
+                        {/* Desktop: number input */}
                         <input
-                          type="number" min={1} max={9} step={0.5}
+                          type="number" min={3.5} max={9} step={0.5}
                           value={backWidth}
                           onChange={(e) => setBackWidth(clampWidth(Number(e.target.value)))}
-                          className="w-full rounded-xl border border-[#e3b33d] px-3 py-2 text-sm outline-none"
+                          className="hidden md:block w-full rounded-xl border border-[#e3b33d] px-3 py-2 text-sm outline-none"
                         />
                       </div>
                     )}
@@ -359,7 +383,7 @@ export default function CustomHoodiesPage() {
                     </p>
                     {logoUpcharge > 0 && (
                       <p className="text-xs font-semibold text-[#d39a14]">
-                        ★ Logo upcharge: +${logoUpcharge.toFixed(2)}
+                        ★ Logo upcharge: +${perUnitUpcharge.toFixed(2)}
                       </p>
                     )}
                   </div>
