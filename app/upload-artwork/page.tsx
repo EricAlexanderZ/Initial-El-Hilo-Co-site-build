@@ -46,7 +46,8 @@ function UploadArtworkContent() {
   const params = useSearchParams();
   const router = useRouter();
   const { addItem } = useCart();
-  const [artworkUrls, setArtworkUrls] = useState<Record<number, string>>({});
+  const [artworkUrls,  setArtworkUrls]  = useState<Record<number, string>>({});
+  const [instructions, setInstructions] = useState("");
 
   const productType      = params.get("productType") ?? "Custom Product";
   const style            = params.get("style") ?? "";
@@ -90,13 +91,17 @@ function UploadArtworkContent() {
       .map(([, url]) => url)
       .filter(Boolean);
 
+    const finalDetails = instructions.trim()
+      ? { ...details, Instructions: instructions.trim() }
+      : details;
+
     addItem({
       productType,
       style,
       color,
       quantity: parsedQty,
       placement: placements,
-      details,
+      details: finalDetails,
       minQty,
       flatUpcharge,
       perPieceUpcharge,
@@ -173,6 +178,8 @@ function UploadArtworkContent() {
             Optional instructions
           </label>
           <textarea
+            value={instructions}
+            onChange={(e) => setInstructions(e.target.value)}
             className="h-28 w-full rounded-2xl border border-[#e3b33d] bg-white p-4 text-sm outline-none"
             placeholder="Add packing notes, delivery instructions, or production reminders"
           />

@@ -123,10 +123,18 @@ export default async function AdminOrderDetailPage({
                 {item.placement?.length > 0 && (
                   <InfoRow label="Placement" value={item.placement.join(", ")} />
                 )}
-                {Object.entries(item.details ?? {}).map(([k, v]) => (
-                  <InfoRow key={k} label={k} value={v} />
-                ))}
+                {Object.entries(item.details ?? {})
+                  .filter(([k]) => k !== "Instructions")
+                  .map(([k, v]) => (
+                    <InfoRow key={k} label={k} value={v} />
+                  ))}
               </div>
+              {item.details?.Instructions && (
+                <div className="mt-4 rounded-xl border border-amber-200 bg-amber-50 p-4">
+                  <p className="mb-1 text-xs font-bold uppercase tracking-wide text-amber-700">Customer Instructions</p>
+                  <p className="text-sm text-amber-900 whitespace-pre-wrap">{item.details.Instructions}</p>
+                </div>
+              )}
 
               <div className="mt-4 flex gap-6 border-t border-black/5 pt-4 text-sm">
                 <InfoRow label="Total"    value={`$${item.price.toFixed(2)}`} />
