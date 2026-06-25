@@ -14,8 +14,12 @@ CREATE TABLE IF NOT EXISTS orders (
   total            numeric(10, 2) NOT NULL,
   status           text        NOT NULL    DEFAULT 'new'
     CHECK (status IN ('new','proof_sent','proof_approved','in_production','shipped','complete','cancelled')),
-  notes            text
+  notes            text,
+  tracking_source  text        -- marketing attribution (e.g. Meta-ad "?ref=" tag); null for organic orders
 );
+
+-- If the orders table already exists, add the attribution column:
+ALTER TABLE orders ADD COLUMN IF NOT EXISTS tracking_source text;
 
 -- Order items table
 CREATE TABLE IF NOT EXISTS order_items (

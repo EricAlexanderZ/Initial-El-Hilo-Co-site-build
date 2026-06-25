@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 export function SiteFooter() {
   return (
@@ -6,17 +7,19 @@ export function SiteFooter() {
       <div className="mx-auto max-w-7xl px-6 py-14">
         <div className="grid grid-cols-1 gap-8 md:gap-12 md:grid-cols-2 lg:grid-cols-4">
           <div>
-            <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-sm font-extrabold text-[#13294b]">
-                EH
-              </div>
-              <div>
-                <p className="text-xl font-extrabold">El Hilo Co</p>
-                <p className="mt-2 text-sm text-white/70">
-                  orders@elhiloco.com
-                </p>
-              </div>
-            </div>
+            <Link href="/" className="inline-flex" aria-label="El Hilo Co home">
+              <span className="flex h-16 w-16 items-center justify-center rounded-2xl bg-white p-2">
+                <span className="relative block h-full w-full">
+                  <Image
+                    src="/images/home/elhilocologo.png"
+                    alt="El Hilo Co"
+                    fill
+                    className="object-contain"
+                  />
+                </span>
+              </span>
+            </Link>
+            <p className="mt-3 text-sm text-white/70">orders@elhiloco.com</p>
           </div>
 
           <div>
