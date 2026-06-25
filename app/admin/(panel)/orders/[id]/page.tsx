@@ -107,6 +107,14 @@ export default async function AdminOrderDetailPage({
                 </p>
               </div>
             )}
+            {order.tracking_source && (
+              <div className="mt-4 border-t border-black/5 pt-4 text-sm">
+                <p className="font-semibold">Order Source</p>
+                <span className="mt-1 inline-block rounded-full bg-[#fff8e7] px-3 py-1 text-xs font-bold text-[#d39a14]">
+                  📣 {order.tracking_source}
+                </span>
+              </div>
+            )}
           </div>
 
           {/* Items */}

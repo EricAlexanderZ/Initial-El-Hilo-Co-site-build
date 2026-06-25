@@ -43,6 +43,7 @@ export type Order = {
   total: number;
   status: OrderStatus;
   notes: string | null;
+  tracking_source: string | null;
   archived_at: string | null;
   order_items?: OrderItem[];
 };

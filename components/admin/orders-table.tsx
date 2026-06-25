@@ -21,6 +21,11 @@ const FILTERS: { value: Filter; label: string }[] = [
 export default function OrdersTable({ orders }: { orders: Order[] }) {
   const [search, setSearch]   = useState("");
   const [filter, setFilter]   = useState<Filter>("all");
+  const [source, setSource]   = useState("all");
+
+  const sources = Array.from(
+    new Set(orders.map((o) => o.tracking_source).filter((s): s is string => !!s))
+  ).sort();
 
   const visible = orders.filter((o) => {
     const q = search.toLowerCase();
@@ -29,7 +34,8 @@ export default function OrdersTable({ orders }: { orders: Order[] }) {
       o.customer_name.toLowerCase().includes(q) ||
       o.customer_email.toLowerCase().includes(q);
     const matchesStatus = filter === "all" || o.status === filter;
-    return matchesSearch && matchesStatus;
+    const matchesSource = source === "all" || o.tracking_source === source;
+    return matchesSearch && matchesStatus && matchesSource;
   });
 
   return (
@@ -72,6 +78,21 @@ export default function OrdersTable({ orders }: { orders: Order[] }) {
             </button>
           ))}
         </div>
+
+        {/* Source (ad attribution) filter — only shown once tagged orders exist */}
+        {sources.length > 0 && (
+          <select
+            value={source}
+            onChange={(e) => setSource(e.target.value)}
+            className="w-full rounded-2xl border border-black/10 bg-white px-4 py-2.5 text-sm font-semibold outline-none focus:border-[#13294b] sm:w-auto"
+            title="Filter by ad / order source"
+          >
+            <option value="all">All sources</option>
+            {sources.map((s) => (
+              <option key={s} value={s}>📣 {s}</option>
+            ))}
+          </select>
+        )}
       </div>
 
       {visible.length === 0 ? (
@@ -93,6 +114,11 @@ export default function OrdersTable({ orders }: { orders: Order[] }) {
                     <div>
                       <p className="font-bold">{order.customer_name}</p>
                       <p className="text-xs text-gray-400">{order.customer_email}</p>
+                      {order.tracking_source && (
+                        <span className="mt-1 inline-block rounded-full bg-[#fff8e7] px-2 py-0.5 text-[10px] font-bold text-[#d39a14]">
+                          📣 {order.tracking_source}
+                        </span>
+                      )}
                     </div>
                     <OrderStatusBadge status={order.status} />
                   </div>
@@ -146,6 +172,11 @@ export default function OrdersTable({ orders }: { orders: Order[] }) {
                         <td className="px-5 py-4 text-gray-600">
                           {firstItem?.product_type ?? "—"}
                           {extraItems > 0 && <span className="ml-1 text-xs text-gray-400">+{extraItems}</span>}
+                          {order.tracking_source && (
+                            <span className="ml-2 inline-block rounded-full bg-[#fff8e7] px-2 py-0.5 text-[10px] font-bold text-[#d39a14]">
+                              📣 {order.tracking_source}
+                            </span>
+                          )}
                         </td>
                         <td className="px-5 py-4 text-gray-600">{firstItem?.quantity ?? "—"}</td>
                         <td className="px-5 py-4 font-semibold">${order.total.toFixed(2)}</td>

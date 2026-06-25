@@ -19,6 +19,7 @@ type OrderPayload = {
   subtotal: number;
   total: number;
   items: CartItem[];
+  trackingSource?: string | null;
 };
 
 export async function POST(request: NextRequest) {
@@ -44,6 +45,7 @@ export async function POST(request: NextRequest) {
       subtotal:         body.subtotal,
       total:            body.total,
       status:           "new",
+      tracking_source:  body.trackingSource?.trim() || null,
     })
     .select("id, order_number")
     .single();

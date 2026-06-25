@@ -53,7 +53,15 @@ const StripeInner = forwardRef<StripeFormHandle, InnerProps>(function StripeInne
 
   return (
     <div className="space-y-4">
-      <PaymentElement options={{ layout: "tabs" }} />
+      <PaymentElement
+        options={{
+          layout: "tabs",
+          // Show Card first, then wallets (Apple/Google Pay) when the device
+          // supports them, ahead of bank/Klarna.
+          paymentMethodOrder: ["card", "apple_pay", "google_pay", "klarna", "us_bank_account"],
+          wallets: { applePay: "auto", googlePay: "auto" },
+        }}
+      />
       {error && <p className="text-sm text-red-500">{error}</p>}
       <button
         type="button"
@@ -109,10 +117,29 @@ const StripePaymentForm = forwardRef<StripeFormHandle, Props>(function StripePay
             ".Tab": {
               border: "1px solid rgba(0,0,0,0.1)",
               borderRadius: "12px",
+              color: "#0a0a0a",
+            },
+            ".TabIcon": {
+              fill: "#13294b",
+            },
+            ".TabLabel": {
+              color: "#0a0a0a",
             },
             ".Tab--selected": {
               border: "1px solid #e5b43d",
               backgroundColor: "#fff8e7",
+              color: "#13294b",
+            },
+            ".Tab--selected:focus": {
+              border: "1px solid #e5b43d",
+              backgroundColor: "#fff8e7",
+              boxShadow: "0 0 0 3px rgba(229,180,61,0.15)",
+            },
+            ".TabIcon--selected": {
+              fill: "#13294b",
+            },
+            ".TabLabel--selected": {
+              color: "#13294b",
             },
           },
         },
