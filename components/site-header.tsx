@@ -7,10 +7,72 @@ import { productLinks } from "@/lib/navigation";
 import CartNavLink from "@/components/cart/cart-nav-link";
 import { createClient } from "@/utils/supabase/client";
 
+/**
+ * Rotating announcement bar.
+ *
+ * Every message is present in the markup and hidden with opacity rather than
+ * swapped in and out of state, so all of them are in the HTML a crawler sees and
+ * the bar reads correctly before hydration.
+ */
+const ANNOUNCEMENTS = [
+  "Free local pickup and delivery on every order across the RGV.",
+  "Text only: (956) 332-3651",
+  "Premium custom embroidery with fast turnaround.",
+];
+
+const ROTATE_MS = 5000;
+
 export function TopBanner() {
+  const [index, setIndex] = useState(0);
+  const [paused, setPaused] = useState(false);
+
+  useEffect(() => {
+    // Honour a reduced-motion preference by simply not rotating.
+    const reduced = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+    if (reduced || paused) return;
+
+    const id = setInterval(() => {
+      setIndex((i) => (i + 1) % ANNOUNCEMENTS.length);
+    }, ROTATE_MS);
+    return () => clearInterval(id);
+  }, [paused]);
+
   return (
-    <div className="bg-[#ffd84d] px-4 py-2 text-center text-sm font-semibold text-black">
-      Premium custom embroidery with fast turnaround.
+    <div
+      className="bg-[#ffd84d] px-4 text-black"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+    >
+      <div className="relative mx-auto flex min-h-10 max-w-7xl items-center justify-center">
+        {ANNOUNCEMENTS.map((text, i) => {
+          const active = i === index;
+          const isPhone = text.startsWith("Text only");
+          const body = (
+            <span className="block text-center text-sm font-semibold leading-tight">{text}</span>
+          );
+          return (
+            <div
+              key={text}
+              aria-hidden={!active}
+              className={`w-full transition-opacity duration-500 ${
+                active
+                  ? "opacity-100"
+                  : "pointer-events-none absolute inset-0 flex items-center opacity-0"
+              }`}
+            >
+              {isPhone ? (
+                // Opens a text, not a call, so nobody dials a number that only
+                // accepts messages.
+                <a href="sms:+19563323651" className="block w-full py-2 hover:underline">
+                  {body}
+                </a>
+              ) : (
+                <div className="py-2">{body}</div>
+              )}
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 }
