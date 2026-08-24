@@ -28,6 +28,12 @@ export function SiteFooter() {
               <Link href="/about" className="block hover:text-[#ffd84d]">
                 About
               </Link>
+              {/* Sitewide entry point to the local guides. The footer matters
+                  here because it is on every page, which is how a crawler finds
+                  the city posts from anywhere on the site. */}
+              <Link href="/blog" className="block hover:text-[#ffd84d]">
+                Embroidery Guides
+              </Link>
             </div>
           </div>
 

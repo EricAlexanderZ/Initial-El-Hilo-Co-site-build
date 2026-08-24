@@ -17,9 +17,13 @@ export const site = {
 
   /**
    * Used for canonicals, the sitemap and JSON-LD, so it must be the exact host
-   * that serves a 200. Verify with a real request before changing it.
+   * that serves a 200.
+   *
+   * Verified 2026-08-17: the apex answers 307 and redirects here, so the www
+   * host is the canonical one. Pointing canonicals at the apex would make every
+   * single one a redirect hop.
    */
-  url: "https://elhiloco.com",
+  url: "https://www.elhiloco.com",
 
   /**
    * Text only, by the owner's instruction. Rendered as an sms: link everywhere

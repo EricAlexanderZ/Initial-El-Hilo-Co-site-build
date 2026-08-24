@@ -49,7 +49,16 @@ export function TopBanner() {
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
-      <div className="relative mx-auto flex min-h-11 max-w-7xl items-center justify-center">
+      {/*
+        Every message is absolutely positioned, including the visible one, and
+        the container holds its own height.
+
+        The previous version left the active message in normal flow and only the
+        inactive ones absolute, so each swap moved an element between positioning
+        modes and the text visibly jumped. Keeping all three out of flow means
+        nothing reflows and the change is purely a crossfade.
+      */}
+      <div className="relative mx-auto min-h-11 w-full max-w-7xl">
         {ANNOUNCEMENTS.map((item, i) => {
           const active = i === index;
           const body = (
@@ -64,10 +73,8 @@ export function TopBanner() {
             <div
               key={item.lead}
               aria-hidden={!active}
-              className={`w-full transition-opacity duration-500 ${
-                active
-                  ? "opacity-100"
-                  : "pointer-events-none absolute inset-0 flex items-center opacity-0"
+              className={`absolute inset-0 flex items-center justify-center transition-opacity duration-700 ease-in-out motion-reduce:transition-none ${
+                active ? "opacity-100" : "pointer-events-none opacity-0"
               }`}
             >
               {item.sms ? (
@@ -75,12 +82,12 @@ export function TopBanner() {
                 // accepts messages.
                 <a
                   href="sms:+19563323651"
-                  className="block w-full py-2.5 transition hover:brightness-110"
+                  className="flex h-full w-full items-center justify-center px-4 transition hover:brightness-110"
                 >
                   {body}
                 </a>
               ) : (
-                <div className="py-2.5">{body}</div>
+                <div className="flex h-full w-full items-center justify-center px-4">{body}</div>
               )}
             </div>
           );
@@ -287,6 +294,28 @@ export function SiteHeader() {
                 <span className="font-semibold">{item.name}</span>
               </Link>
             ))}
+          </div>
+
+          {/* The local guides are the pages chasing "embroidery in <city>", so
+              they need a real link rather than only a sitemap entry. */}
+          <p className="mb-3 mt-6 text-xs font-bold uppercase tracking-widest text-gray-400">
+            Learn
+          </p>
+          <div className="space-y-1">
+            <Link
+              href="/blog"
+              onClick={() => setMenuOpen(false)}
+              className="block rounded-2xl p-3 font-semibold transition hover:bg-[#f7f9fc]"
+            >
+              Embroidery Guides
+            </Link>
+            <Link
+              href="/contact"
+              onClick={() => setMenuOpen(false)}
+              className="block rounded-2xl p-3 font-semibold transition hover:bg-[#f7f9fc]"
+            >
+              Contact
+            </Link>
           </div>
         </nav>
 
