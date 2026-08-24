@@ -26,6 +26,9 @@ const PRODUCT_SLUG: Record<string, string> = {
 const STANDARD_KEYS = new Set([
   "productType", "style", "color", "quantity",
   "placement", "total", "perUnit", "minQty", "flatUpcharge", "perPieceUpcharge",
+  // Hat requoting plumbing. Read explicitly below and stored on the cart item,
+  // so they must not also leak into the visible details list.
+  "styleId", "addOns",
 ]);
 
 function formatDetailKey(key: string): string {
@@ -60,6 +63,8 @@ function UploadArtworkContent() {
   const flatUpcharge     = Number(params.get("flatUpcharge") ?? 0);
   const perPieceUpcharge = Number(params.get("perPieceUpcharge") ?? 0);
   const imageUrl         = sessionStorage.getItem("cartItemImage") ?? "";
+  const styleId          = params.get("styleId") ?? undefined;
+  const addOns           = params.get("addOns") ?? undefined;
 
   const placements = placement.split(",").map((p) => p.trim()).filter(Boolean);
 
@@ -109,6 +114,8 @@ function UploadArtworkContent() {
       unitPrice: perUnit,
       image: imageUrl || emoji,
       artworkUrls: urls,
+      styleId,
+      addOns,
     });
     sessionStorage.removeItem("cartItemImage");
     router.push("/cart");

@@ -13,6 +13,16 @@ export type CartItem = {
   price: number;
   unitPrice: number;
   image?: string;
+
+  /**
+   * Hats only. The cap style id and the serialised add-on placements, carried
+   * so the cart can requote through `quoteOrder()` when the shopper changes
+   * quantity. Hat pricing depends on the style's blank cost and on which
+   * placements are embroidered, so the flat `getUnitPrice` table cannot
+   * reprice them. Absent on every other product type.
+   */
+  styleId?: string;
+  addOns?: string;
 };
 
 export type AddCartItemInput = Omit<CartItem, "cartItemId">;

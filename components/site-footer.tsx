@@ -56,8 +56,36 @@ export function SiteFooter() {
           </div>
         </div>
 
-        <div className="mt-12 border-t border-white/10 pt-6 text-sm text-white/50">
-          © 2026 El Hilo Co. All rights reserved.
+        <div className="mt-12 flex flex-col items-center gap-5 border-t border-white/10 pt-6 text-sm text-white/50 sm:flex-row sm:justify-between">
+          <span>© 2026 El Hilo Co. All rights reserved.</span>
+
+          {/*
+            Agency credit. A plain <a>, not next/link, because this leaves the
+            site entirely and there is nothing for the router to prefetch.
+
+            TurboSites' brand blue #0151fc is too dark to read as small text on
+            black, so it is used only for the bolt and the hover border, and the
+            wordmark runs through a lighter ramp instead. Nothing animates at
+            rest and there is no backdrop-filter, per the iOS crash notes.
+          */}
+          <a
+            href="https://turbosites.io"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.03] px-4 py-2 transition hover:border-[#0151fc]/60 hover:bg-white/[0.06]"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+              className="h-3.5 w-3.5 shrink-0 fill-[#5B9BD5] transition group-hover:fill-[#9EC5FF]"
+            >
+              <path d="M13 2 4.5 13.2h5.6L9.8 22l8.7-11.4h-5.7L13 2Z" />
+            </svg>
+            <span className="text-white/55">Site by</span>
+            <span className="bg-gradient-to-r from-[#9EC5FF] via-[#5B9BD5] to-[#4A90C4] bg-clip-text font-extrabold tracking-tight text-transparent">
+              TurboSites.io
+            </span>
+          </a>
         </div>
       </div>
     </footer>
