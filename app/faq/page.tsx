@@ -1,11 +1,50 @@
 import { TopBanner, SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import FAQAccordion from "@/components/faq-accordion";
+import { FAQS } from "@/lib/faqs";
+import type { Metadata } from "next";
+import { site } from "@/lib/site";
 import Link from "next/link";
+
+export const metadata: Metadata = {
+  title: "Frequently Asked Questions",
+  description:
+    "Ordering, artwork, pricing, turnaround and delivery for custom embroidery with El Hilo Co. No minimum order.",
+  alternates: { canonical: "/faq" },
+};
+
+/**
+ * FAQPage schema.
+ *
+ * Built from the same FAQS array the accordion renders, so the structured data
+ * and the visible answers cannot drift — Google treats a mismatch between them
+ * as a reason to drop the rich result entirely.
+ */
+function FaqJsonLd() {
+  const data = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "@id": `${site.url}/faq#faq`,
+    mainEntity: FAQS.flatMap((section) =>
+      section.items.map((item) => ({
+        "@type": "Question",
+        name: item.q,
+        acceptedAnswer: { "@type": "Answer", text: item.a },
+      }))
+    ),
+  };
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
+    />
+  );
+}
 
 export default function FAQPage() {
   return (
     <main className="min-h-dvh bg-[#f6f6f4] text-black">
+      <FaqJsonLd />
       <TopBanner />
       <SiteHeader />
 
