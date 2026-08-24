@@ -419,7 +419,7 @@ export default function CustomHatsPage() {
                 <div>
                   <Label>Quantity</Label>
                   <div className="flex flex-wrap gap-2">
-                    {[12, 24, 48, 72, 100, 200].map((q) => (
+                    {[1, 6, 12, 24, 48, 72, 100, 200].map((q) => (
                       <button
                         key={q}
                         type="button"

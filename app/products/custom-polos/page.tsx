@@ -118,7 +118,7 @@ export default function CustomPolosPage() {
     customQuantity.trim() !== "" &&
     Number.isFinite(parsedCustomQty) &&
     Number.isInteger(parsedCustomQty) &&
-    parsedCustomQty >= 5;
+    parsedCustomQty >= 1;
 
   const dualPerPiece = leftChest && rightSideName ? DUAL_PER_PIECE : 0;
   const activeQty    = isCustomQuantity && customQtyIsValid ? parsedCustomQty : currentQty.qty;
@@ -153,7 +153,7 @@ export default function CustomPolosPage() {
     if (!/^\d+$/.test(value)) { setCustomQuantity(value); setCustomQuantityError("Please enter numbers only."); return; }
     const qty = Number.parseInt(value, 10);
     setCustomQuantity(value);
-    setCustomQuantityError(qty < 5 ? "Minimum order is 5 polos." : "");
+    setCustomQuantityError(qty < 1 ? "Enter a quantity of 1 or more." : "");
   }
 
   function handleCustomFocus() {
@@ -177,7 +177,7 @@ export default function CustomPolosPage() {
       ...(sizes ? { sizes } : {}),
       total:            String(total),
       perUnit:          String(perUnit),
-      minQty:           "5",
+      minQty:           "1",
       flatUpcharge:     "0",
       perPieceUpcharge: String(dualPerPiece),
     });
@@ -218,7 +218,7 @@ export default function CustomPolosPage() {
               <span className="text-[#f0b100]">★★★★★</span>
               <span>5.0 average</span>
               <span>·</span>
-              <span>Minimum order of 5</span>
+              <span>No minimum order</span>
             </div>
             <p className="mt-6 text-base leading-7 text-gray-600">
               Moisture-wicking 100% polyester with a clean embroidery surface. Order custom

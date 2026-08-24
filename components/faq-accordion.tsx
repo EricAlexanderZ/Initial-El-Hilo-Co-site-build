@@ -15,7 +15,7 @@ const FAQS: FAQSection[] = [
       },
       {
         q: "What is the minimum order quantity?",
-        a: "Minimum order quantities vary by product. Custom Hats and Custom Polos require a minimum of 5 pieces. Custom Hoodies and Custom Sweaters can be ordered as a single item.",
+        a: "There is no minimum. Every product can be ordered as a single piece. Embroidery is priced per piece and the per-piece cost falls as quantity rises, because the setup cost spreads across the run, so small orders cost more each rather than being turned away.",
       },
       {
         q: "How long does it take to receive my order?",

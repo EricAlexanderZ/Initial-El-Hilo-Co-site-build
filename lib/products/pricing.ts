@@ -36,9 +36,18 @@ const TIERS: Record<string, PricingTier[]> = {
   ],
 };
 
+/**
+ * Minimum order quantity, per product type.
+ *
+ * Everything is 1: single pieces are accepted across the catalog. The tier
+ * tables below still start at 5 for hats and polos, which is deliberate — a
+ * quantity under the lowest tier falls through to the highest per-piece rate
+ * rather than being rejected. Small orders cost more each, they are simply no
+ * longer refused.
+ */
 export const PRODUCT_MOQ: Record<string, number> = {
-  "Custom Hats":     5,
-  "Custom Polos":    5,
+  "Custom Hats":     1,
+  "Custom Polos":    1,
   "Custom Hoodies":  1,
   "Custom Sweaters": 1,
 };
