@@ -53,6 +53,7 @@ export default function HeroLogo() {
                 src="/images/home/elhilocologo.png"
                 alt="El Hilo Co"
                 fill
+                sizes="(max-width: 640px) 60vw, 400px"
                 className="object-contain"
                 priority
               />

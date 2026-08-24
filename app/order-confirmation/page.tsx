@@ -11,7 +11,7 @@ export default function OrderConfirmationPage() {
 
       <section className="mx-auto max-w-2xl px-6 py-24 text-center">
         <div className="relative mx-auto h-20 w-20">
-          <Image src="/images/home/elhilocologo.png" alt="El Hilo Co" fill className="object-contain" />
+          <Image src="/images/home/elhilocologo.png" alt="El Hilo Co" fill sizes="96px" className="object-contain" />
         </div>
 
         <div className="mt-8 inline-flex h-16 w-16 items-center justify-center rounded-full bg-green-100 text-3xl">
@@ -46,13 +46,13 @@ export default function OrderConfirmationPage() {
         </div>
 
         <div className="mt-8 flex flex-wrap justify-center gap-4">
-          <Link
+          <Link prefetch={false}
             href="/"
             className="rounded-full bg-[#13294b] px-6 py-3 text-sm font-semibold text-white transition hover:bg-[#0f1f39]"
           >
             Back to home
           </Link>
-          <Link
+          <Link prefetch={false}
             href="/products/custom-hats"
             className="rounded-full border border-[#13294b] px-6 py-3 text-sm font-semibold text-[#13294b] transition hover:bg-[#eef2f7]"
           >

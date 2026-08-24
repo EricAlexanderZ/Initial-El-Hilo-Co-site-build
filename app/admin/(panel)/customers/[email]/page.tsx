@@ -42,7 +42,7 @@ export default async function CustomerDetailPage({
     <div className="p-4 md:p-8">
       {/* Header */}
       <div className="mb-6">
-        <Link href="/admin/customers" className="text-sm font-semibold text-gray-400 hover:text-black">
+        <Link prefetch={false} href="/admin/customers" className="text-sm font-semibold text-gray-400 hover:text-black">
           ← Customers
         </Link>
       </div>
@@ -75,7 +75,7 @@ export default async function CustomerDetailPage({
                 <div className="flex items-center gap-2">
                   <OrderStatusBadge status={order.status} />
                   <p className="font-bold">${order.total.toFixed(2)}</p>
-                  <Link
+                  <Link prefetch={false}
                     href={`/admin/orders/${order.id}`}
                     className="rounded-full bg-[#13294b] px-3 py-1.5 text-xs font-semibold text-white transition hover:bg-[#0f1f39]"
                   >

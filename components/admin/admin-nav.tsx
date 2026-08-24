@@ -47,7 +47,7 @@ export default function AdminNav({ open, onClose }: Props) {
         <div className="flex items-center justify-between border-b border-white/10 px-5 py-5">
           <div className="flex items-center gap-3">
             <div className="relative h-8 w-8 shrink-0">
-              <Image src="/images/home/elhilocologo.png" alt="El Hilo Co" fill className="object-contain brightness-0 invert" />
+              <Image src="/images/home/elhilocologo.png" alt="El Hilo Co" fill sizes="48px" className="object-contain brightness-0 invert" />
             </div>
             <div>
               <p className="text-[10px] font-bold uppercase tracking-widest text-white/40">El Hilo Co</p>
@@ -71,7 +71,7 @@ export default function AdminNav({ open, onClose }: Props) {
               pathname === item.href ||
               (item.href !== "/admin" && pathname.startsWith(item.href));
             return (
-              <Link
+              <Link prefetch={false}
                 key={item.href}
                 href={item.href}
                 onClick={handleNavClick}

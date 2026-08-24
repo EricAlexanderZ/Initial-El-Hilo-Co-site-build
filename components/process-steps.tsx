@@ -16,7 +16,7 @@ export function ProcessSteps() {
             {processSteps.map((step) => (
               <div key={step.step} className="text-center">
                 <div className="relative mx-auto h-32 w-32 sm:h-40 sm:w-40 md:h-48 md:w-48">
-                  <Image src={step.image} alt={step.title} fill className="object-contain" />
+                  <Image src={step.image} alt={step.title} fill sizes="(max-width: 640px) 25vw, 120px" className="object-contain" />
                 </div>
                 <div className="mx-auto mt-6 flex h-10 w-10 items-center justify-center rounded-full bg-[#e5b43d] text-sm font-extrabold text-black">
                   {step.step}

@@ -127,7 +127,7 @@ function LoginForm() {
             >
               Password
             </label>
-            <Link
+            <Link prefetch={false}
               href="/auth/forgot-password"
               className="text-xs font-medium text-[#13294b] hover:underline"
             >
@@ -158,7 +158,7 @@ function LoginForm() {
 
       <p className="mt-6 text-center text-sm text-gray-500">
         Don&apos;t have an account?{" "}
-        <Link
+        <Link prefetch={false}
           href="/auth/signup"
           className="font-semibold text-[#13294b] hover:underline"
         >

@@ -101,7 +101,7 @@ export default async function OrdersPage() {
           <p className="mt-2 text-sm text-gray-500">
             Start your first order and it will appear here.
           </p>
-          <Link
+          <Link prefetch={false}
             href="/products/custom-hats"
             className="mt-6 inline-block rounded-full bg-[#13294b] px-6 py-2.5 text-sm font-semibold text-white transition hover:bg-[#0f1f39]"
           >

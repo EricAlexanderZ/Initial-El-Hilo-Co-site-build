@@ -35,7 +35,7 @@ export default function Home() {
             </p>
 
             <div className="mt-8 flex flex-wrap items-center justify-center gap-4 lg:justify-start">
-              <Link
+              <Link prefetch={false}
                 href="/products/custom-hats"
                 className="rounded-full bg-[#13294b] px-6 py-3 text-sm font-semibold text-white transition duration-200 hover:scale-105 hover:bg-[#0f1f39]"
               >
@@ -84,7 +84,7 @@ export default function Home() {
 
         <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-6">
           {categories.map((category) => (
-            <Link
+            <Link prefetch={false}
               key={category.name}
               href={category.href}
               className="group flex flex-col items-center justify-center rounded-2xl p-3 text-center transition duration-300 sm:p-4"
@@ -96,6 +96,7 @@ export default function Home() {
                       src={category.image}
                       alt={category.name}
                       fill
+                      sizes="(max-width: 640px) 112px, 192px"
                       className="object-contain drop-shadow-lg"
                     />
                   </div>
@@ -141,7 +142,7 @@ export default function Home() {
             <div className="brand-track flex min-w-max items-center gap-6 md:gap-12 lg:gap-16">
               {[...logos, ...logos].map((logo, index) => (
                 <div key={`${logo.alt}-${index}`} className="relative h-8 w-24 shrink-0 md:h-12 md:w-32 lg:h-16 lg:w-48">
-                  <Image src={logo.src} alt={logo.alt} fill className="object-contain" />
+                  <Image src={logo.src} alt={logo.alt} fill sizes="(max-width: 640px) 112px, 192px" className="object-contain" />
                 </div>
               ))}
             </div>
@@ -149,7 +150,7 @@ export default function Home() {
 
           <div className="mt-16 rounded-[2rem] border border-[#ebcf8d] bg-white p-6 sm:p-10 text-center shadow-sm">
             <h3 className="text-2xl sm:text-4xl font-extrabold">Have any questions for us?</h3>
-            <Link
+            <Link prefetch={false}
               href="/contact"
               className="mt-6 inline-flex rounded-full bg-[#13294b] px-6 py-3 text-sm font-semibold text-white transition hover:scale-105 hover:bg-[#0f1f39]"
             >

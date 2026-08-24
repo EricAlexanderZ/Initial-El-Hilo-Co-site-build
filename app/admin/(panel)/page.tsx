@@ -68,7 +68,7 @@ export default async function AdminDashboard() {
           {PIPELINE.map((stage) => {
             const count = pipeline[stage.status] ?? 0;
             return (
-              <Link
+              <Link prefetch={false}
                 key={stage.status}
                 href={`/admin/orders?status=${stage.status}`}
                 className="group rounded-[1.25rem] bg-white p-4 shadow-sm transition hover:shadow-md"
@@ -86,7 +86,7 @@ export default async function AdminDashboard() {
       <div className="mt-10">
         <div className="mb-5 flex items-center justify-between">
           <h2 className="text-xl font-bold">Recent Orders</h2>
-          <Link href="/admin/orders" className="text-sm font-semibold text-[#13294b] hover:underline">
+          <Link prefetch={false} href="/admin/orders" className="text-sm font-semibold text-[#13294b] hover:underline">
             View all →
           </Link>
         </div>
@@ -114,7 +114,7 @@ export default async function AdminDashboard() {
                   </div>
                   <div className="mt-3 flex items-center justify-between">
                     <p className="text-xs text-gray-400">{new Date(order.created_at).toLocaleDateString()}</p>
-                    <Link href={`/admin/orders/${order.id}`} className="rounded-full bg-[#13294b] px-4 py-1.5 text-xs font-semibold text-white">
+                    <Link prefetch={false} href={`/admin/orders/${order.id}`} className="rounded-full bg-[#13294b] px-4 py-1.5 text-xs font-semibold text-white">
                       View
                     </Link>
                   </div>
@@ -148,7 +148,7 @@ export default async function AdminDashboard() {
                         <td className="px-5 py-4"><OrderStatusBadge status={order.status} /></td>
                         <td className="px-5 py-4 text-gray-400">{new Date(order.created_at).toLocaleDateString()}</td>
                         <td className="px-5 py-4">
-                          <Link href={`/admin/orders/${order.id}`} className="rounded-full bg-[#13294b] px-4 py-1.5 text-xs font-semibold text-white transition hover:bg-[#0f1f39]">
+                          <Link prefetch={false} href={`/admin/orders/${order.id}`} className="rounded-full bg-[#13294b] px-4 py-1.5 text-xs font-semibold text-white transition hover:bg-[#0f1f39]">
                             View
                           </Link>
                         </td>

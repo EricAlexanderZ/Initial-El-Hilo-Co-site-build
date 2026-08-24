@@ -15,7 +15,7 @@ export default function BestSellerCard({
   imageScale = "scale-[2]",
 }: BestSellerCardProps) {
   return (
-    <Link
+    <Link prefetch={false}
       href={href}
       className="group rounded-[2rem] border border-black/10 bg-[#f3f3f1] p-3 shadow-[0_16px_48px_rgba(0,0,0,0.10)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_24px_64px_rgba(0,0,0,0.14)] sm:p-5"
     >
@@ -32,6 +32,7 @@ export default function BestSellerCard({
             src={image}
             alt={title}
             fill
+            sizes="(max-width: 640px) 50vw, 25vw"
             className={`${imageScale} object-contain p-0 drop-shadow-[0_10px_18px_rgba(0,0,0,0.10)] transition duration-300 group-hover:scale-[1.4]`}
           />
         </div>

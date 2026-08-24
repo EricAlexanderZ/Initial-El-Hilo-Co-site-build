@@ -25,7 +25,7 @@ export default function MobileNav() {
       {/* Overlay */}
       {open && (
         <div
-          className="fixed inset-0 z-40 bg-black/30 backdrop-blur-sm md:hidden"
+          className="fixed inset-0 z-40 bg-black/50 md:hidden"
           onClick={() => setOpen(false)}
         />
       )}
@@ -40,7 +40,7 @@ export default function MobileNav() {
         <div className="flex items-center justify-between border-b border-black/10 px-5 py-4">
           <div className="flex items-center gap-2">
             <div className="relative h-8 w-8">
-              <Image src="/images/home/elhilocologo.png" alt="El Hilo Co" fill className="object-contain" />
+              <Image src="/images/home/elhilocologo.png" alt="El Hilo Co" fill sizes="40px" className="object-contain" />
             </div>
             <span className="text-sm font-extrabold tracking-wide">EL HILO CO</span>
           </div>
@@ -59,14 +59,14 @@ export default function MobileNav() {
           <p className="mb-3 text-xs font-bold uppercase tracking-widest text-gray-400">Products</p>
           <div className="space-y-1">
             {productLinks.map((item) => (
-              <Link
+              <Link prefetch={false}
                 key={item.name}
                 href={item.href}
                 onClick={() => setOpen(false)}
                 className="flex items-center gap-3 rounded-2xl p-3 transition hover:bg-[#f7f9fc]"
               >
                 <div className="relative h-10 w-10 shrink-0">
-                  <Image src={item.image} alt={item.name} fill className="object-contain" />
+                  <Image src={item.image} alt={item.name} fill sizes="40px" className="object-contain" />
                 </div>
                 <span className="font-semibold">{item.name}</span>
               </Link>
@@ -76,14 +76,14 @@ export default function MobileNav() {
 
         {/* Account links */}
         <div className="border-t border-black/10 px-5 py-5 space-y-3">
-          <Link
+          <Link prefetch={false}
             href="/login"
             onClick={() => setOpen(false)}
             className="block w-full rounded-full border border-black/10 py-2.5 text-center text-sm font-semibold transition hover:bg-gray-50"
           >
             Login
           </Link>
-          <Link
+          <Link prefetch={false}
             href="/signup"
             onClick={() => setOpen(false)}
             className="block w-full rounded-full bg-[#13294b] py-2.5 text-center text-sm font-semibold text-white transition hover:bg-[#0f1f39]"

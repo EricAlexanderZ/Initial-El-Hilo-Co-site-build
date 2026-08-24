@@ -113,7 +113,7 @@ export default async function DashboardPage() {
       <div className="mb-8">
         <div className="mb-4 flex items-center justify-between">
           <h2 className="text-lg font-bold text-gray-900">Recent Orders</h2>
-          <Link
+          <Link prefetch={false}
             href="/dashboard/orders"
             className="text-sm font-semibold text-[#13294b] hover:underline"
           >
@@ -163,7 +163,7 @@ export default async function DashboardPage() {
       <div>
         <h2 className="mb-4 text-lg font-bold text-gray-900">Quick Actions</h2>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-          <Link
+          <Link prefetch={false}
             href="/products/custom-hats"
             className="group rounded-2xl border border-black/10 bg-white p-6 transition hover:border-[#13294b]/30 hover:shadow-md"
           >
@@ -178,7 +178,7 @@ export default async function DashboardPage() {
             </p>
           </Link>
 
-          <Link
+          <Link prefetch={false}
             href="/dashboard/orders"
             className="group rounded-2xl border border-black/10 bg-white p-6 transition hover:border-[#13294b]/30 hover:shadow-md"
           >
@@ -193,7 +193,7 @@ export default async function DashboardPage() {
             </p>
           </Link>
 
-          <Link
+          <Link prefetch={false}
             href="/dashboard/profile"
             className="group rounded-2xl border border-black/10 bg-white p-6 transition hover:border-[#13294b]/30 hover:shadow-md"
           >

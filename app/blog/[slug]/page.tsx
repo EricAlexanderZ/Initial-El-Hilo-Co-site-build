@@ -96,7 +96,7 @@ export default async function BlogPostPage({ params }: Params) {
       <main>
         <section className="bg-[#111111] py-12 text-white">
           <div className="mx-auto max-w-3xl px-6">
-            <Link href="/blog" className="text-xs font-bold uppercase tracking-[0.16em] text-[#e3b33d] hover:underline">
+            <Link prefetch={false} href="/blog" className="text-xs font-bold uppercase tracking-[0.16em] text-[#e3b33d] hover:underline">
               ← Guides
             </Link>
             <h1 className="mt-4 text-3xl font-extrabold leading-tight tracking-tight sm:text-4xl">
@@ -142,7 +142,7 @@ export default async function BlogPostPage({ params }: Params) {
               >
                 Text {site.phone}
               </a>
-              <Link
+              <Link prefetch={false}
                 href="/products/custom-hats"
                 className="inline-flex min-h-12 items-center rounded-full border-2 border-[#13294b] px-6 text-base font-extrabold text-[#13294b] transition hover:bg-[#13294b] hover:text-white"
               >
@@ -161,7 +161,7 @@ export default async function BlogPostPage({ params }: Params) {
             </h2>
             <div className="mt-4 grid gap-3 sm:grid-cols-2">
               {others.map((other) => (
-                <Link
+                <Link prefetch={false}
                   key={other.slug}
                   href={`/blog/${other.slug}`}
                   className="rounded-2xl bg-white p-5 text-sm font-bold leading-snug text-[#13294b] shadow-sm transition hover:shadow-md"

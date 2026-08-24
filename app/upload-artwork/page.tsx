@@ -207,7 +207,7 @@ function UploadArtworkContent() {
 
           <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center lg:justify-end">
             <div className="flex gap-3">
-              <Link
+              <Link prefetch={false}
                 href={backHref}
                 className="flex-1 rounded-xl border border-black/10 bg-white px-5 py-3 text-center text-sm font-semibold transition hover:bg-gray-50 sm:flex-none"
               >

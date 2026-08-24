@@ -12,7 +12,7 @@ export default function AddMoreCategories() {
       <div className="mt-8 rounded-[2rem] border border-black/10 bg-white p-6 shadow-sm">
         <div className="grid grid-cols-2 gap-6 md:grid-cols-4">
           {categories.map((category) => (
-            <Link
+            <Link prefetch={false}
               key={category.name}
               href={category.href}
               className="group flex flex-col items-center justify-center rounded-2xl p-4 text-center transition duration-300"
@@ -22,6 +22,7 @@ export default function AddMoreCategories() {
                   src={category.image!}
                   alt={category.name}
                   fill
+                  sizes="(max-width: 640px) 45vw, 160px"
                   className="object-contain drop-shadow-lg"
                 />
               </div>

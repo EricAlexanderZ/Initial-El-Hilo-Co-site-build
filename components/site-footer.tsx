@@ -7,13 +7,14 @@ export function SiteFooter() {
       <div className="mx-auto max-w-7xl px-6 py-14">
         <div className="grid grid-cols-1 gap-8 md:gap-12 md:grid-cols-2 lg:grid-cols-4">
           <div>
-            <Link href="/" className="inline-flex" aria-label="El Hilo Co home">
+            <Link prefetch={false} href="/" className="inline-flex" aria-label="El Hilo Co home">
               <span className="flex h-16 w-16 items-center justify-center rounded-2xl bg-white p-2">
                 <span className="relative block h-full w-full">
                   <Image
                     src="/images/home/elhilocologo.png"
                     alt="El Hilo Co"
                     fill
+                    sizes="64px"
                     className="object-contain"
                   />
                 </span>
@@ -25,13 +26,13 @@ export function SiteFooter() {
           <div>
             <p className="text-sm font-semibold text-white/60">Company</p>
             <div className="mt-4 space-y-3 text-sm">
-              <Link href="/about" className="block hover:text-[#ffd84d]">
+              <Link prefetch={false} href="/about" className="block hover:text-[#ffd84d]">
                 About
               </Link>
               {/* Sitewide entry point to the local guides. The footer matters
                   here because it is on every page, which is how a crawler finds
                   the city posts from anywhere on the site. */}
-              <Link href="/blog" className="block hover:text-[#ffd84d]">
+              <Link prefetch={false} href="/blog" className="block hover:text-[#ffd84d]">
                 Embroidery Guides
               </Link>
             </div>
@@ -40,10 +41,10 @@ export function SiteFooter() {
           <div>
             <p className="text-sm font-semibold text-white/60">Support</p>
             <div className="mt-4 space-y-3 text-sm">
-              <Link href="/faq" className="block hover:text-[#ffd84d]">
+              <Link prefetch={false} href="/faq" className="block hover:text-[#ffd84d]">
                 FAQ
               </Link>
-              <Link href="/contact" className="block hover:text-[#ffd84d]">
+              <Link prefetch={false} href="/contact" className="block hover:text-[#ffd84d]">
                 Contact Us
               </Link>
             </div>
@@ -52,10 +53,10 @@ export function SiteFooter() {
           <div>
             <p className="text-sm font-semibold text-white/60">Legal</p>
             <div className="mt-4 space-y-3 text-sm">
-              <Link href="/privacy" className="block hover:text-[#ffd84d]">
+              <Link prefetch={false} href="/privacy" className="block hover:text-[#ffd84d]">
                 Privacy
               </Link>
-              <Link href="/terms" className="block hover:text-[#ffd84d]">
+              <Link prefetch={false} href="/terms" className="block hover:text-[#ffd84d]">
                 Terms
               </Link>
             </div>

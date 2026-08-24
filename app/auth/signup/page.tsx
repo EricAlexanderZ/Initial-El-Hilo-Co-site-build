@@ -98,7 +98,7 @@ export default function SignupPage() {
             <span className="font-medium text-gray-700">{email}</span>. Click it
             to activate your account.
           </p>
-          <Link
+          <Link prefetch={false}
             href="/auth/login"
             className="mt-2 text-sm font-semibold text-[#13294b] hover:underline"
           >
@@ -199,7 +199,7 @@ export default function SignupPage() {
 
           <p className="mt-6 text-center text-sm text-gray-500">
             Already have an account?{" "}
-            <Link
+            <Link prefetch={false}
               href="/auth/login"
               className="font-semibold text-[#13294b] hover:underline"
             >

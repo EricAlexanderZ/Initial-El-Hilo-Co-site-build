@@ -60,7 +60,7 @@ export default function ForgotPasswordPage() {
             If that email exists in our system, you&apos;ll receive a password
             reset link shortly.
           </p>
-          <Link
+          <Link prefetch={false}
             href="/auth/login"
             className="mt-2 text-sm font-semibold text-[#13294b] hover:underline"
           >
@@ -115,7 +115,7 @@ export default function ForgotPasswordPage() {
 
           <p className="mt-6 text-center text-sm text-gray-500">
             Remember your password?{" "}
-            <Link
+            <Link prefetch={false}
               href="/auth/login"
               className="font-semibold text-[#13294b] hover:underline"
             >

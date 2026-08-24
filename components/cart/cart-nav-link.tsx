@@ -7,7 +7,7 @@ export default function CartNavLink() {
   const { cartCount } = useCart();
 
   return (
-    <Link
+    <Link prefetch={false}
       href="/cart"
       className="relative inline-flex items-center gap-2 text-sm font-semibold text-black transition hover:opacity-70"
       aria-label={`Cart${cartCount > 0 ? ` with ${cartCount} item${cartCount === 1 ? "" : "s"}` : ""}`}

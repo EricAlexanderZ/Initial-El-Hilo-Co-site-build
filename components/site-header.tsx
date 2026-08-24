@@ -142,7 +142,7 @@ export function SiteHeader() {
 
   // User avatar circle linking to dashboard
   const UserAvatar = () => (
-    <Link
+    <Link prefetch={false}
       href="/dashboard"
       className="flex h-9 w-9 items-center justify-center rounded-full bg-[#13294b] text-sm font-bold text-white transition hover:opacity-80"
       aria-label="Go to dashboard"
@@ -159,7 +159,7 @@ export function SiteHeader() {
     className: string;
     onClick?: () => void;
   }) => (
-    <Link href="/auth/login" className={className} onClick={onClick}>
+    <Link prefetch={false} href="/auth/login" className={className} onClick={onClick}>
       Login
     </Link>
   );
@@ -182,9 +182,9 @@ export function SiteHeader() {
         </button>
 
         {/* Logo — center */}
-        <Link href="/" className="absolute left-1/2 -translate-x-1/2">
+        <Link prefetch={false} href="/" className="absolute left-1/2 -translate-x-1/2">
           <div className="relative h-16 w-16">
-            <Image src="/images/home/elhilocologo.png" alt="El Hilo Co" fill className="object-contain" />
+            <Image src="/images/home/elhilocologo.png" alt="El Hilo Co" fill sizes="64px" className="object-contain" />
           </div>
         </Link>
 
@@ -194,9 +194,9 @@ export function SiteHeader() {
 
       {/* ── Desktop header ── */}
       <div className="mx-auto hidden max-w-7xl items-center justify-between px-6 py-4 md:flex">
-        <Link href="/" className="flex items-center gap-3">
+        <Link prefetch={false} href="/" className="flex items-center gap-3">
           <div className="relative h-10 w-10">
-            <Image src="/images/home/elhilocologo.png" alt="El Hilo Co" fill className="object-contain" />
+            <Image src="/images/home/elhilocologo.png" alt="El Hilo Co" fill sizes="64px" className="object-contain" />
           </div>
           <span className="text-lg font-extrabold tracking-wide">EL HILO CO</span>
         </Link>
@@ -209,13 +209,13 @@ export function SiteHeader() {
             <div className="invisible absolute left-0 top-full mt-3 w-[320px] rounded-[1.75rem] border border-black/10 bg-white p-4 opacity-0 shadow-2xl transition-all duration-200 group-hover:visible group-hover:opacity-100">
               <div className="space-y-2">
                 {productLinks.map((item) => (
-                  <Link
+                  <Link prefetch={false}
                     key={item.name}
                     href={item.href}
                     className="group/item flex items-center gap-4 rounded-2xl p-3 transition duration-200 hover:bg-[#f7f9fc]"
                   >
                     <div className="relative h-16 w-16 transition duration-200 group-hover/item:scale-105">
-                      <Image src={item.image} alt={item.name} fill className="object-contain" />
+                      <Image src={item.image} alt={item.name} fill sizes="64px" className="object-contain" />
                     </div>
                     <p className="text-base font-bold text-black transition group-hover/item:text-[#13294b]">
                       {item.name}
@@ -238,7 +238,7 @@ export function SiteHeader() {
           ) : (
             <>
               <LoginLink className="text-sm font-medium hover:text-[#13294b]" />
-              <Link
+              <Link prefetch={false}
                 href="/auth/signup"
                 className="rounded-full bg-[#13294b] px-5 py-2 text-sm font-semibold text-white transition duration-200 hover:scale-105 hover:bg-[#0f1f39]"
               >
@@ -252,7 +252,7 @@ export function SiteHeader() {
       {/* ── Mobile drawer (slides from left) ── */}
       {menuOpen && (
         <div
-          className="fixed inset-0 z-40 bg-black/30 backdrop-blur-sm"
+          className="fixed inset-0 z-40 bg-black/50"
           onClick={() => setMenuOpen(false)}
         />
       )}
@@ -264,7 +264,7 @@ export function SiteHeader() {
         <div className="flex items-center justify-between border-b border-black/10 px-5 py-4">
           <div className="flex items-center gap-2">
             <div className="relative h-8 w-8">
-              <Image src="/images/home/elhilocologo.png" alt="El Hilo Co" fill className="object-contain" />
+              <Image src="/images/home/elhilocologo.png" alt="El Hilo Co" fill sizes="64px" className="object-contain" />
             </div>
             <span className="text-sm font-extrabold tracking-wide">EL HILO CO</span>
           </div>
@@ -282,14 +282,14 @@ export function SiteHeader() {
           <p className="mb-3 text-xs font-bold uppercase tracking-widest text-gray-400">Products</p>
           <div className="space-y-1">
             {productLinks.map((item) => (
-              <Link
+              <Link prefetch={false}
                 key={item.name}
                 href={item.href}
                 onClick={() => setMenuOpen(false)}
                 className="flex items-center gap-3 rounded-2xl p-3 transition hover:bg-[#f7f9fc]"
               >
                 <div className="relative h-10 w-10 shrink-0">
-                  <Image src={item.image} alt={item.name} fill className="object-contain" />
+                  <Image src={item.image} alt={item.name} fill sizes="64px" className="object-contain" />
                 </div>
                 <span className="font-semibold">{item.name}</span>
               </Link>
@@ -302,14 +302,14 @@ export function SiteHeader() {
             Learn
           </p>
           <div className="space-y-1">
-            <Link
+            <Link prefetch={false}
               href="/blog"
               onClick={() => setMenuOpen(false)}
               className="block rounded-2xl p-3 font-semibold transition hover:bg-[#f7f9fc]"
             >
               Embroidery Guides
             </Link>
-            <Link
+            <Link prefetch={false}
               href="/contact"
               onClick={() => setMenuOpen(false)}
               className="block rounded-2xl p-3 font-semibold transition hover:bg-[#f7f9fc]"
@@ -324,7 +324,7 @@ export function SiteHeader() {
           {!authLoaded ? (
             <div className="h-10 animate-pulse rounded-full bg-gray-100" />
           ) : userInitial ? (
-            <Link
+            <Link prefetch={false}
               href="/dashboard"
               onClick={() => setMenuOpen(false)}
               className="flex w-full items-center gap-3 rounded-full border border-[#13294b]/20 py-2.5 px-4 text-sm font-semibold text-[#13294b] transition hover:bg-[#f7f9fc]"
@@ -340,7 +340,7 @@ export function SiteHeader() {
                 className="block w-full rounded-full border border-black/10 py-2.5 text-center text-sm font-semibold transition hover:bg-gray-50"
                 onClick={() => setMenuOpen(false)}
               />
-              <Link
+              <Link prefetch={false}
                 href="/auth/signup"
                 onClick={() => setMenuOpen(false)}
                 className="block w-full rounded-full bg-[#13294b] py-2.5 text-center text-sm font-semibold text-white transition hover:bg-[#0f1f39]"

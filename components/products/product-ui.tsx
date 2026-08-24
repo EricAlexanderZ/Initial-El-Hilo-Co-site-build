@@ -186,6 +186,7 @@ export function ProductPreview({
                   src={src}
                   alt={alt}
                   fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
                   priority
                   className="object-contain"
                   onError={() => setImgError(true)}
@@ -254,6 +255,7 @@ export function ProductPreview({
                     src={backSrc && modalView === "back" ? backSrc : src}
                     alt={`${alt}${backSrc ? ` ${modalView}` : ""}`}
                     fill
+                    sizes="(max-width: 768px) 100vw, 50vw"
                     className="object-contain"
                   />
                 </div>

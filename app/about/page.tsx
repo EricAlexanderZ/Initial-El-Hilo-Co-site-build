@@ -37,6 +37,7 @@ export default function AboutPage() {
                   src="/images/home/HUMBLE_BEGININGS.jpg"
                   alt="Humble beginnings — embroidering in a 2-bedroom apartment"
                   fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
                   className="object-cover"
                   priority
                 />
@@ -83,13 +84,13 @@ export default function AboutPage() {
             </div>
 
             <div className="mt-10 flex flex-wrap gap-4">
-              <Link
+              <Link prefetch={false}
                 href="/products/custom-hats"
                 className="rounded-full bg-[#13294b] px-6 py-3 text-sm font-semibold text-white transition hover:scale-105 hover:bg-[#0f1f39]"
               >
                 Shop Now
               </Link>
-              <Link
+              <Link prefetch={false}
                 href="/contact"
                 className="rounded-full border border-[#13294b] px-6 py-3 text-sm font-semibold text-[#13294b] transition hover:bg-[#eef2f7]"
               >

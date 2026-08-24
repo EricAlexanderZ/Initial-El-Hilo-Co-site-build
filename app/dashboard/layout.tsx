@@ -96,7 +96,7 @@ export default async function DashboardLayout({
           <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[#13294b] text-sm font-extrabold text-white">
             EH
           </div>
-          <Link href="/" className="text-sm font-extrabold tracking-wide text-[#13294b] hover:opacity-80">
+          <Link prefetch={false} href="/" className="text-sm font-extrabold tracking-wide text-[#13294b] hover:opacity-80">
             El Hilo Co
           </Link>
         </div>
@@ -121,7 +121,7 @@ export default async function DashboardLayout({
           <ul className="space-y-1">
             {navItems.map((item) => (
               <li key={item.href}>
-                <Link
+                <Link prefetch={false}
                   href={item.href}
                   className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-gray-600 transition hover:bg-[#f6f6f4] hover:text-[#13294b] [&.active]:bg-[#13294b] [&.active]:text-white"
                 >
@@ -151,7 +151,7 @@ export default async function DashboardLayout({
       <div className="flex flex-1 flex-col">
         {/* Mobile top bar */}
         <div className="flex items-center justify-between border-b border-black/10 bg-white px-4 py-4 md:hidden">
-          <Link href="/" className="flex items-center gap-2">
+          <Link prefetch={false} href="/" className="flex items-center gap-2">
             <div className="flex h-7 w-7 items-center justify-center rounded-full bg-[#13294b] text-xs font-extrabold text-white">
               EH
             </div>
@@ -168,7 +168,7 @@ export default async function DashboardLayout({
         {/* Mobile bottom nav */}
         <nav className="flex border-t border-black/10 bg-white md:hidden">
           {navItems.map((item) => (
-            <Link
+            <Link prefetch={false}
               key={item.href}
               href={item.href}
               className="flex flex-1 flex-col items-center gap-1 py-3 text-[10px] font-medium text-gray-500 transition hover:text-[#13294b]"

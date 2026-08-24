@@ -72,7 +72,7 @@ export default async function ArchivePage() {
                     </span>
                     <div className="flex gap-2">
                       <UnarchiveButton orderId={order.id} />
-                      <Link
+                      <Link prefetch={false}
                         href={`/admin/orders/${order.id}`}
                         className="rounded-full bg-[#13294b] px-4 py-1.5 text-xs font-semibold text-white"
                       >
@@ -120,7 +120,7 @@ export default async function ArchivePage() {
                       <td className="px-5 py-4">
                         <div className="flex gap-2">
                           <UnarchiveButton orderId={order.id} />
-                          <Link
+                          <Link prefetch={false}
                             href={`/admin/orders/${order.id}`}
                             className="rounded-full bg-[#13294b] px-4 py-1.5 text-xs font-semibold text-white transition hover:bg-[#0f1f39]"
                           >

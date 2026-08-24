@@ -36,7 +36,7 @@ export default function AdminLoginPage() {
       <div className="w-full max-w-sm px-4">
         <div className="mb-8 text-center">
           <div className="relative mx-auto h-14 w-14">
-            <Image src="/images/home/elhilocologo.png" alt="El Hilo Co" fill className="object-contain" />
+            <Image src="/images/home/elhilocologo.png" alt="El Hilo Co" fill sizes="96px" className="object-contain" />
           </div>
           <h1 className="mt-4 text-2xl font-extrabold">Admin Login</h1>
           <p className="mt-1 text-sm text-gray-500">El Hilo Co — Internal Panel</p>

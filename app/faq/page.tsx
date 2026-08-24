@@ -68,7 +68,7 @@ export default function FAQPage() {
           <p className="mt-3 text-sm text-white/70">
             Our team is happy to help. Send us a message and we&apos;ll get back to you within 1–2 business days.
           </p>
-          <Link
+          <Link prefetch={false}
             href="/contact"
             className="mt-6 inline-block rounded-full bg-[#ffd84d] px-6 py-3 text-sm font-bold text-black transition hover:brightness-95"
           >

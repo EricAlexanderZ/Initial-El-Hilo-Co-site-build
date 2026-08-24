@@ -81,7 +81,7 @@ export default async function CustomersPage() {
                     <span>·</span>
                     <span>{new Date(c.lastOrderAt).toLocaleDateString()}</span>
                   </div>
-                  <Link
+                  <Link prefetch={false}
                     href={`/admin/customers/${encodeURIComponent(c.email)}`}
                     className="rounded-full bg-[#13294b] px-4 py-1.5 text-xs font-semibold text-white"
                   >
@@ -118,7 +118,7 @@ export default async function CustomersPage() {
                       <td className="px-5 py-4 font-semibold text-[#13294b]">${c.totalSpent.toFixed(2)}</td>
                       <td className="px-5 py-4 text-gray-400">{new Date(c.lastOrderAt).toLocaleDateString()}</td>
                       <td className="px-5 py-4">
-                        <Link
+                        <Link prefetch={false}
                           href={`/admin/customers/${encodeURIComponent(c.email)}`}
                           className="rounded-full bg-[#13294b] px-4 py-1.5 text-xs font-semibold text-white transition hover:bg-[#0f1f39]"
                         >

@@ -21,7 +21,7 @@ export default function CartItemCard({ item }: { item: CartItem }) {
       <div className="flex items-start gap-4">
         <div className="relative flex h-16 w-16 shrink-0 items-center justify-center overflow-hidden rounded-2xl sm:h-24 sm:w-24">
           {emoji.startsWith("/") || emoji.startsWith("http") ? (
-            <Image src={emoji} alt={item.productType} fill className="object-contain p-1" />
+            <Image src={emoji} alt={item.productType} fill sizes="96px" className="object-contain p-1" />
           ) : (
             <span className="text-4xl sm:text-5xl">{emoji}</span>
           )}

@@ -43,7 +43,7 @@ export default function BlogIndexPage() {
           <div className="mx-auto max-w-4xl px-6">
             {/* The pillar leads, because it is the page every other post links
                 back to and the one competing for the broadest phrase. */}
-            <Link
+            <Link prefetch={false}
               href={`/blog/${pillar.slug}`}
               className="block rounded-3xl bg-white p-7 shadow-sm transition hover:shadow-md"
             >
@@ -64,7 +64,7 @@ export default function BlogIndexPage() {
             </h2>
             <div className="grid gap-4 sm:grid-cols-2">
               {rest.map((post) => (
-                <Link
+                <Link prefetch={false}
                   key={post.slug}
                   href={`/blog/${post.slug}`}
                   className="flex flex-col rounded-2xl bg-white p-6 shadow-sm transition hover:shadow-md"

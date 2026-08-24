@@ -33,7 +33,7 @@ export default async function AdminOrderDetailPage({
     <div className="p-4 md:p-8">
       {/* Header */}
       <div className="mb-6 flex flex-wrap items-center gap-3">
-        <Link href="/admin/orders" className="text-sm font-semibold text-gray-400 hover:text-black">
+        <Link prefetch={false} href="/admin/orders" className="text-sm font-semibold text-gray-400 hover:text-black">
           ← Orders
         </Link>
         <span className="text-gray-300">|</span>
