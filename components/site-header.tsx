@@ -14,13 +14,13 @@ import { createClient } from "@/utils/supabase/client";
  * swapped in and out of state, so all of them are in the HTML a crawler sees and
  * the bar reads correctly before hydration.
  */
-const ANNOUNCEMENTS = [
-  "Free local pickup and delivery on every order across the RGV.",
-  "Text only: (956) 332-3651",
-  "Premium custom embroidery with fast turnaround.",
+const ANNOUNCEMENTS: { lead: string; rest: string; sms?: boolean }[] = [
+  { lead: "Free local pickup & delivery", rest: "on every order across the RGV" },
+  { lead: "Text only", rest: "(956) 332-3651", sms: true },
+  { lead: "Premium custom embroidery", rest: "with fast turnaround" },
 ];
 
-const ROTATE_MS = 5000;
+const ROTATE_MS = 3000;
 
 export function TopBanner() {
   const [index, setIndex] = useState(0);
@@ -38,21 +38,31 @@ export function TopBanner() {
   }, [paused]);
 
   return (
+    /*
+      Navy rather than the old yellow-with-black. Black on #ffd84d is high
+      contrast but reads cheap, and a light bar above a white header has nothing
+      to push against. A dark band at the very top of the page separates cleanly
+      from the header beneath it and lets the gold carry the emphasis.
+    */
     <div
-      className="bg-[#ffd84d] px-4 text-black"
+      className="bg-[#13294b] px-4 text-white"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
-      <div className="relative mx-auto flex min-h-10 max-w-7xl items-center justify-center">
-        {ANNOUNCEMENTS.map((text, i) => {
+      <div className="relative mx-auto flex min-h-11 max-w-7xl items-center justify-center">
+        {ANNOUNCEMENTS.map((item, i) => {
           const active = i === index;
-          const isPhone = text.startsWith("Text only");
           const body = (
-            <span className="block text-center text-sm font-semibold leading-tight">{text}</span>
+            <span className="flex flex-wrap items-center justify-center gap-x-2 text-center text-[13px] leading-tight sm:text-sm">
+              <span className="font-extrabold uppercase tracking-[0.08em] text-[#ffd84d]">
+                {item.lead}
+              </span>
+              <span className="font-medium text-white/90">{item.rest}</span>
+            </span>
           );
           return (
             <div
-              key={text}
+              key={item.lead}
               aria-hidden={!active}
               className={`w-full transition-opacity duration-500 ${
                 active
@@ -60,14 +70,17 @@ export function TopBanner() {
                   : "pointer-events-none absolute inset-0 flex items-center opacity-0"
               }`}
             >
-              {isPhone ? (
+              {item.sms ? (
                 // Opens a text, not a call, so nobody dials a number that only
                 // accepts messages.
-                <a href="sms:+19563323651" className="block w-full py-2 hover:underline">
+                <a
+                  href="sms:+19563323651"
+                  className="block w-full py-2.5 transition hover:brightness-110"
+                >
                   {body}
                 </a>
               ) : (
-                <div className="py-2">{body}</div>
+                <div className="py-2.5">{body}</div>
               )}
             </div>
           );
