@@ -32,10 +32,18 @@ export const site = {
   email: "orders@elhiloco.com",
 
   /**
-   * ⚠️ PLACEHOLDER. El Hilo Co operates as a service-area business, so the
-   * schema below uses `areaServed` rather than a storefront address. If a real
-   * address is ever published it must match the Google Business Profile
-   * character for character.
+   * Confirmed 2026-08-17: there is no storefront. El Hilo Co is a service-area
+   * business, so this is city, region and country only — deliberately no
+   * street address anywhere on the site or in the schema.
+   *
+   * That is the correct shape, not a gap. Publishing a home address for an SAB
+   * is the common mistake: it exposes a private address and Google can suspend
+   * a listing whose address does not match a staffed, visitable location.
+   * `areaServed` in the LocalBusiness block is what carries the geography here.
+   *
+   * The Google Business Profile must be configured the same way — set as a
+   * service-area business with the address hidden — or the profile and the site
+   * disagree, which is exactly the inconsistency that weakens local ranking.
    */
   address: {
     locality: "Palmview",
