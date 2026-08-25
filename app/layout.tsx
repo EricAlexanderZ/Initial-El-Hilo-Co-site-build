@@ -114,11 +114,19 @@ function LocalBusinessJsonLd() {
      * on the wrong entity entirely. Linking them is what consolidates the
      * signals onto one business.
      *
-     * The Google Business Profile URL belongs here too, once its share link is
-     * to hand. Add it and nothing else needs to change.
+     * The share.google URL is the Business Profile's own share link. Following
+     * it resolves to a Google entity page carrying kgmid /g/11z4lwdxwd, which is
+     * the Knowledge Graph id for this business. Worth recording: that id is the
+     * thing Google uses internally to mean "El Hilo Co the embroidery shop", as
+     * distinct from every other use of the phrase.
+     *
+     * Use the share link rather than a signed-in search URL. Those carry
+     * authuser and session parameters, are not stable, and do not identify the
+     * business to anyone else.
      */
     sameAs: [
       "https://www.instagram.com/elhiloco",
+      "https://share.google/yOCamJrOjHD6zCykZ",
     ],
   };
 
