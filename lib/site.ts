@@ -12,8 +12,26 @@ export const site = {
   name: "El Hilo Co",
   legalName: "El Hilo Co",
   tagline: "Custom embroidery in the Rio Grande Valley",
+  /**
+   * Meta description. Deliberately short: Google truncates around 155
+   * characters in results, so this is the trimmed version of `longDescription`
+   * rather than the whole thing.
+   */
   description:
-    "Custom embroidery for businesses, teams and events across the Rio Grande Valley. Hats, polos, hoodies and sweaters, stitched in house with free local pickup and delivery.",
+    "Custom embroidery in the Rio Grande Valley. Hats, polos, hoodies and sweaters for businesses, teams and schools, with free local pickup and delivery. No minimum order.",
+
+  /**
+   * The full description, kept word for word identical to the Google Business
+   * Profile description. Used for the LocalBusiness schema, where there is room
+   * for it and where matching the profile matters: two descriptions of the same
+   * business that disagree are two things Google has to reconcile, and it is
+   * one of the signals that decides whether the site and the profile are
+   * treated as one entity.
+   *
+   * If the Business Profile text is ever edited, edit this to match.
+   */
+  longDescription:
+    "El Hilo Co is a custom embroidery shop serving the Rio Grande Valley. We stitch hats, polos, hoodies and sweaters for businesses, teams, schools and events, with free local pickup and delivery across Palmview, Mission, McAllen, Edinburg and Pharr. There is no minimum order. One piece or two hundred, embroidery is priced per piece and the cost per piece falls as the quantity rises. Choose from ten cap styles, add front, side or back placement, and see your price before you order. Every job starts with a digital proof. Nothing is stitched until you approve it, and most orders finish within five to seven business days of approval. Orders are coordinated by appointment.",
 
   /**
    * Used for canonicals, the sitemap and JSON-LD, so it must be the exact host

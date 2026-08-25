@@ -71,7 +71,8 @@ function LocalBusinessJsonLd() {
     "@type": "LocalBusiness",
     "@id": `${site.url}/#business`,
     name: site.name,
-    description: site.description,
+    // The long form here, matching the Business Profile word for word.
+    description: site.longDescription,
     url: site.url,
     email: site.email,
     telephone: site.phoneE164,
