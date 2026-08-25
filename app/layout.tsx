@@ -104,6 +104,21 @@ function LocalBusinessJsonLd() {
       "team apparel",
       "corporate uniforms",
     ],
+    /**
+     * The explicit statement that these profiles are the same business.
+     *
+     * Without sameAs, Google treats the site, the Instagram account and the
+     * Business Profile as three unrelated things and has to guess. "El hilo" is
+     * also a well-known podcast, so for a brand-name search that guess can land
+     * on the wrong entity entirely. Linking them is what consolidates the
+     * signals onto one business.
+     *
+     * The Google Business Profile URL belongs here too, once its share link is
+     * to hand. Add it and nothing else needs to change.
+     */
+    sameAs: [
+      "https://www.instagram.com/elhiloco",
+    ],
   };
 
   return (
