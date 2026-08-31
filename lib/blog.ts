@@ -58,7 +58,7 @@ const PILLAR: Post = {
   slug: "custom-embroidery-near-me-rio-grande-valley",
   title: "Custom Embroidery Near Me: A Straight Answer for the Rio Grande Valley",
   description:
-    "What custom embroidery actually costs in the RGV, how long it takes, and what to send us. Serving Palmview, Mission, McAllen, Edinburg and Pharr.",
+    "What custom embroidery actually costs in the RGV, how long it takes, and what to send us. Serving Palmview, Alton, Mission, McAllen, Edinburg and Pharr.",
   date: "2026-08-17",
   readMinutes: 7,
   keywords: [
@@ -126,6 +126,13 @@ const CITY_ANGLES: Record<
     who: "Local restaurants and taquerias putting staff in embroidered polos, contractors who need durable caps that survive a job site, and school groups ordering team apparel.",
     local:
       "Because we are here, Palmview orders can often get a same-day proof and a next-day drop-off once artwork is approved. If you want to see thread colors against your logo in person before committing, that is easiest here.",
+  },
+  alton: {
+    intro:
+      "Alton is our closest neighbour on the Expressway 83 corridor, which makes it one of the shortest runs we make and one of the quickest turnarounds we can offer.",
+    who: "Family-run businesses putting staff in matching polos, contractors and trades needing caps that survive outdoors, and Alton school groups ordering team and club apparel.",
+    local:
+      "Free pickup and delivery throughout Alton. Because it is minutes from us, an approved proof in the morning can often be stitched and dropped the following day.",
   },
   mission: {
     intro:

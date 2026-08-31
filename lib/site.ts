@@ -31,7 +31,7 @@ export const site = {
    * If the Business Profile text is ever edited, edit this to match.
    */
   longDescription:
-    "El Hilo Co is a custom embroidery shop serving the Rio Grande Valley. We stitch hats, polos, hoodies and sweaters for businesses, teams, schools and events, with free local pickup and delivery across Palmview, Mission, McAllen, Edinburg and Pharr. There is no minimum order. One piece or two hundred, embroidery is priced per piece and the cost per piece falls as the quantity rises. Choose from ten cap styles, add front, side or back placement, and see your price before you order. Every job starts with a digital proof. Nothing is stitched until you approve it, and most orders finish within five to seven business days of approval. Orders are coordinated by appointment.",
+    "El Hilo Co is a custom embroidery shop serving the Rio Grande Valley. We stitch hats, polos, hoodies and sweaters for businesses, teams, schools and events, with free local pickup and delivery across Palmview, Alton, Mission, McAllen, Edinburg and Pharr. There is no minimum order. One piece or two hundred, embroidery is priced per piece and the cost per piece falls as the quantity rises. Choose from ten cap styles, add front, side or back placement, and see your price before you order. Every job starts with a digital proof. Nothing is stitched until you approve it, and most orders finish within five to seven business days of approval. Orders are coordinated by appointment.",
 
   /**
    * Used for canonicals, the sitemap and JSON-LD, so it must be the exact host
@@ -99,6 +99,13 @@ export const serviceCities: ServiceCity[] = [
       "Our home base. Same-day proofs and free drop-off for Palmview businesses, schools and teams.",
   },
   {
+    slug: "alton",
+    name: "Alton",
+    county: "Hidalgo County",
+    blurb:
+      "Next door to us on the Expressway 83 corridor. Free drop-off for Alton businesses, schools and teams.",
+  },
+  {
     slug: "mission",
     name: "Mission",
     county: "Hidalgo County",
@@ -130,7 +137,7 @@ export const serviceCities: ServiceCity[] = [
 
 export const cityNames = serviceCities.map((c) => c.name);
 
-/** "Palmview, Mission, McAllen, Edinburg and Pharr" — for prose. */
+/** "Palmview, Alton, Mission, McAllen, Edinburg and Pharr" — for prose. */
 export const cityList = `${cityNames.slice(0, -1).join(", ")} and ${cityNames[cityNames.length - 1]}`;
 
 export function getCity(slug: string): ServiceCity | undefined {
