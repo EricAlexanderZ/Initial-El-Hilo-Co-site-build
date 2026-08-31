@@ -86,7 +86,14 @@ export async function POST(request: NextRequest) {
     price:       i.price,
   }));
 
-  Promise.allSettled([
+  // These MUST be awaited. Vercel freezes a serverless function the moment it
+  // returns a response, so an un-awaited promise is killed mid-flight and the
+  // email silently never sends. It works locally only because the dev server
+  // keeps running long enough for the request to finish.
+  //
+  // allSettled, not all: the order is already saved, so a failed email must not
+  // turn a successful order into an error for the customer.
+  const emailResults = await Promise.allSettled([
     sendOrderConfirmation({
       to:      body.customerEmail,
       name:    body.customerName,
@@ -102,6 +109,17 @@ export async function POST(request: NextRequest) {
       total:         body.total,
     }),
   ]);
+
+  // Without this a rejected send is invisible, which is exactly how an email
+  // outage goes unnoticed for weeks.
+  emailResults.forEach((r, i) => {
+    if (r.status === "rejected") {
+      console.error(
+        `[api/order] ${i === 0 ? "customer confirmation" : "admin alert"} failed:`,
+        r.reason
+      );
+    }
+  });
 
   return NextResponse.json({ orderId: order.id, orderNumber: order.order_number });
 }

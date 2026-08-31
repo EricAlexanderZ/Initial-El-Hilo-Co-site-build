@@ -19,12 +19,26 @@ type EmailPayload = {
   html: string;
 };
 
-async function send({ to, subject, html }: EmailPayload) {
+/**
+ * Returns true when a message was actually handed to SMTP.
+ *
+ * It used to return undefined both when it sent and when it was unconfigured,
+ * which made a missing EMAIL_USER indistinguishable from a successful send. A
+ * warning is logged instead, so an unconfigured deployment says so in the logs
+ * rather than looking like everything worked.
+ */
+async function send({ to, subject, html }: EmailPayload): Promise<boolean> {
   const transporter = getTransporter();
-  if (!transporter) return; // silently skip if not configured
+  if (!transporter) {
+    console.warn(
+      "[email] EMAIL_USER / EMAIL_APP_PASSWORD not set. Nothing was sent to " + to
+    );
+    return false;
+  }
 
   const from = process.env.EMAIL_USER;
   await transporter.sendMail({ from: `El Hilo Co <${from}>`, to, subject, html });
+  return true;
 }
 
 // ─── Customer: order confirmation ────────────────────────────────────────────
