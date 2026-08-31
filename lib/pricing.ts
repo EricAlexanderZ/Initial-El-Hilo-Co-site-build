@@ -92,20 +92,17 @@ export const CAP_STYLES: CapStyle[] = [
   // put it back on /pitbull-caps.
   { id: "pb222",  brand: "Pitbull Caps", sku: "PB222",  name: "Cambridge Mesh Trucker",         fullName: "PB222 Cambridge Mesh Trucker",                      blankCost: 4.75, hidden: true },
   /**
-   * ⚠️ HIDDEN pending a confirmed blank cost.
-   *
-   * blankCost below is a placeholder, NOT a real supplier price. Everything the
-   * customer is charged derives from it, so shipping it unverified would quote
-   * wrong money on a live store. `hidden: true` keeps it out of the configurator
-   * until the real figure is in. Set the cost, delete the flag, and it appears.
+   * The most expensive blank in the catalog, which is expected: performance
+   * fabric, mesh back and a rope cost more than a cotton twill cap. It carries
+   * through to the storefront price, so this style simply prices above the
+   * others rather than being marked up differently.
    */
   {
     id: "lonestar-gameday-hydro",
     brand: "Lonestar",
     name: "Gameday Hydro Snapback",
     fullName: "Lonestar Gameday Hydro 6 Panel Flat Bill Snapback",
-    blankCost: 0,
-    hidden: true,
+    blankCost: 7.99,
   },
 ];
 
