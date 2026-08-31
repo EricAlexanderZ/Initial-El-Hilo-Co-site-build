@@ -17,6 +17,7 @@ import {
   PriceSummary,
   type QuantityOption,
 } from "@/components/products/product-ui";
+import { getUnitPrice } from "@/lib/products/pricing";
 
 // ─── Data ─────────────────────────────────────────────────────
 
@@ -55,14 +56,20 @@ const colors: PoloColor[] = [
   { name: "White",         hex: "#f5f5f5", ...img("White_Front.jpeg")         },
 ];
 
-const quantities: QuantityOption[] = [
-  { label: "5 Polos",   qty: 5,   price: 150  },
-  { label: "12 Polos",  qty: 12,  price: 252  },
-  { label: "24 Polos",  qty: 24,  price: 480  },
-  { label: "48 Polos",  qty: 48,  price: 900  },
-  { label: "72 Polos",  qty: 72,  price: 1260 },
-  { label: "100 Polos", qty: 100, price: 1700 },
-];
+/**
+ * One-tap presets. Anything else is typed into the custom box.
+ *
+ * Prices are computed from the tier table rather than written out, because a
+ * hardcoded list silently goes stale the moment pricing changes and the button
+ * then advertises a number the cart will not honour.
+ */
+const QUANTITY_PRESETS = [1, 5, 10, 20, 30];
+
+const quantities: QuantityOption[] = QUANTITY_PRESETS.map((qty) => ({
+  label: `${qty} Polo${qty === 1 ? "" : "s"}`,
+  qty,
+  price: qty * getUnitPrice("Custom Polos", qty),
+}));
 
 const DUAL_PER_PIECE = 5;
 
@@ -76,14 +83,6 @@ const reviews = [
 
 // ─── Helpers ──────────────────────────────────────────────────
 
-function getUnitPrice(qty: number): number {
-  if (qty >= 100) return 17;
-  if (qty >= 72)  return 17.5;
-  if (qty >= 48)  return 18.75;
-  if (qty >= 24)  return 20;
-  if (qty >= 12)  return 21;
-  return 30;
-}
 
 function sanitizeName(value: string): string {
   return value.replace(/[^a-zA-Z\s-]/g, "").slice(0, 24);
@@ -123,7 +122,7 @@ export default function CustomPolosPage() {
   const dualPerPiece = leftChest && rightSideName ? DUAL_PER_PIECE : 0;
   const activeQty    = isCustomQuantity && customQtyIsValid ? parsedCustomQty : currentQty.qty;
   const baseTotal    = isCustomQuantity && customQtyIsValid
-    ? parsedCustomQty * getUnitPrice(parsedCustomQty)
+    ? parsedCustomQty * getUnitPrice("Custom Polos", parsedCustomQty)
     : currentQty.price;
   const total    = baseTotal + dualPerPiece * activeQty;
   const perUnit  = activeQty > 0 ? total / activeQty : 0;

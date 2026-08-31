@@ -17,6 +17,7 @@ import {
   PriceSummary,
   type QuantityOption,
 } from "@/components/products/product-ui";
+import { getUnitPrice } from "@/lib/products/pricing";
 
 // ─── Data ─────────────────────────────────────────────────────
 
@@ -73,13 +74,20 @@ const colors: HoodieColor[] = [
   { name: "White",                hex: "#f5f5f5", ...img("White_Front.jpeg",             "White_Back.jpeg")             },
 ];
 
-const quantities: QuantityOption[] = [
-  { label: "1 Hoodie",   qty: 1,  price: 45   },
-  { label: "5 Hoodies",  qty: 5,  price: 200  },
-  { label: "12 Hoodies", qty: 12, price: 432  },
-  { label: "24 Hoodies", qty: 24, price: 816  },
-  { label: "48 Hoodies", qty: 48, price: 1488 },
-];
+/**
+ * One-tap presets. Anything else is typed into the custom box.
+ *
+ * Prices are computed from the tier table rather than written out, because a
+ * hardcoded list silently goes stale the moment pricing changes and the button
+ * then advertises a number the cart will not honour.
+ */
+const QUANTITY_PRESETS = [1, 5, 10, 20, 30];
+
+const quantities: QuantityOption[] = QUANTITY_PRESETS.map((qty) => ({
+  label: `${qty} Hoodie${qty === 1 ? "" : "s"}`,
+  qty,
+  price: qty * getUnitPrice("Custom Hoodies", qty),
+}));
 
 
 const reviews = [
@@ -90,13 +98,6 @@ const reviews = [
 
 // ─── Helpers ──────────────────────────────────────────────────
 
-function getUnitPrice(qty: number): number {
-  if (qty >= 48) return 31;
-  if (qty >= 24) return 34;
-  if (qty >= 12) return 36;
-  if (qty >= 5)  return 40;
-  return 45;
-}
 
 function clampWidth(value: number): number {
   return Math.min(9, Math.max(1, value));
@@ -145,7 +146,7 @@ export default function CustomHoodiesPage() {
 
   const activeQty       = isCustomQuantity && customQtyIsValid ? parsedCustomQty : currentQty.qty;
   const baseTotal       = isCustomQuantity && customQtyIsValid
-    ? parsedCustomQty * getUnitPrice(parsedCustomQty)
+    ? parsedCustomQty * getUnitPrice("Custom Hoodies", parsedCustomQty)
     : currentQty.price;
   const total           = baseTotal + logoUpcharge;
   const perUnit         = activeQty > 0 ? total / activeQty : 0;

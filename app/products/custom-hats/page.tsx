@@ -47,6 +47,9 @@ import {
 
 const NAVY = "#13294b";
 
+/** The only quantities offered as one-tap presets. Anything else is typed. */
+const QUANTITY_PRESETS = [1, 5, 10, 20, 30];
+
 /** Side and back are the only optional positions; front is always included. */
 const ADD_ON_POSITIONS: { position: PlacementPosition; label: string }[] = [
   { position: "left",  label: "Left Side" },
@@ -62,7 +65,17 @@ export default function CustomHatsPage() {
   const [selectedColor, setColor]   = useState(() => getCatalogEntry(getStylesByBrand("OTTO")[0].id)!.colors[0].name);
   const [angle, setAngle]           = useState<PreviewAngle>("front");
   const [puff, setPuff]             = useState(false);
-  const [quantity, setQuantity]     = useState(24);
+  const [quantity, setQuantity]     = useState(20);
+  /**
+   * The raw text of the custom-quantity box, kept separate from `quantity`.
+   *
+   * Deriving the input's value straight from the number made it impossible to
+   * clear: backspacing to empty ran Number("") || MIN_QUANTITY, which is 1, so
+   * the field instantly refilled and the last digit could never be deleted.
+   * The text is authoritative while typing; `quantity` only follows when the
+   * text parses to something valid.
+   */
+  const [qtyText, setQtyText]       = useState("20");
 
   /** Optional placements, keyed by position, each carrying its art grade. */
   const [addOns, setAddOns] = useState<Record<string, PlacementArt | undefined>>({});
@@ -419,11 +432,11 @@ export default function CustomHatsPage() {
                 <div>
                   <Label>Quantity</Label>
                   <div className="flex flex-wrap gap-2">
-                    {[1, 6, 12, 24, 48, 72, 100, 200].map((q) => (
+                    {QUANTITY_PRESETS.map((q) => (
                       <button
                         key={q}
                         type="button"
-                        onClick={() => setQuantity(q)}
+                        onClick={() => { setQuantity(q); setQtyText(String(q)); }}
                         aria-pressed={quantity === q}
                         className={`min-h-11 min-w-16 rounded-xl px-4 text-sm font-bold transition ${
                           quantity === q
@@ -436,13 +449,26 @@ export default function CustomHatsPage() {
                     ))}
                   </div>
                   <input
-                    type="number"
-                    min={MIN_QUANTITY}
-                    max={MAX_QUANTITY}
-                    value={quantity}
-                    onChange={(e) => setQuantity(clampQuantity(Number(e.target.value) || MIN_QUANTITY))}
+                    type="text"
+                    inputMode="numeric"
+                    pattern="[0-9]*"
+                    value={qtyText}
+                    onChange={(e) => {
+                      const next = e.target.value;
+                      // Let the box be empty or mid-edit. Only digits are kept,
+                      // and `quantity` follows only once the text is a number.
+                      if (next !== "" && !/^\d+$/.test(next)) return;
+                      setQtyText(next);
+                      if (next !== "") setQuantity(clampQuantity(Number(next)));
+                    }}
+                    onBlur={() => {
+                      // Leaving it empty would show a blank box against a real
+                      // price, so restore whatever is actually being quoted.
+                      if (qtyText === "" || Number(qtyText) < MIN_QUANTITY) setQtyText(String(quantity));
+                    }}
+                    placeholder="Custom Quantity"
                     aria-label="Custom quantity"
-                    className="mt-3 h-12 w-full rounded-xl border border-black/15 px-4 text-base font-semibold text-[#13294b]"
+                    className="mt-3 h-12 w-full rounded-xl border border-black/15 px-4 text-base font-semibold text-[#13294b] placeholder:font-normal placeholder:text-gray-400"
                   />
                 </div>
 

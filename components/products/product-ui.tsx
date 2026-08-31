@@ -361,8 +361,8 @@ export function QuantitySelector({
               value={isCustomQuantity ? customQuantity : ""}
               onChange={onCustomChange}
               onFocus={onCustomFocus}
-              placeholder="Enter"
-              className="w-20 sm:w-24 rounded-2xl border border-[#e3b33d] px-4 py-3 text-center text-sm font-medium outline-none"
+              placeholder="Custom Quantity"
+              className="w-32 sm:w-40 rounded-2xl border border-[#e3b33d] px-4 py-3 text-center text-sm font-medium outline-none"
             />
             {isCustomQuantity && customQtyIsValid && (
               <div className="min-w-[92px] text-right">
