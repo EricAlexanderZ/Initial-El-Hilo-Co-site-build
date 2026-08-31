@@ -46,6 +46,7 @@ const STYLE_ANGLES: Record<string, PreviewAngle[]> = {
   "pb275":            ["front"],
   // Client supplied front views only for this drop.
   "lonestar-gameday-hydro": ["front"],
+  "lonestar-elite-hydro":   ["front"],
 };
 
 export function getAngles(styleId: string): PreviewAngle[] {
@@ -290,14 +291,27 @@ const PB311_COLORS: CapColor[] = [
 ];
 
 const COLORS_BY_STYLE: Record<string, CapColor[]> = {
+  "lonestar-elite-hydro": [
+    { name: "Navy / Navy White Rope",               hex: "#1e2a4a" },
+    { name: "Black / Black White Rope",             hex: "#1a1a1a" },
+    { name: "Black on Black",                       hex: "#141414" },
+    { name: "Charcoal Grey / Grey White Rope",      hex: "#7c8285" },
+    { name: "Charcoal Grey / Pink White Rope",      hex: "#7c8285" },
+    { name: "Charcoal Grey / Red Black Retro Rope", hex: "#8a8f91" },
+    { name: "Grey / Black",                         hex: "#8a8f91", hex2: "#1a1a1a" },
+    { name: "Royal / Royal White Rope",             hex: "#1155cc" },
+    { name: "White / Black",                        hex: "#eceded", hex2: "#1a1a1a" },
+    { name: "White / Neon Pink White Rope",         hex: "#fdfdfd" },
+    { name: "White / Wide Holes",                   hex: "#f7f7f5" },
+  ],
   "lonestar-gameday-hydro": [
+    { name: "Navy / Black Diamond Rope",       hex: "#1e2a44" },
     { name: "Black / Wide Holes",              hex: "#1a1a1a" },
     { name: "Charcoal / Charcoal White Rope",  hex: "#5a5f5e" },
     { name: "Charcoal / White Black Rope",     hex: "#5a5f5e" },
     { name: "Grey / Black Snapback",           hex: "#7d8482", hex2: "#1a1a1a" },
     { name: "Grey Black / Black White Rope",   hex: "#7d8482", hex2: "#1a1a1a" },
     { name: "Light Grey / White Diamond Rope", hex: "#c9cdc8" },
-    { name: "Navy / Black Diamond Rope",       hex: "#1e2a44" },
     { name: "Navy / Navy White Rope",          hex: "#1e2a44" },
     { name: "Tan / Black Rope",                hex: "#b08d5f" },
     { name: "White / Black White Rope",        hex: "#ecebe7" },
@@ -356,6 +370,8 @@ const COLORS_BY_STYLE: Record<string, CapColor[]> = {
 
 /** Short marketing blurb per style, shown under the tab selector. */
 const DESCRIPTIONS: Record<string, string> = {
+  "lonestar-elite-hydro":
+    "Curved bill snapback with a breathable mesh back for airflow, an adjustable snapback closure that fits any head size, and a lightweight, durable build made for all-day wear.",
   "lonestar-gameday-hydro":
     "6 panel flat bill snapback with a breathable mesh back for airflow, an adjustable snapback closure that fits any head size, and a lightweight, durable build made for all-day wear.",
   "otto-5-panel-aframe":  "Structured 5-panel A-frame with a tall front panel, the cleanest surface for a bold front logo.",
@@ -406,6 +422,7 @@ export function capImage(styleId: string, colorName: string, angle: PreviewAngle
  * Falls back to the first color's front shot when a style has no override.
  */
 const STYLE_PREVIEW: Record<string, { color: string; angle: PreviewAngle }> = {
+  "lonestar-elite-hydro":   { color: "Navy / Navy White Rope", angle: "front" },
   "lonestar-gameday-hydro": { color: "Navy / Black Diamond Rope", angle: "front" },
   "otto-5-panel-aframe": { color: "White", angle: "side" },
   "otto-5-panel-pro":    { color: "White", angle: "side" },

@@ -104,6 +104,17 @@ export const CAP_STYLES: CapStyle[] = [
     fullName: "Lonestar Gameday Hydro 6 Panel Flat Bill Snapback",
     blankCost: 7.99,
   },
+  /**
+   * Same blank price as the Gameday and the same feature set. The difference is
+   * the bill: this one is curved, the Gameday is flat.
+   */
+  {
+    id: "lonestar-elite-hydro",
+    brand: "Lonestar",
+    name: "Elite Hydro Snapback",
+    fullName: "Lonestar Elite Hydro Curved Bill Snapback",
+    blankCost: 7.99,
+  },
 ];
 
 export const CAP_BRANDS: CapBrand[] = ["OTTO", "Pitbull Caps", "Lonestar"];
