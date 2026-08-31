@@ -89,6 +89,19 @@ export default function CustomHatsPage() {
   const angles      = getAngles(styleId);
   const brandStyles = useMemo(() => getStylesByBrand(brand), [brand]);
 
+  /**
+   * Only brands that currently have something to sell.
+   *
+   * A brand whose styles are all hidden still had a tab, and selecting it ran
+   * getStylesByBrand(next)[0].id against an empty array, which throws. Deriving
+   * the tabs from visible styles means hiding the last style in a brand simply
+   * removes the brand, which is what `hidden` is meant to do.
+   */
+  const visibleBrands = useMemo(
+    () => CAP_BRANDS.filter((b) => getStylesByBrand(b).length > 0),
+    []
+  );
+
   const placements: Placement[] = useMemo(
     () =>
       ADD_ON_POSITIONS.filter((p) => addOns[p.position]).map((p) => ({
@@ -113,8 +126,10 @@ export default function CustomHatsPage() {
   }
 
   function chooseBrand(next: CapBrand) {
+    const first = getStylesByBrand(next)[0];
+    if (!first) return; // brand has nothing visible; leave the selection alone
     setBrand(next);
-    chooseStyle(getStylesByBrand(next)[0].id);
+    chooseStyle(first.id);
   }
 
   function toggleAddOn(position: PlacementPosition) {
@@ -186,7 +201,7 @@ export default function CustomHatsPage() {
             {/* ── Brand ─────────────────────────────────────────────────── */}
             <Label>Brand</Label>
             <div className="mb-8 flex flex-wrap gap-3">
-              {CAP_BRANDS.map((b) => (
+              {visibleBrands.map((b) => (
                 <button
                   key={b}
                   type="button"

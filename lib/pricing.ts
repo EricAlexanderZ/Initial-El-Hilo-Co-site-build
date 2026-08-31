@@ -56,7 +56,7 @@ export function clampQuantity(quantity: number): number {
 // Blank hat catalog — wholesale cost per style
 // ---------------------------------------------------------------------------
 
-export type CapBrand = "OTTO" | "Pitbull Caps";
+export type CapBrand = "OTTO" | "Pitbull Caps" | "Lonestar";
 
 export type CapStyle = {
   id:        string;
@@ -91,9 +91,25 @@ export const CAP_STYLES: CapStyle[] = [
   // 5 invented TWO_TONES placeholders and no photography. Remove `hidden` to
   // put it back on /pitbull-caps.
   { id: "pb222",  brand: "Pitbull Caps", sku: "PB222",  name: "Cambridge Mesh Trucker",         fullName: "PB222 Cambridge Mesh Trucker",                      blankCost: 4.75, hidden: true },
+  /**
+   * ⚠️ HIDDEN pending a confirmed blank cost.
+   *
+   * blankCost below is a placeholder, NOT a real supplier price. Everything the
+   * customer is charged derives from it, so shipping it unverified would quote
+   * wrong money on a live store. `hidden: true` keeps it out of the configurator
+   * until the real figure is in. Set the cost, delete the flag, and it appears.
+   */
+  {
+    id: "lonestar-gameday-hydro",
+    brand: "Lonestar",
+    name: "Gameday Hydro Snapback",
+    fullName: "Lonestar Gameday Hydro 6 Panel Flat Bill Snapback",
+    blankCost: 0,
+    hidden: true,
+  },
 ];
 
-export const CAP_BRANDS: CapBrand[] = ["OTTO", "Pitbull Caps"];
+export const CAP_BRANDS: CapBrand[] = ["OTTO", "Pitbull Caps", "Lonestar"];
 
 /** Each brand gets its own page; this drives that page's route and copy. */
 export const BRAND_PAGES: Record<CapBrand, {
@@ -110,6 +126,14 @@ export const BRAND_PAGES: Record<CapBrand, {
     href:    "/pitbull-caps",
     heading: "Pitbull Caps",
     blurb:   "Hybrid perforated rope caps, two-tone camo and mesh truckers, all embroidered in-house with your logo. Choose regular or 3D puff stitching. Low minimums, free digital proof on every order.",
+  },
+  // This site renders brands as tabs on /products/custom-hats rather than
+  // giving each its own route, so href is nominal. The Record type still
+  // requires an entry for every CapBrand.
+  "Lonestar": {
+    href: "/products/custom-hats",
+    heading: "Lonestar",
+    blurb: "Performance snapbacks built for heat and long days outdoors.",
   },
 };
 
