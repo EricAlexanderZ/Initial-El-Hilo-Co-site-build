@@ -9,6 +9,11 @@ import AddressSuggestionModal from "@/components/checkout/address-suggestion-mod
 import StripePaymentForm, { type StripeFormHandle } from "@/components/checkout/stripe-payment-form";
 import { useCart } from "@/components/cart/cart-provider";
 import {
+  LOCAL_DELIVERY_CITY_LIST,
+  isLocalDeliveryEligible,
+  localDeliveryMethod,
+} from "@/lib/local-delivery";
+import {
   DEFAULT_SHIPPING_FORM,
   getShippingLabel,
   hasShippingErrors,
@@ -135,7 +140,17 @@ export default function CheckoutPage() {
       setShippingError("");
 
       const rates = await fetchLiveShippingRates();
-      setDeliveryMethods(rates);
+
+      // Free local delivery goes first, ahead of every carrier rate, because it
+      // is both the cheapest and the fastest for anyone it applies to. Offered
+      // only when the typed address actually qualifies: showing it to someone
+      // out of range would be a promise the business cannot keep.
+      const eligible = isLocalDeliveryEligible(shippingForm.city, shippingForm.state);
+      setDeliveryMethods(eligible ? [localDeliveryMethod(), ...rates] : rates);
+
+      // Preselect it. It is free, so there is no version of this where someone
+      // in range would rather pay a carrier.
+      if (eligible) setSelectedDelivery(localDeliveryMethod());
       setShippingComplete(true);
       setShowAddressSuggestion(false);
       setOpenStep(2);
@@ -482,6 +497,20 @@ export default function CheckoutPage() {
                 shippingComplete && setOpenStep(openStep === 2 ? 0 : 2)
               }
             >
+              {/*
+                Shown whether or not the address qualified. If it did, this explains
+                why the free option is there; if it did not, it tells the customer the
+                service exists rather than leaving them wondering why they are being
+                quoted a carrier rate.
+              */}
+              <div className="mb-4 rounded-xl border border-[#e5b43d]/40 bg-[#fff8e7] px-4 py-3">
+                <p className="text-sm font-semibold text-[#13294b]">Free local delivery</p>
+                <p className="mt-1 text-sm leading-relaxed text-gray-700">
+                  We deliver to {LOCAL_DELIVERY_CITY_LIST} at no charge. Choose it below if
+                  your address is in one of those cities.
+                </p>
+              </div>
+
               <div className="space-y-3">
                 {deliveryMethods.map((method) => {
                   const selected = selectedDelivery?.id === method.id;
