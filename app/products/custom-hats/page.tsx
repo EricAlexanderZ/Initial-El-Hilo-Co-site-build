@@ -47,6 +47,22 @@ import {
 
 const NAVY = "#13294b";
 
+/**
+ * What the configurator opens on.
+ *
+ * Lonestar leads because it is the newest range and the one worth showing
+ * first. Resolved through the visible-styles check rather than used directly:
+ * if every style in the preferred brand were hidden, naming it here would open
+ * the page on a brand with nothing in it and throw on the first render.
+ */
+const PREFERRED_BRAND: CapBrand = "Lonestar";
+
+function openingBrand(): CapBrand {
+  return getStylesByBrand(PREFERRED_BRAND).length > 0
+    ? PREFERRED_BRAND
+    : (CAP_BRANDS.find((b) => getStylesByBrand(b).length > 0) ?? PREFERRED_BRAND);
+}
+
 /** The only quantities offered as one-tap presets. Anything else is typed. */
 const QUANTITY_PRESETS = [1, 5, 10, 20, 30];
 
@@ -60,9 +76,11 @@ const ADD_ON_POSITIONS: { position: PlacementPosition; label: string }[] = [
 export default function CustomHatsPage() {
   const router = useRouter();
 
-  const [brand, setBrand]           = useState<CapBrand>("OTTO");
-  const [styleId, setStyleId]       = useState(() => getStylesByBrand("OTTO")[0].id);
-  const [selectedColor, setColor]   = useState(() => getCatalogEntry(getStylesByBrand("OTTO")[0].id)!.colors[0].name);
+  const [brand, setBrand]           = useState<CapBrand>(openingBrand);
+  const [styleId, setStyleId]       = useState(() => getStylesByBrand(openingBrand())[0].id);
+  const [selectedColor, setColor]   = useState(
+    () => getCatalogEntry(getStylesByBrand(openingBrand())[0].id)!.colors[0].name
+  );
   const [angle, setAngle]           = useState<PreviewAngle>("front");
   const [puff, setPuff]             = useState(false);
   const [quantity, setQuantity]     = useState(20);
