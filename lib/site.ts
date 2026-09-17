@@ -9,8 +9,24 @@
  */
 
 export const site = {
-  name: "El Hilo Co",
-  legalName: "El Hilo Co",
+  name: "Brand First Merch",
+
+  /**
+   * The registered entity, which the rebrand does not change. Brand First Merch
+   * is a trade name; the LLC is still El Hilo Co LLC until that is refiled.
+   * Terms, Privacy and anything contractual must name this, not the brand.
+   */
+  legalName: "El Hilo Co LLC",
+
+  /**
+   * The previous trade name. Kept deliberately rather than deleted.
+   *
+   * The Google Business Profile, its reviews and every existing backlink point
+   * at "El Hilo Co". Naming the old brand once on the site is what lets Google
+   * treat the two as one entity instead of a new business with no history.
+   * Remove this only after the profile rename has settled, months out.
+   */
+  formerName: "El Hilo Co",
   tagline: "Custom embroidery in the Rio Grande Valley",
   /**
    * Meta description. Deliberately short: Google truncates around 155
@@ -31,7 +47,7 @@ export const site = {
    * If the Business Profile text is ever edited, edit this to match.
    */
   longDescription:
-    "El Hilo Co is a custom embroidery shop serving the Rio Grande Valley. We stitch hats, polos, hoodies and sweaters for businesses, teams, schools and events, with free local pickup and delivery across Palmview, Alton, Mission, McAllen, Edinburg and Pharr. There is no minimum order. One piece or two hundred, embroidery is priced per piece and the cost per piece falls as the quantity rises. Choose from ten cap styles, add front, side or back placement, and see your price before you order. Every job starts with a digital proof. Nothing is stitched until you approve it, and most orders finish within five to seven business days of approval. Orders are coordinated by appointment.",
+    "Brand First Merch, formerly El Hilo Co, is a custom embroidery shop serving the Rio Grande Valley. We stitch hats, polos, hoodies and sweaters for businesses, teams, schools and events, with free local pickup and delivery across Palmview, Alton, Mission, McAllen, Edinburg and Pharr. There is no minimum order. One piece or two hundred, embroidery is priced per piece and the cost per piece falls as the quantity rises. Choose from ten cap styles, add front, side or back placement, and see your price before you order. Every job starts with a digital proof. Nothing is stitched until you approve it, and most orders finish within five to seven business days of approval. Orders are coordinated by appointment.",
 
   /**
    * Used for canonicals, the sitemap and JSON-LD, so it must be the exact host
@@ -40,6 +56,13 @@ export const site = {
    * Verified 2026-08-17: the apex answers 307 and redirects here, so the www
    * host is the canonical one. Pointing canonicals at the apex would make every
    * single one a redirect hop.
+   *
+   * REBRAND: still elhiloco.com on purpose. This is the host that serves a 200
+   * today. Switching it to brandfirstmerch.com before that domain is attached
+   * to the project and serving would point every canonical, the sitemap and all
+   * JSON-LD at a dead host, which deindexes the site. Change this only once
+   * brandfirstmerch.com resolves, and add 301s from the old host at the same
+   * time so the existing ranking transfers instead of being abandoned.
    */
   url: "https://www.elhiloco.com",
 
@@ -51,10 +74,16 @@ export const site = {
   phoneE164: "+19563323651",
   smsHref: "sms:+19563323651",
 
+  /**
+   * REBRAND: still the elhiloco.com mailbox, which is the one that exists and
+   * the one SMTP_USER authenticates as. Renaming this string would not create
+   * orders@brandfirstmerch.com; it would just print an address that bounces.
+   * Change it when that mailbox is live and the SMTP credentials follow.
+   */
   email: "orders@elhiloco.com",
 
   /**
-   * Confirmed 2026-08-17: there is no storefront. El Hilo Co is a service-area
+   * Confirmed 2026-08-17: there is no storefront. This is a service-area
    * business, so this is city, region and country only — deliberately no
    * street address anywhere on the site or in the schema.
    *

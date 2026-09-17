@@ -184,7 +184,7 @@ export function SiteHeader() {
         {/* Logo — center */}
         <Link prefetch={false} href="/" className="absolute left-1/2 -translate-x-1/2">
           <div className="relative h-16 w-16">
-            <Image src="/images/home/elhilocologo.png" alt="El Hilo Co" fill sizes="64px" className="object-contain" />
+            <Image src="/images/home/elhilocologo.png" alt="Brand First Merch" fill sizes="64px" className="object-contain" />
           </div>
         </Link>
 
@@ -196,9 +196,9 @@ export function SiteHeader() {
       <div className="mx-auto hidden max-w-7xl items-center justify-between px-6 py-4 md:flex">
         <Link prefetch={false} href="/" className="flex items-center gap-3">
           <div className="relative h-10 w-10">
-            <Image src="/images/home/elhilocologo.png" alt="El Hilo Co" fill sizes="64px" className="object-contain" />
+            <Image src="/images/home/elhilocologo.png" alt="Brand First Merch" fill sizes="64px" className="object-contain" />
           </div>
-          <span className="text-lg font-extrabold tracking-wide">EL HILO CO</span>
+          <span className="text-lg font-extrabold tracking-tight">BRAND FIRST MERCH</span>
         </Link>
 
         <nav className="flex items-center gap-8">
@@ -264,9 +264,9 @@ export function SiteHeader() {
         <div className="flex items-center justify-between border-b border-black/10 px-5 py-4">
           <div className="flex items-center gap-2">
             <div className="relative h-8 w-8">
-              <Image src="/images/home/elhilocologo.png" alt="El Hilo Co" fill sizes="64px" className="object-contain" />
+              <Image src="/images/home/elhilocologo.png" alt="Brand First Merch" fill sizes="64px" className="object-contain" />
             </div>
-            <span className="text-sm font-extrabold tracking-wide">EL HILO CO</span>
+            <span className="text-sm font-extrabold tracking-tight">BRAND FIRST MERCH</span>
           </div>
           <button
             type="button"

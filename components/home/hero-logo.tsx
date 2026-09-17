@@ -51,7 +51,7 @@ export default function HeroLogo() {
             <div className="relative h-72 w-72 md:h-96 md:w-96">
               <Image
                 src="/images/home/elhilocologo.png"
-                alt="El Hilo Co"
+                alt="Brand First Merch"
                 fill
                 sizes="(max-width: 640px) 60vw, 400px"
                 className="object-contain"

@@ -11,7 +11,7 @@ export default function OrderConfirmationPage() {
 
       <section className="mx-auto max-w-2xl px-6 py-24 text-center">
         <div className="relative mx-auto h-20 w-20">
-          <Image src="/images/home/elhilocologo.png" alt="El Hilo Co" fill sizes="96px" className="object-contain" />
+          <Image src="/images/home/elhilocologo.png" alt="Brand First Merch" fill sizes="96px" className="object-contain" />
         </div>
 
         <div className="mt-8 inline-flex h-16 w-16 items-center justify-center rounded-full bg-green-100 text-3xl">

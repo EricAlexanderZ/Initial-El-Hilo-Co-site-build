@@ -80,7 +80,7 @@ export default function SquarePaymentForm({ onTokenized, amount }: Props) {
           const paymentRequest = payments.paymentRequest({
             countryCode: "US",
             currencyCode: "USD",
-            total: { amount: amountRef.current.toFixed(2), label: "El Hilo Co" },
+            total: { amount: amountRef.current.toFixed(2), label: "Brand First Merch" },
           });
           const applePay = await payments.applePay(paymentRequest);
           applePayRef.current = applePay;

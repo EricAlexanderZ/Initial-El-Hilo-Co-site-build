@@ -2,8 +2,10 @@
 import { SiteFooter } from "@/components/site-footer";
 
 // ─── Brand constants ──────────────────────────────────────────
+// The registered entity. Unchanged by the rebrand: Brand First Merch is
+// the trade name, and naming the wrong party voids the agreement.
 const COMPANY = "El Hilo Co LLC";
-const SITE    = "El Hilo Co";
+const SITE    = "Brand First Merch";
 const ADDRESS = "Alton, TX";
 const EMAIL   = "orders@elhiloco.com";
 const UPDATED = "April 25, 2026";
@@ -236,14 +238,14 @@ export default function PrivacyPage() {
           </Prose>
           <ServiceBlock
             name="Google Analytics (Google LLC)"
-            description="Google Analytics is a web analysis service. Google utilizes the data collected to track and examine the use of El Hilo Co, prepare reports on its activities, and share these reports with other Google services."
+            description="Google Analytics is a web analysis service. Google utilizes the data collected to track and examine the use of Brand First Merch, prepare reports on its activities, and share these reports with other Google services."
             dataTypes="Cookies; Usage Data"
             location="United States"
             privacyUrl="https://policies.google.com/privacy"
           />
           <ServiceBlock
             name="Google Ads Conversion Tracking (Google LLC)"
-            description="Google Ads conversion tracking is an analytics service that connects data from the Google Ads advertising network with actions performed on El Hilo Co."
+            description="Google Ads conversion tracking is an analytics service that connects data from the Google Ads advertising network with actions performed on Brand First Merch."
             dataTypes="Cookies; Usage Data"
             location="United States"
             privacyUrl="https://policies.google.com/privacy"
@@ -252,7 +254,7 @@ export default function PrivacyPage() {
           <SubTitle>Tag Management</SubTitle>
           <ServiceBlock
             name="Google Tag Manager (Google LLC)"
-            description="Google Tag Manager is a tag management service that allows El Hilo Co to deploy and manage analytics and marketing tags without modifying the codebase directly. It does not collect Personal Data itself but may trigger tags that do."
+            description="Google Tag Manager is a tag management service that allows Brand First Merch to deploy and manage analytics and marketing tags without modifying the codebase directly. It does not collect Personal Data itself but may trigger tags that do."
             dataTypes="Usage Data; Cookies; data collected by triggered tags"
             location="United States"
             privacyUrl="https://policies.google.com/privacy"
@@ -323,14 +325,14 @@ export default function PrivacyPage() {
           </Prose>
           <ServiceBlock
             name="Google Ads Remarketing (Google LLC)"
-            description="Google Ads Remarketing connects the activity of El Hilo Co with the Google Ads advertising network and the DoubleClick Cookie."
+            description="Google Ads Remarketing connects the activity of Brand First Merch with the Google Ads advertising network and the DoubleClick Cookie."
             dataTypes="Cookies; Usage Data"
             location="United States"
             privacyUrl="https://policies.google.com/privacy"
           />
           <ServiceBlock
             name="Facebook Custom Audience / Remarketing (Facebook, Inc.)"
-            description="Facebook remarketing services connect the activity of El Hilo Co with the Facebook advertising network and allow for targeted advertising."
+            description="Facebook remarketing services connect the activity of Brand First Merch with the Facebook advertising network and allow for targeted advertising."
             dataTypes="Cookies; email address; Usage Data"
             location="United States"
             privacyUrl="https://www.facebook.com/policy.php"

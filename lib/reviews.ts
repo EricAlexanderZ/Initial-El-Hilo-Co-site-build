@@ -44,5 +44,9 @@ export const EMPTY_REVIEWS: ReviewsPayload = {
  * Resolved by text search rather than hardcoded, so it survives the listing
  * being edited. If it ever resolves to the wrong business, hardcode the place
  * id here instead — it is stable.
+ *
+ * REBRAND: this matches the Business Profile's CURRENT name, which is still
+ * El Hilo Co. It is a text search, so it stops resolving the day the profile
+ * is renamed. Update this string in the same sitting as the profile rename.
  */
 export const PLACE_QUERY = "El Hilo Co embroidery Palmview TX";

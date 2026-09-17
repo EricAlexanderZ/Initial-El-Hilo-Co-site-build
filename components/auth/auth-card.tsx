@@ -9,7 +9,7 @@ interface AuthCardProps {
 /**
  * Shared wrapper for all auth pages (login, signup, forgot-password,
  * update-password). Renders the site chrome + centered card with the
- * El Hilo Co branding block above it.
+ * Brand First Merch branding block above it.
  */
 export function AuthCard({ subtitle, children }: AuthCardProps) {
   return (
@@ -27,7 +27,7 @@ export function AuthCard({ subtitle, children }: AuthCardProps) {
               EH
             </div>
             <h1 className="text-2xl font-extrabold tracking-tight text-[#13294b]">
-              El Hilo Co
+              Brand First Merch
             </h1>
             <p className="text-sm text-gray-500">{subtitle}</p>
           </div>

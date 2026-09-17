@@ -11,7 +11,7 @@ import { EMPTY_REVIEWS, type ReviewsPayload } from "@/lib/reviews";
  * works natively on a phone, and it degrades to a plain scrolling row if
  * JavaScript never arrives. The arrows scroll by one card width and are hidden
  * when everything already fits, which matters because Google caps this at five
- * reviews and El Hilo Co currently has two. Arrows over a row that does not
+ * reviews and Brand First Merch currently has two. Arrows over a row that does not
  * scroll look broken.
  *
  * Renders nothing at all when there are no reviews. An empty "what our

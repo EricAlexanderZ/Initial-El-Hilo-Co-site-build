@@ -77,8 +77,14 @@ export default function AboutPage() {
                 personal. Fast turnarounds aren't just a promise, they're a sign of
                 respect for your time and your brand.
               </p>
+              <p>
+                You may know us as El Hilo Co. Same shop, same machines, same
+                person answering your texts. The name is now Brand First Merch,
+                because that is what the work has always been about: making sure
+                your brand is the thing people notice.
+              </p>
               <p className="font-semibold text-black">
-                Thank you for trusting El Hilo Co. This is more than a business,
+                Thank you for trusting us. This is more than a business,
                 it's everything.
               </p>
             </div>

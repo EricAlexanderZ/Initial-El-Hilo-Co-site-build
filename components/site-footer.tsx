@@ -7,12 +7,12 @@ export function SiteFooter() {
       <div className="mx-auto max-w-7xl px-6 py-14">
         <div className="grid grid-cols-1 gap-8 md:gap-12 md:grid-cols-2 lg:grid-cols-4">
           <div>
-            <Link prefetch={false} href="/" className="inline-flex" aria-label="El Hilo Co home">
+            <Link prefetch={false} href="/" className="inline-flex" aria-label="Brand First Merch home">
               <span className="flex h-16 w-16 items-center justify-center rounded-2xl bg-white p-2">
                 <span className="relative block h-full w-full">
                   <Image
                     src="/images/home/elhilocologo.png"
-                    alt="El Hilo Co"
+                    alt="Brand First Merch"
                     fill
                     sizes="64px"
                     className="object-contain"
@@ -64,7 +64,7 @@ export function SiteFooter() {
         </div>
 
         <div className="mt-12 flex flex-col items-center gap-5 border-t border-white/10 pt-6 text-sm text-white/50 sm:flex-row sm:justify-between">
-          <span>© 2026 El Hilo Co. All rights reserved.</span>
+          <span>© 2026 Brand First Merch. All rights reserved.</span>
 
           {/*
             Agency credit. A plain <a>, not next/link, because this leaves the

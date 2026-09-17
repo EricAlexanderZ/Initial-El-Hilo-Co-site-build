@@ -299,7 +299,7 @@ export default function ProfilePage() {
               className="h-4 w-4 rounded border-black/15 accent-[#13294b]"
             />
             <span className="text-sm text-gray-600">
-              Receive updates and promotions from El Hilo Co
+              Receive updates and promotions from Brand First Merch
             </span>
           </label>
 

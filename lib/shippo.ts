@@ -32,7 +32,7 @@ export async function getShippoRates({
 
   const payload = {
     address_from: {
-      name: "El Hilo Co",
+      name: "Brand First Merch",
       street1: "123 Main St",
       city: "Edinburg",
       state: "TX",

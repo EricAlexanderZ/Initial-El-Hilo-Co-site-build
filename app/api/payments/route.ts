@@ -11,7 +11,7 @@ export async function POST(req: Request) {
       sourceId,
       amount,
       currency = "USD",
-      note = "El Hilo Co order",
+      note = "Brand First Merch order",
       verificationToken,
       orderReference,
     } = await req.json();

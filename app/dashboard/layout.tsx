@@ -97,7 +97,7 @@ export default async function DashboardLayout({
             EH
           </div>
           <Link prefetch={false} href="/" className="text-sm font-extrabold tracking-wide text-[#13294b] hover:opacity-80">
-            El Hilo Co
+            Brand First Merch
           </Link>
         </div>
 

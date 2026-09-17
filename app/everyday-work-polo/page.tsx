@@ -9,7 +9,7 @@ import EverydayPoloClient from "./everyday-polo-client";
 // the nav or footer, and is excluded from search indexing — reachable only via
 // the direct ad link (with its ?ref= attribution tag).
 export const metadata: Metadata = {
-  title: "The Everyday Work Polo — El Hilo Co",
+  title: "The Everyday Work Polo — Brand First Merch",
   description:
     "Custom embroidered work polos for your company. Buy our Everyday Work Polo or bring your own garments — left chest logo, names, and more.",
   robots: { index: false, follow: false },

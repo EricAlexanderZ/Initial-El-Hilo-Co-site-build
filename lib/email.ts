@@ -37,7 +37,7 @@ async function send({ to, subject, html }: EmailPayload): Promise<boolean> {
   }
 
   const from = process.env.EMAIL_USER;
-  await transporter.sendMail({ from: `El Hilo Co <${from}>`, to, subject, html });
+  await transporter.sendMail({ from: `Brand First Merch <${from}>`, to, subject, html });
   return true;
 }
 
@@ -69,11 +69,11 @@ export function sendOrderConfirmation({
 
   return send({
     to,
-    subject: `Order Confirmed — El Hilo Co #${ref}`,
+    subject: `Order Confirmed — Brand First Merch #${ref}`,
     html: `
       <div style="font-family:Arial,sans-serif;max-width:560px;margin:0 auto;color:#111">
         <div style="background:#13294b;padding:24px 32px;border-radius:16px 16px 0 0">
-          <p style="color:#ffd84d;font-weight:900;font-size:20px;margin:0">EL HILO CO</p>
+          <p style="color:#ffd84d;font-weight:900;font-size:20px;margin:0">BRAND FIRST MERCH</p>
         </div>
         <div style="background:#fff;padding:32px;border-radius:0 0 16px 16px;border:1px solid #eee">
           <h1 style="font-size:24px;margin:0 0 8px">Order Confirmed!</h1>

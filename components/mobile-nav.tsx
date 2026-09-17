@@ -40,9 +40,9 @@ export default function MobileNav() {
         <div className="flex items-center justify-between border-b border-black/10 px-5 py-4">
           <div className="flex items-center gap-2">
             <div className="relative h-8 w-8">
-              <Image src="/images/home/elhilocologo.png" alt="El Hilo Co" fill sizes="40px" className="object-contain" />
+              <Image src="/images/home/elhilocologo.png" alt="Brand First Merch" fill sizes="40px" className="object-contain" />
             </div>
-            <span className="text-sm font-extrabold tracking-wide">EL HILO CO</span>
+            <span className="text-sm font-extrabold tracking-tight">BRAND FIRST MERCH</span>
           </div>
           <button
             type="button"

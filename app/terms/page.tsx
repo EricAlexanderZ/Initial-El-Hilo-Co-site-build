@@ -2,8 +2,10 @@
 import { SiteFooter } from "@/components/site-footer";
 
 // ─── Brand constants ─────────────────────────────────────────
+// The registered entity. Unchanged by the rebrand: Brand First Merch is
+// the trade name, and naming the wrong party voids the agreement.
 const COMPANY   = "El Hilo Co LLC";
-const SITE      = "El Hilo Co";
+const SITE      = "Brand First Merch";
 const ADDRESS   = "Alton, TX";
 const EMAIL     = "orders@elhiloco.com";
 const UPDATED   = "April 25, 2026";

@@ -1,7 +1,7 @@
 import type { DeliveryMethod } from "@/types/checkout";
 
 /**
- * Free local delivery, offered instead of a carrier where El Hilo Co drives the
+ * Free local delivery, offered instead of a carrier where Brand First Merch drives the
  * order out itself.
  *
  * ⚠️ This list is NOT the same as `serviceCities` in lib/site.ts, which drives

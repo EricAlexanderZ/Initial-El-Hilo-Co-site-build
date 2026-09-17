@@ -9,7 +9,7 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Frequently Asked Questions",
   description:
-    "Ordering, artwork, pricing, turnaround and delivery for custom embroidery with El Hilo Co. No minimum order.",
+    "Ordering, artwork, pricing, turnaround and delivery for custom embroidery with Brand First Merch. No minimum order.",
   alternates: { canonical: "/faq" },
 };
 
@@ -54,7 +54,7 @@ export default function FAQPage() {
             Frequently Asked Questions
           </h1>
           <p className="mx-auto mt-4 max-w-xl text-base text-gray-600">
-            Everything you need to know about ordering custom embroidery with El Hilo Co.
+            Everything you need to know about ordering custom embroidery with Brand First Merch.
           </p>
         </div>
 

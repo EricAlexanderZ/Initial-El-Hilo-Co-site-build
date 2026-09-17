@@ -71,6 +71,19 @@ function LocalBusinessJsonLd() {
     "@type": "LocalBusiness",
     "@id": `${site.url}/#business`,
     name: site.name,
+
+    /**
+     * The old trade name, declared as structured data rather than only as prose.
+     *
+     * This is the mechanism for a rebrand: it tells Google that the entity it
+     * already ranks as "El Hilo Co", with its reviews and its Knowledge Graph
+     * id, is this same business under a new name. Without it the rename reads
+     * as a brand-new business starting from zero authority.
+     *
+     * Retire it once the Business Profile rename has settled and brand-name
+     * searches resolve here on their own.
+     */
+    alternateName: site.formerName,
     // The long form here, matching the Business Profile word for word.
     description: site.longDescription,
     url: site.url,
@@ -109,16 +122,16 @@ function LocalBusinessJsonLd() {
      * The explicit statement that these profiles are the same business.
      *
      * Without sameAs, Google treats the site, the Instagram account and the
-     * Business Profile as three unrelated things and has to guess. "El hilo" is
-     * also a well-known podcast, so for a brand-name search that guess can land
-     * on the wrong entity entirely. Linking them is what consolidates the
-     * signals onto one business.
+     * Business Profile as three unrelated things and has to guess. That matters
+     * more than usual right now: the Instagram handle and the Business Profile
+     * are still under the old name, so these links are the only thing stating
+     * that they and this site are one business. Do not drop them mid-rebrand.
      *
      * The share.google URL is the Business Profile's own share link. Following
      * it resolves to a Google entity page carrying kgmid /g/11z4lwdxwd, which is
      * the Knowledge Graph id for this business. Worth recording: that id is the
-     * thing Google uses internally to mean "El Hilo Co the embroidery shop", as
-     * distinct from every other use of the phrase.
+     * thing Google uses internally to mean this business. It survives a rename,
+     * which is exactly why the profile should be renamed rather than replaced.
      *
      * Use the share link rather than a signed-in search URL. Those carry
      * authuser and session parameters, are not stable, and do not identify the

@@ -20,7 +20,7 @@ export async function POST(request: NextRequest) {
     });
 
     await transporter.sendMail({
-      from: `El Hilo Co Contact Form <${user}>`,
+      from: `Brand First Merch Contact Form <${user}>`,
       to: user,
       replyTo: `${name} <${email}>`,
       subject: `Contact Form — ${subject || "New Message"}`,

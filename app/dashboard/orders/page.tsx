@@ -90,7 +90,7 @@ export default async function OrdersPage() {
       <div className="mb-8">
         <h1 className="text-2xl font-extrabold text-gray-900">Orders</h1>
         <p className="mt-1 text-sm text-gray-500">
-          All of your El Hilo Co orders in one place.
+          All of your Brand First Merch orders in one place.
         </p>
       </div>
 

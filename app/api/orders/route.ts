@@ -25,12 +25,14 @@ type OrderPayload = {
 export async function POST(request: NextRequest) {
   const body: OrderPayload = await request.json();
 
-  // ── Generate readable order number: ELHILOCO4501, 4502, … ────
+  // ── Generate readable order number: BFM4501, 4502, … ────
+  // Prefix changed with the rebrand. The count is NOT reset: it is the
+  // row count, so restarting it would remint numbers that already exist.
   const { count } = await supabaseAdmin
     .from("orders")
     .select("*", { count: "exact", head: true });
 
-  const orderNumber = `ELHILOCO${4501 + (count ?? 0)}`;
+  const orderNumber = `BFM${4501 + (count ?? 0)}`;
 
   const { data: order, error: orderError } = await supabaseAdmin
     .from("orders")
