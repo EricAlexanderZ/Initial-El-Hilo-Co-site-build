@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Production Proof — Brand First Merch</title>
+<title>Brandfirstmerch Proof Order Form</title>
 <style>
   /*
     Proof sheet. Open in a browser, click any dotted field to type, then print
@@ -138,6 +138,7 @@
     .sheet { border: 0; border-radius: 0; padding: 26px; max-width: 100%; }
     .hint  { display: none; }
     .f     { border-color: transparent; background: transparent; }
+    .f:empty::before { content: ""; }  /* blank fields print empty, not as dashes */
     .watermark { opacity: 0.09; }
   }
 
