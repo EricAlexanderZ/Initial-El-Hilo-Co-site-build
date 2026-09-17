@@ -131,12 +131,38 @@
   footer { margin-top: 22px; padding-top: 14px; border-top: 1px solid var(--line);
            display: flex; justify-content: space-between; font-size: 11px; color: var(--steel); }
 
-  .hint { max-width: 820px; margin: 0 auto 14px; font-size: 12px; color: var(--steel); }
+  /*
+    Sticky so the button is still reachable at the bottom of a long proof.
+    Hidden in print, along with everything else that is scaffolding.
+  */
+  .toolbar {
+    position: sticky; top: 0; z-index: 10;
+    max-width: 820px; margin: 0 auto 14px;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 16px; flex-wrap: wrap;
+    background: var(--shell); padding: 6px 0 10px;
+  }
+  .hint { font-size: 12px; color: var(--steel); margin: 0; flex: 1 1 320px; }
+
+  .pdf-btn {
+    flex: none; cursor: pointer;
+    background: var(--navy); color: #fff;
+    border: 0; border-radius: 8px;
+    padding: 11px 20px;
+    font-size: 14px; font-weight: 700;
+    font-family: inherit;
+    display: inline-flex; align-items: center; gap: 9px;
+    transition: background 0.15s;
+  }
+  .pdf-btn:hover  { background: var(--navy-lt); }
+  .pdf-btn:active { transform: translateY(1px); }
+  .pdf-btn:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
+  .pdf-btn svg { width: 16px; height: 16px; fill: currentColor; }
 
   @media print {
     body   { background: #fff; padding: 0; }
     .sheet { border: 0; border-radius: 0; padding: 26px; max-width: 100%; }
-    .hint  { display: none; }
+    .toolbar { display: none; }
     .f     { border-color: transparent; background: transparent; }
     .f:empty::before { content: ""; }  /* blank fields print empty, not as dashes */
     .watermark { opacity: 0.09; }
@@ -152,7 +178,13 @@
 </head>
 <body>
 
-<p class="hint">Click any dotted field to type. Drag your mockup image onto the box below. When it is filled in, print and save as PDF, then send that to your client.</p>
+<div class="toolbar">
+  <p class="hint">Click any dotted field to type. Drag your mockup image onto the box below, then download the PDF and send that to your client.</p>
+  <button type="button" class="pdf-btn" id="pdf">
+    <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1v8.6l3.3-3.3 1.1 1.1L7.25 12.5 2.1 7.4l1.1-1.1L6.5 9.6V1h1.5zM2 13h12v1.5H2V13z"/></svg>
+    Download as PDF
+  </button>
+</div>
 
 <div class="sheet">
   <div class="watermark">PROOF</div>
@@ -299,6 +331,16 @@
 
     art.addEventListener("drop", function (e) {
       show(e.dataTransfer.files && e.dataTransfer.files[0]);
+    });
+
+    // The browser's own print-to-PDF, rather than a canvas screenshot library.
+    // It renders real text at full resolution and honours the @media print
+    // rules above, which a canvas rasteriser would flatten and blur.
+    // The saved filename comes from <title>.
+    document.getElementById("pdf").addEventListener("click", function () {
+      var active = document.activeElement;
+      if (active && active.blur) active.blur();  // drop the caret so no field prints focused
+      window.print();
     });
 
     document.addEventListener("paste", function (e) {
