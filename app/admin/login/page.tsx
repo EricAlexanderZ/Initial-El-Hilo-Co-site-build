@@ -35,7 +35,7 @@ export default function AdminLoginPage() {
     <div className="flex min-h-dvh items-center justify-center bg-[#f6f6f4]">
       <div className="w-full max-w-sm px-4">
         <div className="mb-8 text-center">
-          <Wordmark className="text-[15px]" />
+          <Wordmark className="mx-auto h-14" sizes="68px" />
           <h1 className="mt-4 text-2xl font-extrabold">Admin Login</h1>
           <p className="mt-1 text-sm text-gray-500">Brand First Merch — Internal Panel</p>
         </div>

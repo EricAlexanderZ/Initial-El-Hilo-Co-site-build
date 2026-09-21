@@ -10,7 +10,7 @@ export default function OrderConfirmationPage() {
       <SiteHeader />
 
       <section className="mx-auto max-w-2xl px-6 py-24 text-center">
-        <Wordmark className="text-[18px]" />
+        <Wordmark className="mx-auto h-16" sizes="78px" />
 
         <div className="mt-8 inline-flex h-16 w-16 items-center justify-center rounded-full bg-green-100 text-3xl">
           ✓

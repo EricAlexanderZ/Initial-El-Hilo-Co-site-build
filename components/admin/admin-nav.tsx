@@ -46,7 +46,7 @@ export default function AdminNav({ open, onClose }: Props) {
         {/* Logo */}
         <div className="flex items-center justify-between border-b border-white/10 px-5 py-5">
           <div className="flex items-center gap-3">
-            <Wordmark tone="dark" className="text-[11px] shrink-0" />
+            <Wordmark className="h-9 shrink-0" sizes="44px" />
             <p className="text-sm font-extrabold text-white">Admin Panel</p>
           </div>
           <button

@@ -184,7 +184,7 @@ export function SiteHeader() {
 
         {/* Logo — center */}
         <Link prefetch={false} href="/" className="absolute left-1/2 -translate-x-1/2">
-          <Wordmark className="text-[15px]" />
+          <Wordmark className="h-12" sizes="59px" />
         </Link>
 
         {/* Cart — right */}
@@ -194,7 +194,7 @@ export function SiteHeader() {
       {/* ── Desktop header ── */}
       <div className="mx-auto hidden max-w-7xl items-center justify-between px-6 py-4 md:flex">
         <Link prefetch={false} href="/" className="flex items-center">
-          <Wordmark className="text-[17px]" />
+          <Wordmark className="h-14" sizes="68px" />
         </Link>
 
         <nav className="flex items-center gap-8">
@@ -258,7 +258,7 @@ export function SiteHeader() {
         }`}
       >
         <div className="flex items-center justify-between border-b border-black/10 px-5 py-4">
-          <Wordmark className="text-[13px]" />
+          <Wordmark className="h-9" sizes="44px" />
           <button
             type="button"
             onClick={() => setMenuOpen(false)}

@@ -39,7 +39,7 @@ export default function MobileNav() {
       >
         {/* Header */}
         <div className="flex items-center justify-between border-b border-black/10 px-5 py-4">
-          <Wordmark className="text-[13px]" />
+          <Wordmark className="h-9" sizes="44px" />
           <button
             type="button"
             onClick={() => setOpen(false)}

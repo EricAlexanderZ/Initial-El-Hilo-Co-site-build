@@ -8,7 +8,7 @@ export function SiteFooter() {
         <div className="grid grid-cols-1 gap-8 md:gap-12 md:grid-cols-2 lg:grid-cols-4">
           <div>
             <Link prefetch={false} href="/" className="inline-flex" aria-label="Brand First Merch home">
-              <Wordmark tone="dark" className="text-[20px]" />
+              <Wordmark className="h-14" sizes="68px" />
             </Link>
             <p className="mt-3 text-sm text-white/70">orders@elhiloco.com</p>
           </div>

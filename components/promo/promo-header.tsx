@@ -8,7 +8,7 @@ export function PromoHeader() {
     <header className="sticky top-0 z-50 border-b border-black/10 bg-white">
       <div className="mx-auto flex max-w-7xl items-center justify-center px-6 py-2 sm:py-3">
         <Link prefetch={false} href="/" aria-label="Brand First Merch home">
-          <Wordmark className="text-[22px] sm:text-[26px]" />
+          <Wordmark className="h-14 sm:h-16" sizes="(min-width: 640px) 78px, 68px" priority />
         </Link>
       </div>
     </header>
