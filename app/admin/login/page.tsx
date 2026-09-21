@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
+import { Wordmark } from "@/components/brand/wordmark";
 
 export default function AdminLoginPage() {
   const [password, setPassword] = useState("");
@@ -35,9 +35,7 @@ export default function AdminLoginPage() {
     <div className="flex min-h-dvh items-center justify-center bg-[#f6f6f4]">
       <div className="w-full max-w-sm px-4">
         <div className="mb-8 text-center">
-          <div className="relative mx-auto h-14 w-14">
-            <Image src="/images/home/elhilocologo.png" alt="Brand First Merch" fill sizes="96px" className="object-contain" />
-          </div>
+          <Wordmark className="text-[15px]" />
           <h1 className="mt-4 text-2xl font-extrabold">Admin Login</h1>
           <p className="mt-1 text-sm text-gray-500">Brand First Merch — Internal Panel</p>
         </div>

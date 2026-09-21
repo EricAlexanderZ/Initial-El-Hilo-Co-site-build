@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { productLinks } from "@/lib/navigation";
+import { Wordmark } from "@/components/brand/wordmark";
 
 export default function MobileNav() {
   const [open, setOpen] = useState(false);
@@ -38,12 +39,7 @@ export default function MobileNav() {
       >
         {/* Header */}
         <div className="flex items-center justify-between border-b border-black/10 px-5 py-4">
-          <div className="flex items-center gap-2">
-            <div className="relative h-8 w-8">
-              <Image src="/images/home/elhilocologo.png" alt="Brand First Merch" fill sizes="40px" className="object-contain" />
-            </div>
-            <span className="text-sm font-extrabold tracking-tight">BRAND FIRST MERCH</span>
-          </div>
+          <Wordmark className="text-[13px]" />
           <button
             type="button"
             onClick={() => setOpen(false)}

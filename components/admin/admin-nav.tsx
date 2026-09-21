@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
+import { Wordmark } from "@/components/brand/wordmark";
 
 const NAV = [
   { href: "/admin",            label: "Dashboard", icon: "▣" },
@@ -46,13 +46,8 @@ export default function AdminNav({ open, onClose }: Props) {
         {/* Logo */}
         <div className="flex items-center justify-between border-b border-white/10 px-5 py-5">
           <div className="flex items-center gap-3">
-            <div className="relative h-8 w-8 shrink-0">
-              <Image src="/images/home/elhilocologo.png" alt="Brand First Merch" fill sizes="48px" className="object-contain brightness-0 invert" />
-            </div>
-            <div>
-              <p className="text-[10px] font-bold uppercase tracking-widest text-white/40">Brand First Merch</p>
-              <p className="text-sm font-extrabold text-white">Admin Panel</p>
-            </div>
+            <Wordmark tone="dark" className="text-[11px] shrink-0" />
+            <p className="text-sm font-extrabold text-white">Admin Panel</p>
           </div>
           <button
             type="button"

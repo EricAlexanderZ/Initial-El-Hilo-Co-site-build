@@ -1,7 +1,7 @@
 "use client";
 
-import Image from "next/image";
 import { useRef, useCallback } from "react";
+import { Wordmark } from "@/components/brand/wordmark";
 
 export default function HeroLogo() {
   const floatRef = useRef<HTMLDivElement>(null);
@@ -48,16 +48,7 @@ export default function HeroLogo() {
               filter: "drop-shadow(0 20px 40px rgba(0, 0, 0, 0.5))",
             }}
           >
-            <div className="relative h-72 w-72 md:h-96 md:w-96">
-              <Image
-                src="/images/home/elhilocologo.png"
-                alt="Brand First Merch"
-                fill
-                sizes="(max-width: 640px) 60vw, 400px"
-                className="object-contain"
-                priority
-              />
-            </div>
+            <Wordmark tone="dark" className="text-[46px] md:text-[64px]" />
           </div>
         </div>
       </div>

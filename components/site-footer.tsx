@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Image from "next/image";
+import { Wordmark } from "@/components/brand/wordmark";
 
 export function SiteFooter() {
   return (
@@ -8,17 +8,7 @@ export function SiteFooter() {
         <div className="grid grid-cols-1 gap-8 md:gap-12 md:grid-cols-2 lg:grid-cols-4">
           <div>
             <Link prefetch={false} href="/" className="inline-flex" aria-label="Brand First Merch home">
-              <span className="flex h-16 w-16 items-center justify-center rounded-2xl bg-white p-2">
-                <span className="relative block h-full w-full">
-                  <Image
-                    src="/images/home/elhilocologo.png"
-                    alt="Brand First Merch"
-                    fill
-                    sizes="64px"
-                    className="object-contain"
-                  />
-                </span>
-              </span>
+              <Wordmark tone="dark" className="text-[20px]" />
             </Link>
             <p className="mt-3 text-sm text-white/70">orders@elhiloco.com</p>
           </div>
