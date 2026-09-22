@@ -1,9 +1,17 @@
+/*
+ * Next 16 renamed the middleware file convention to `proxy`. Same runtime, same
+ * matcher semantics; the file and the exported function are what changed, and
+ * `middleware.ts` now logs a deprecation warning on every dev boot.
+ *
+ * The Supabase helper it calls still lives at utils/supabase/middleware, which
+ * is that library's own path and is deliberately not renamed to match.
+ */
 import { NextRequest, NextResponse } from "next/server";
 import { updateSession } from "@/utils/supabase/middleware";
 
 const COOKIE = "ehc_admin";
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   // Admin protection (existing logic — unchanged)
