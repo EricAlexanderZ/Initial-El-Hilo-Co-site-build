@@ -57,21 +57,21 @@ export const bestSellers = [
 
 export const processSteps = [
   {
-    image: "/images/home/IPHONE_UPLOAD.png",
+    image: "/images/brand/bf-upload.png",
     step: 1,
     title: "Upload your artwork",
     description:
       "Send us your logo, design, or concept and we will prepare it for embroidery.",
   },
   {
-    image: "/images/home/MONITOR_APPROVED.png",
+    image: "/images/brand/bf-approved.png",
     step: 2,
     title: "Review and Approve",
     description:
       "We send a proof, make any needed adjustments, and get approval before production begins.",
   },
   {
-    image: "/images/home/BOX_TAPE_LOGO.png",
+    image: "/images/brand/bf-box.png",
     step: 3,
     title: "Receive your Order",
     description:

@@ -48,7 +48,12 @@ export default function HeroLogo() {
               filter: "drop-shadow(0 20px 40px rgba(0, 0, 0, 0.5))",
             }}
           >
-            <Wordmark className="h-44 md:h-64" sizes="(min-width: 768px) 313px, 215px" priority />
+            <Wordmark
+              variant="holographic"
+              className="h-44 md:h-64"
+              sizes="(min-width: 768px) 313px, 215px"
+              priority
+            />
           </div>
         </div>
       </div>
