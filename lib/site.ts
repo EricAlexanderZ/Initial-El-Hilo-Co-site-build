@@ -76,6 +76,23 @@ export const site = {
   url: "https://brandfirstmerch.com",
 
   /**
+   * The Google "write a review" form for this listing.
+   *
+   * ⚠️ There is no API that posts a review to Google. That is deliberate on
+   * Google's part: a write API would make fake reviews trivial. Sending the
+   * customer to Google's own form is the only supported route, and the only
+   * one that produces a review that actually appears on the listing.
+   *
+   * Get this from the Business Profile: Read reviews -> Get more reviews, which
+   * yields a short link of the form https://g.page/r/<id>/review
+   *
+   * Empty is handled: /review falls back to the Maps listing so the page is
+   * never a dead end. Fill it in, because the fallback costs the customer an
+   * extra tap and loses some of them.
+   */
+  googleReviewUrl: "",
+
+  /**
    * Text only, by the owner's instruction. Rendered as an sms: link everywhere
    * so nobody dials a number that does not take calls.
    */
