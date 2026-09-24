@@ -57,18 +57,23 @@ export const site = {
    * Used for canonicals, the sitemap and JSON-LD, so it must be the exact host
    * that serves a 200.
    *
-   * Verified 2026-08-17: the apex answers 307 and redirects here, so the www
-   * host is the canonical one. Pointing canonicals at the apex would make every
-   * single one a redirect hop.
+   * Cut over to brandfirstmerch.com 2026-09-24, once the domain was attached
+   * and serving, not before. Measured at the time of the change:
    *
-   * REBRAND: still elhiloco.com on purpose. This is the host that serves a 200
-   * today. Switching it to brandfirstmerch.com before that domain is attached
-   * to the project and serving would point every canonical, the sitemap and all
-   * JSON-LD at a dead host, which deindexes the site. Change this only once
-   * brandfirstmerch.com resolves, and add 301s from the old host at the same
-   * time so the existing ranking transfers instead of being abandoned.
+   *   brandfirstmerch.com       200, valid certificate  <- canonical
+   *   www.brandfirstmerch.com   308 -> apex
+   *   elhiloco.com              308 -> apex
+   *   www.elhiloco.com          308 -> apex
+   *
+   * The apex is canonical here, where the old domain used www. All three other
+   * hosts reach it in a single hop with the path preserved, so an indexed URL
+   * maps to its exact equivalent rather than to the home page.
+   *
+   * The old hosts stay attached to the project permanently. They are what
+   * carries the existing ranking and anyone's bookmarks; deleting them throws
+   * that away. There is no cost to leaving them.
    */
-  url: "https://www.elhiloco.com",
+  url: "https://brandfirstmerch.com",
 
   /**
    * Text only, by the owner's instruction. Rendered as an sms: link everywhere
