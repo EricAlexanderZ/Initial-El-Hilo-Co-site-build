@@ -19,7 +19,12 @@ export const metadata: Metadata = {
   // Graph URL resolved relative and effectively did nothing.
   metadataBase: new URL(site.url),
   title: {
-    default: `${site.name} — Custom Embroidery in the Rio Grande Valley`,
+    // Reads site.tagline rather than repeating it. The previous version
+    // hardcoded "Custom Embroidery in the Rio Grande Valley", so when the
+    // tagline gained printing the title silently kept saying embroidery only.
+    // Separator is the pipe the template already uses, which also keeps the
+    // em dash out of the copy.
+    default: `${site.name} | ${site.tagline}`,
     template: `%s | ${site.name}`,
   },
   description: site.description,
