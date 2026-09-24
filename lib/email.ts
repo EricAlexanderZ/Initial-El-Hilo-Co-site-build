@@ -157,3 +157,145 @@ export function sendAdminNewOrderAlert({
     `,
   });
 }
+
+// ─── Customer: order status updates ──────────────────────────────────────────
+
+/**
+ * Minimal HTML escape for values that go into an email body.
+ *
+ * Customer names and order numbers are attacker-influenced free text. Without
+ * this, a name containing markup would be rendered as markup by the mail
+ * client.
+ */
+function esc(value: string): string {
+  return String(value)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
+/**
+ * Copy for each status that is worth telling the customer about.
+ *
+ * Two statuses are deliberately absent. `new` already triggers the order
+ * confirmation, so notifying again would double up. `proof_approved` is the
+ * customer's own action, and emailing someone to report what they just did is
+ * noise.
+ *
+ * Membership of this map is the single definition of "notifies the customer";
+ * statusNotifiesCustomer reads it rather than keeping a second list that could
+ * drift out of step.
+ */
+const STATUS_EMAILS: Record<
+  string,
+  { subject: (orderNumber: string) => string; heading: string; body: string }
+> = {
+  proof_sent: {
+    subject: (n) => `Your proof is ready, order ${n}`,
+    heading: "Your proof is ready",
+    body:
+      "We have prepared a proof of your artwork. Please review every detail carefully, including spelling, colours, sizes and placement, and reply to let us know if you would like any changes. Nothing is made until you approve it.",
+  },
+  in_production: {
+    subject: (n) => `Your order is in production, order ${n}`,
+    heading: "Your order is being made",
+    body:
+      "Your proof is approved and your order has moved into production. We will let you know as soon as it is ready.",
+  },
+  shipped: {
+    subject: (n) => `Your order is on its way, order ${n}`,
+    heading: "Your order is on its way",
+    body:
+      "Your order is packed and on its way to you. If you need tracking details or have any questions, just reply to this email.",
+  },
+  complete: {
+    subject: (n) => `Your order is complete, order ${n}`,
+    heading: "Your order is complete",
+    body:
+      "Your order is complete. Thank you for choosing Brand First Merch. If anything is not right, reply to this email and we will make it right.",
+  },
+  cancelled: {
+    subject: (n) => `Your order has been cancelled, order ${n}`,
+    heading: "Your order has been cancelled",
+    body:
+      "Your order has been cancelled and you will not be charged. If this was not expected, reply to this email and we will sort it out.",
+  },
+};
+
+/** True when moving to `status` should email the customer. */
+export function statusNotifiesCustomer(status: string): boolean {
+  return status in STATUS_EMAILS;
+}
+
+/**
+ * Tell the customer their order moved to a new status.
+ *
+ * Resolves false when the status has no customer-facing copy or when no mail
+ * provider is configured, so callers can report what actually happened instead
+ * of assuming a send occurred.
+ */
+export async function sendOrderStatusUpdate({
+  to,
+  name,
+  orderNumber,
+  status,
+  proofUrl,
+}: {
+  to: string;
+  name: string;
+  orderNumber: string;
+  status: string;
+  /** Set for proof_sent, so the customer can open the proof from the email. */
+  proofUrl?: string;
+}): Promise<boolean> {
+  const copy = STATUS_EMAILS[status];
+  if (!copy) return false;
+
+  const safeName = esc(name || "there");
+  const safeRef  = esc(orderNumber);
+
+  const proofButton =
+    status === "proof_sent" && proofUrl
+      ? `<p style="margin:0 0 24px">
+           <a href="${esc(proofUrl)}"
+              style="display:inline-block;background:#13294b;color:#fff;text-decoration:none;
+                     padding:12px 24px;border-radius:8px;font-weight:700;font-size:15px">
+             View your proof
+           </a>
+         </p>`
+      : "";
+
+  return send({
+    to,
+    subject: copy.subject(orderNumber),
+    html: `
+      <div style="font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+                  max-width:560px;margin:0 auto;padding:32px 24px;color:#0f1c33">
+        <div style="background:#13294b;border-radius:10px;padding:20px 24px;margin-bottom:28px">
+          <p style="color:#ffd84d;font-weight:900;font-size:20px;margin:0;letter-spacing:-0.02em">
+            BRAND FIRST MERCH
+          </p>
+          <p style="color:rgba(255,255,255,0.7);font-size:12px;margin:4px 0 0;letter-spacing:0.14em">
+            CUSTOM EMBROIDERY &amp; PRINTING
+          </p>
+        </div>
+
+        <h1 style="font-size:22px;margin:0 0 6px">${esc(copy.heading)}</h1>
+        <p style="color:#6b7280;font-size:13px;margin:0 0 20px">Order ${safeRef}</p>
+
+        <p style="font-size:15px;line-height:1.6;margin:0 0 16px">Hi ${safeName},</p>
+        <p style="font-size:15px;line-height:1.6;margin:0 0 24px">${esc(copy.body)}</p>
+
+        ${proofButton}
+
+        <p style="font-size:14px;line-height:1.6;color:#4b5563;margin:0 0 4px">
+          Questions? Reply to this email or text ${esc(site.phone)}.
+        </p>
+        <p style="font-size:12px;color:#6b7280;margin:24px 0 0;border-top:1px solid #dfe3e9;padding-top:16px">
+          Brand First Merch &middot; ${esc(site.email)}
+        </p>
+      </div>
+    `,
+  });
+}

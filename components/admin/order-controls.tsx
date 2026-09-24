@@ -5,6 +5,19 @@ import { useRouter } from "next/navigation";
 import type { OrderStatus } from "@/lib/types/orders";
 import OrderStatusBadge from "./order-status-badge";
 
+/**
+ * Statuses that email the customer on save. Mirrors STATUS_EMAILS in
+ * lib/email.ts, which is the authority; this copy exists only so the UI can
+ * warn before the request is sent rather than after.
+ */
+const NOTIFIES = new Set<OrderStatus>([
+  "proof_sent",
+  "in_production",
+  "shipped",
+  "complete",
+  "cancelled",
+]);
+
 const STATUSES: OrderStatus[] = [
   "new",
   "proof_sent",
@@ -19,11 +32,13 @@ export default function OrderControls({
   orderId,
   currentStatus,
   currentNotes,
+  customerEmail,
   isArchived = false,
 }: {
   orderId: string;
   currentStatus: OrderStatus;
   currentNotes: string | null;
+  customerEmail: string;
   isArchived?: boolean;
 }) {
   const [status, setStatus]     = useState<OrderStatus>(currentStatus);
@@ -31,12 +46,19 @@ export default function OrderControls({
   const [saving, setSaving]     = useState(false);
   const [saved, setSaved]       = useState(false);
   const [archiving, setArchiving] = useState(false);
+  const [result, setResult]     = useState<{ ok: boolean; message: string } | null>(null);
   const router = useRouter();
+
+  const statusChanging = status !== currentStatus;
+  const willNotify     = statusChanging && NOTIFIES.has(status);
 
   async function handleArchive() {
     setArchiving(true);
     const method = isArchived ? "DELETE" : "POST";
-    await fetch(`/api/admin/orders/${orderId}/archive`, { method });
+    const res = await fetch(`/api/admin/orders/${orderId}/archive`, { method });
+    // The admin API answers 401 rather than redirecting, because a fetch cannot
+    // act on an HTML login page.
+    if (res.status === 401) { router.push("/admin/login"); return; }
     router.refresh();
     setArchiving(false);
   }
@@ -44,15 +66,39 @@ export default function OrderControls({
   async function handleSave() {
     setSaving(true);
     setSaved(false);
-    await fetch(`/api/admin/orders/${orderId}`, {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ status, notes }),
-    });
-    setSaving(false);
-    setSaved(true);
-    setTimeout(() => setSaved(false), 2500);
-    router.refresh();
+    setResult(null);
+    try {
+      const res = await fetch(`/api/admin/orders/${orderId}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ status, notes }),
+      });
+
+      if (res.status === 401) { router.push("/admin/login"); return; }
+
+      const body = await res.json().catch(() => ({}));
+
+      if (!res.ok) {
+        setResult({ ok: false, message: body.error ?? "Could not save. Please try again." });
+        return;
+      }
+
+      // Report what actually happened. The server tells us whether mail was
+      // handed to SMTP, so an unconfigured deployment cannot look like a send.
+      setResult({
+        ok: true,
+        message: body.notified
+          ? `Saved. ${body.notifiedEmail ?? customerEmail} was emailed.`
+          : "Saved.",
+      });
+      setSaved(true);
+      setTimeout(() => setSaved(false), 2500);
+      router.refresh();
+    } catch {
+      setResult({ ok: false, message: "Network error. Please try again." });
+    } finally {
+      setSaving(false);
+    }
   }
 
   return (
@@ -78,6 +124,17 @@ export default function OrderControls({
         </div>
       </div>
 
+      {/* Sending mail on the owner's behalf should never be a surprise. */}
+      {willNotify && (
+        <p className="rounded-2xl bg-[#f6f8fc] px-4 py-3 text-xs leading-relaxed text-[#13294b]">
+          Saving will email <strong className="font-bold">{customerEmail}</strong> to say the order
+          is now <strong className="font-bold">{status.replace(/_/g, " ")}</strong>.
+        </p>
+      )}
+      {statusChanging && !willNotify && (
+        <p className="text-xs text-gray-400">No customer email is sent for this status.</p>
+      )}
+
       <div>
         <p className="mb-2 text-sm font-bold">Internal Notes</p>
         <textarea
@@ -101,6 +158,15 @@ export default function OrderControls({
       >
         {saving ? "Saving…" : saved ? "✓ Saved" : "Save Changes"}
       </button>
+
+      {result && (
+        <p
+          role="status"
+          className={`text-center text-xs font-semibold ${result.ok ? "text-green-600" : "text-red-500"}`}
+        >
+          {result.message}
+        </p>
+      )}
 
       <button
         type="button"

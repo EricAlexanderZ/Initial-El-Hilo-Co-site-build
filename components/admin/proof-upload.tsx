@@ -7,6 +7,7 @@ export default function ProofUpload({ orderId }: { orderId: string }) {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [status, setStatus] = useState<"idle" | "uploading" | "done" | "error">("idle");
   const [error, setError]   = useState("");
+  const [notified, setNotified] = useState<string | null>(null);
   const router = useRouter();
 
   async function handleFile(file: File) {
@@ -21,12 +22,19 @@ export default function ProofUpload({ orderId }: { orderId: string }) {
       body: form,
     });
 
+    // The admin API answers 401 rather than redirecting, because a fetch cannot
+    // act on an HTML login page.
+    if (res.status === 401) { router.push("/admin/login"); return; }
+
+    const body = await res.json().catch(() => ({}));
+
     if (res.ok) {
       setStatus("done");
+      setNotified(body.notified ? body.notifiedEmail ?? null : null);
       router.refresh();
     } else {
       setStatus("error");
-      setError("Upload failed. Please try again.");
+      setError(body.error ?? "Upload failed. Please try again.");
     }
   }
 
@@ -34,7 +42,8 @@ export default function ProofUpload({ orderId }: { orderId: string }) {
     <div>
       <p className="mb-3 text-sm font-bold">Upload Proof</p>
       <p className="mb-4 text-xs text-gray-500">
-        Upload a proof image or PDF. Status will automatically change to &quot;Proof Sent&quot;.
+        Upload a proof image or PDF. The status changes to &quot;Proof Sent&quot; and the
+        customer is emailed a link to it automatically.
       </p>
 
       {status === "uploading" && (
@@ -45,7 +54,14 @@ export default function ProofUpload({ orderId }: { orderId: string }) {
       )}
 
       {status === "done" && (
-        <p className="text-sm font-semibold text-green-600">✓ Proof uploaded — status updated to Proof Sent</p>
+        <div className="text-sm font-semibold text-green-600">
+          <p>✓ Proof uploaded, status set to Proof Sent</p>
+          {notified
+            ? <p className="mt-1 font-normal text-gray-600">{notified} was emailed a link to it.</p>
+            : <p className="mt-1 font-normal text-amber-600">
+                The customer was not emailed. Check EMAIL_USER and EMAIL_APP_PASSWORD.
+              </p>}
+        </div>
       )}
 
       {status === "error" && (
