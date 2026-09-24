@@ -2,6 +2,7 @@ import Link from "next/link";
 import { TopBanner, SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { Wordmark } from "@/components/brand/wordmark";
+import { site } from "@/lib/site";
 
 export default function OrderConfirmationPage() {
   return (
@@ -60,8 +61,8 @@ export default function OrderConfirmationPage() {
 
         <p className="mt-10 text-sm text-gray-400">
           Questions? Email us at{" "}
-          <a href="mailto:orders@elhiloco.com" className="font-semibold text-[#13294b] hover:underline">
-            orders@elhiloco.com
+          <a href={`mailto:${site.email}`} className="font-semibold text-[#13294b] hover:underline">
+            {site.email}
           </a>
         </p>
       </section>

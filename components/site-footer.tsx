@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Wordmark } from "@/components/brand/wordmark";
+import { site } from "@/lib/site";
 
 export function SiteFooter() {
   return (
@@ -10,7 +11,7 @@ export function SiteFooter() {
             <Link prefetch={false} href="/" className="inline-flex" aria-label="Brand First Merch home">
               <Wordmark className="h-14" sizes="68px" />
             </Link>
-            <p className="mt-3 text-sm text-white/70">orders@elhiloco.com</p>
+            <p className="mt-3 text-sm text-white/70">{site.email}</p>
           </div>
 
           <div>

@@ -1,3 +1,4 @@
+import { site } from "@/lib/site";
 /**
  * FAQ content.
  *
@@ -41,7 +42,7 @@ export const FAQS: FAQSection[] = [
       },
       {
         q: "Do you accept rush orders?",
-        a: "Reach out to us at orders@elhiloco.com before placing your order and we'll do our best to accommodate tight timelines.",
+        a: `Reach out to us at ${site.email} before placing your order and we'll do our best to accommodate tight timelines.`,
       },
     ],
   },
@@ -120,7 +121,7 @@ export const FAQS: FAQSection[] = [
       },
       {
         q: "Can I order samples before a large order?",
-        a: "Contact us at orders@elhiloco.com to discuss sample options for large bulk orders.",
+        a: `Contact us at ${site.email} to discuss sample options for large bulk orders.`,
       },
     ],
   },
@@ -158,7 +159,7 @@ export const FAQS: FAQSection[] = [
       },
       {
         q: "What if there's a defect in my order?",
-        a: "Your satisfaction is our priority. If you receive an item with a production defect, contact us within 7 days of delivery at orders@elhiloco.com and we'll make it right.",
+        a: `Your satisfaction is our priority. If you receive an item with a production defect, contact us within 7 days of delivery at ${site.email} and we'll make it right.`,
       },
     ],
   },

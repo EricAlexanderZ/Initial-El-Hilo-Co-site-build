@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { TopBanner, SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
+import { site } from "@/lib/site";
 
 export default function ContactPage() {
   const [form, setForm] = useState({ name: "", email: "", subject: "", message: "" });
@@ -110,7 +111,7 @@ export default function ContactPage() {
 
                 {status === "error" && (
                   <p className="rounded-2xl bg-red-50 px-4 py-3 text-sm text-red-600">
-                    Something went wrong. Please email us directly at orders@elhiloco.com.
+                    Something went wrong. Please email us directly at {site.email}.
                   </p>
                 )}
 
@@ -134,8 +135,8 @@ export default function ContactPage() {
                   <span className="mt-0.5 text-[#13294b]">✉</span>
                   <div>
                     <p className="font-semibold">Email</p>
-                    <a href="mailto:orders@elhiloco.com" className="text-gray-600 hover:text-[#13294b]">
-                      orders@elhiloco.com
+                    <a href={`mailto:${site.email}`} className="text-gray-600 hover:text-[#13294b]">
+                      {site.email}
                     </a>
                   </div>
                 </div>

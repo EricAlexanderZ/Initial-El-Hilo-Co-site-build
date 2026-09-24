@@ -1,5 +1,6 @@
 ﻿import { SiteHeader, TopBanner } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
+import { site } from "@/lib/site";
 
 // ─── Brand constants ─────────────────────────────────────────
 // The registered entity. Unchanged by the rebrand: Brand First Merch is
@@ -7,7 +8,7 @@ import { SiteFooter } from "@/components/site-footer";
 const COMPANY   = "El Hilo Co LLC";
 const SITE      = "Brand First Merch";
 const ADDRESS   = "Alton, TX";
-const EMAIL     = "orders@elhiloco.com";
+const EMAIL     = site.email;
 const UPDATED   = "April 25, 2026";
 
 // ─── Shared primitives ────────────────────────────────────────

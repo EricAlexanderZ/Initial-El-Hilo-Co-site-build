@@ -1,4 +1,5 @@
 import nodemailer from "nodemailer";
+import { site } from "@/lib/site";
 
 function getTransporter() {
   const user = process.env.EMAIL_USER;
@@ -103,7 +104,7 @@ export function sendOrderConfirmation({
           </div>
 
           <p style="margin-top:24px;font-size:13px;color:#888">
-            Questions? Reply to this email or contact us at orders@elhiloco.com
+            Questions? Reply to this email or contact us at ${site.email}
           </p>
         </div>
       </div>
