@@ -2,8 +2,11 @@ import nodemailer from "nodemailer";
 import { site } from "@/lib/site";
 
 function getTransporter() {
-  const user = process.env.EMAIL_USER;
-  const pass = process.env.EMAIL_APP_PASSWORD;
+  const user = process.env.EMAIL_USER?.trim();
+  // Google displays app passwords as four spaced groups ("abcd efgh ijkl mnop")
+  // and Gmail's SMTP rejects them with the spaces left in. Strip rather than
+  // depend on whoever pastes it next remembering to.
+  const pass = process.env.EMAIL_APP_PASSWORD?.replace(/\s+/g, "");
   if (!user || !pass) return null;
 
   return nodemailer.createTransport({

@@ -84,12 +84,15 @@ export const site = {
   smsHref: "sms:+19563323651",
 
   /**
-   * REBRAND: still the elhiloco.com mailbox, which is the one that exists and
-   * the one SMTP_USER authenticates as. Renaming this string would not create
-   * orders@brandfirstmerch.com; it would just print an address that bounces.
-   * Change it when that mailbox is live and the SMTP credentials follow.
+   * Moved 2026-09-24, after the mailbox existed and was proven, not before.
+   * Authentication and delivery were both tested: smtp.gmail.com accepted the
+   * app password and returned 250 for a message addressed to this box.
+   *
+   * Worth recording why that test mattered. The previous address could send but
+   * never receive: elhiloco.com had no MX records, so every customer reply
+   * bounced for the life of the old site. This domain has MX and SPF.
    */
-  email: "orders@elhiloco.com",
+  email: "orders@brandfirstmerch.com",
 
   /**
    * Confirmed 2026-08-17: there is no storefront. This is a service-area
