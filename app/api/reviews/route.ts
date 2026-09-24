@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { EMPTY_REVIEWS, PLACE_QUERY, type GoogleReview, type ReviewsPayload } from "@/lib/reviews";
+import { EMPTY_REVIEWS, PLACE_ID, type GoogleReview, type ReviewsPayload } from "@/lib/reviews";
 
 /**
  * Google reviews for the storefront carousel.
@@ -10,7 +10,6 @@ import { EMPTY_REVIEWS, PLACE_QUERY, type GoogleReview, type ReviewsPayload } fr
  */
 export const revalidate = 86400;
 
-const SEARCH  = "https://places.googleapis.com/v1/places:searchText";
 const DETAILS = "https://places.googleapis.com/v1/places";
 
 export async function GET() {
@@ -21,28 +20,12 @@ export async function GET() {
   }
 
   try {
-    // 1. Resolve the place. Cheaper than storing an id that could go stale, and
-    //    the response is cached for a day anyway.
-    const found = await fetch(SEARCH, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "X-Goog-Api-Key": key,
-        "X-Goog-FieldMask": "places.id",
-      },
-      body: JSON.stringify({ textQuery: PLACE_QUERY, maxResultCount: 1 }),
-      next: { revalidate },
-    }).then((r) => r.json());
-
-    const placeId = found?.places?.[0]?.id;
-    if (!placeId) {
-      // A PERMISSION_DENIED here means the Places API is not enabled on the key.
-      console.warn("[api/reviews] no place found:", found?.error?.status ?? "empty result");
-      return NextResponse.json(EMPTY_REVIEWS);
-    }
-
-    // 2. Reviews. Google caps this at five and there is no way to ask for more.
-    const detail = await fetch(`${DETAILS}/${placeId}`, {
+    // Straight to the listing. The text-search step this replaced cost an extra
+    // call per revalidation to look up something that never changes, and broke
+    // on a profile rename.
+    //
+    // Google caps reviews at five here and there is no way to ask for more.
+    const detail = await fetch(`${DETAILS}/${PLACE_ID}`, {
       headers: {
         "X-Goog-Api-Key": key,
         "X-Goog-FieldMask":
@@ -52,6 +35,8 @@ export async function GET() {
     }).then((r) => r.json());
 
     if (detail?.error) {
+      // PERMISSION_DENIED here almost always means billing is not enabled on the
+      // Google Cloud project, not that the key or the Place ID is wrong.
       console.warn("[api/reviews] details failed:", detail.error.status);
       return NextResponse.json(EMPTY_REVIEWS);
     }

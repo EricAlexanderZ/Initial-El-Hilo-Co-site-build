@@ -39,14 +39,19 @@ export const EMPTY_REVIEWS: ReviewsPayload = {
 };
 
 /**
- * The business on Google.
+ * The business on Google, by its Place ID.
  *
- * Resolved by text search rather than hardcoded, so it survives the listing
- * being edited. If it ever resolves to the wrong business, hardcode the place
- * id here instead — it is stable.
+ * This used to be a text search for "El Hilo Co embroidery Palmview TX", which
+ * had two problems: it spent an extra API call resolving something that never
+ * changes, and it would have stopped resolving the day the Business Profile was
+ * renamed — precisely mid-rebrand, when nobody would have been watching the
+ * carousel.
  *
- * REBRAND: this matches the Business Profile's CURRENT name, which is still
- * El Hilo Co. It is a text search, so it stops resolving the day the profile
- * is renamed. Update this string in the same sitting as the profile rename.
+ * A Place ID is stable across renames, address edits and profile changes. This
+ * one was read out of the redirect chain behind the profile's own "get more
+ * reviews" short link, so it is the listing's own id rather than a guess:
+ *
+ *   https://g.page/r/CS72F3FhN4O5EAI/review
+ *     -> search.google.com/local/writereview?placeid=ChIJ3_9DA7u7liERLvYXcWE3g7k
  */
-export const PLACE_QUERY = "El Hilo Co embroidery Palmview TX";
+export const PLACE_ID = "ChIJ3_9DA7u7liERLvYXcWE3g7k";

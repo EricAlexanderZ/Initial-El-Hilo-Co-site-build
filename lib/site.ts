@@ -90,7 +90,7 @@ export const site = {
    * never a dead end. Fill it in, because the fallback costs the customer an
    * extra tap and loses some of them.
    */
-  googleReviewUrl: "",
+  googleReviewUrl: "https://g.page/r/CS72F3FhN4O5EAI/review",
 
   /**
    * Text only, by the owner's instruction. Rendered as an sms: link everywhere
