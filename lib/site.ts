@@ -27,14 +27,14 @@ export const site = {
    * Remove this only after the profile rename has settled, months out.
    */
   formerName: "El Hilo Co",
-  tagline: "Custom embroidery in the Rio Grande Valley",
+  tagline: "Custom embroidery and printing in the Rio Grande Valley",
   /**
    * Meta description. Deliberately short: Google truncates around 155
    * characters in results, so this is the trimmed version of `longDescription`
    * rather than the whole thing.
    */
   description:
-    "Custom embroidery in the Rio Grande Valley. Hats, polos, hoodies and sweaters for businesses, teams and schools, with free local pickup and delivery. No minimum order.",
+    "Custom embroidery and printing in the Rio Grande Valley. Hats, polos, hoodies, DTF shirts and signage, with free local pickup and delivery. No minimum order.",
 
   /**
    * The full description, kept word for word identical to the Google Business
@@ -45,9 +45,13 @@ export const site = {
    * treated as one entity.
    *
    * If the Business Profile text is ever edited, edit this to match.
+   *
+   * Last synced 2026-09-23. The profile copy carries paragraph breaks that
+   * are flattened to spaces here, because schema.org description is a plain
+   * string; the wording is otherwise identical.
    */
   longDescription:
-    "Brand First Merch, formerly El Hilo Co, is a custom embroidery shop serving the Rio Grande Valley. We stitch hats, polos, hoodies and sweaters for businesses, teams, schools and events, with free local pickup and delivery across Palmview, Alton, Mission, McAllen, Edinburg and Pharr. There is no minimum order. One piece or two hundred, embroidery is priced per piece and the cost per piece falls as the quantity rises. Choose from ten cap styles, add front, side or back placement, and see your price before you order. Every job starts with a digital proof. Nothing is stitched until you approve it, and most orders finish within five to seven business days of approval. Orders are coordinated by appointment.",
+    "Brand First Merch, formerly El Hilo Co, is a custom embroidery and printing shop serving the Rio Grande Valley. We stitch hats, polos, hoodies and sweaters for businesses, teams, schools and events. We also do DTF shirt printing, custom acrylic signage, stickers, business cards and flyers. Free local pickup and delivery across Palmview, Alton, Mission, McAllen, Edinburg and Pharr. No minimum order. One piece or two hundred, work is priced per piece and the price falls as quantity rises. Ten cap styles, with front, side or back placement, and pricing you can see before you order. Every job starts with a digital proof. Nothing is made until you approve it, and most orders finish in five to seven business days. Orders are by appointment.",
 
   /**
    * Used for canonicals, the sitemap and JSON-LD, so it must be the exact host

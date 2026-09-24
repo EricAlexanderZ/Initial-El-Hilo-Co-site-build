@@ -117,6 +117,14 @@ function LocalBusinessJsonLd() {
       "embroidered polos",
       "team apparel",
       "corporate uniforms",
+      // Added 2026-09-23 alongside the Business Profile rewrite. These are
+      // offered by text and appointment rather than sold on the site, which is
+      // fine here: this block describes the business, not the storefront.
+      "DTF shirt printing",
+      "custom acrylic signage",
+      "stickers",
+      "business cards",
+      "flyers",
     ],
     /**
      * The explicit statement that these profiles are the same business.
